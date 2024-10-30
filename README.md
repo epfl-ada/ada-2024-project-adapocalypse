@@ -5,28 +5,28 @@ The ADAlien, a curious alien coming from a peaceful and harmonious planet, dream
 The goal of this project is to understand what makes a good villain, in order for the ADAlien to adopt the most appropriate villain character for his space conquest.
 
 More specifically, the guide will help the ADALien address the following questions :
-· What are the main profiles of villain characters according to movie genres ?
-· How do the different combinations of actor-character correlate with specific movie genres or roles ?
-· Based on one’s individual information and movies preferences, which actor of the database could he/she impersonate ?
+* What are the main profiles of villain characters according to movie genres ?
+* How do the different combinations of actor-character correlate with specific movie genres or roles ?
+* Based on one’s individual information and movies preferences, which actor of the database could he/she impersonate ?
 
 The methods used will combine :
-· epuration of the database (detecting any missing or atypical data and treating it accordingly)
-· qualitative and quantitative univariable analysis
-· qualitative and quantitative multi-variable analysis
-· statistical formulas
-· sentiment analysis
+* epuration of the database (detecting any missing or atypical data and treating it accordingly)
+* qualitative and quantitative univariable analysis
+* qualitative and quantitative multi-variable analysis
+* statistical formulas
+* sentiment analysis
 
 Timeline :
-· until milestone 2 : individual exploration of the database
-· week 9 : sharing of findings and clear definition of roles & tasks (1 HMW 2 :) )
-· week 10 : individual work (& HMW 2 :) )
-· week 11 : sharing progress, redifining objectives / work distribution
-· week 12 : individual work
-· week 13 : individual work, pooling
-· week 14 : finishing touches
+* until milestone 2 : individual exploration of the database
+* week 9 : sharing of findings and clear definition of roles & tasks (1 HMW 2 :) )
+* week 10 : individual work (& HMW 2 :) )
+* week 11 : sharing progress, redifining objectives / work distribution
+* week 12 : individual work
+* week 13 : individual work, pooling
+* week 14 : finishing touches
 
 Organization within the team (internal milestones up until Milestone P3) :
-· attribution of roles
+* attribution of roles
 week 11 - first draft of the Jupyter Notebook (story telling included)
 
 
