@@ -4,8 +4,6 @@ The ADAlien, a curious alien coming from a peaceful and harmonious planet, dream
 
 The goal of this project is to understand what makes a good villain, in order for the ADAlien to adopt the most appropriate villain character for his space conquest.
 
---146 words
-
 More specifically, the guide will help the ADALien address the following questions :
 · What are the main profiles of villain characters according to movie genres ?
 · How do the different combinations of actor-character correlate with specific movie genres or roles ?
