@@ -1,4 +1,45 @@
-# The Ultimate Super-Villain Guide
+# Movinder
+
+Movinder offers an immersive experience that can be explored from three different perspectives. By impersonating either a movie producer, an actor or a spectator, create your own experience and uncover data regarding movie features. From the perspective of a movie producer, will you prioritize maximizing box office revenues over achieving worldwide reach ? As an actor, do awards hold greater importance for you than acting in movies maintaining parity amongst actors ? Through the eyes of a spectator, which movie features will capture the most your attention ? These seemingly straightforwards questions will reveal key movie features and subtle details shape the movie industry in impactful ways. Through a playful and interactive adventure, one will discover unexpected details over a movie he/she would be keen to produce, act in or spectate.
+
+This project aims to uncover trends and patterns in movies.
+
+More specifically, Movinder will address the following questions :
+* general questions.. je sèche j'avoue
+
+and more specifically, precised questions could be answered such as :
+* How does the name of a movie correlate with its genre, theme and mediatic success ?
+* How to produce the most economically profitable movie starting with a low budget ?
+* Does parity amongst the actors of a movie influence its success (economically, rating, global reach)
+
+The methods used will combine :
+* epuration of the database (detecting any missing or atypical data and treating it accordingly)
+* qualitative and quantitative univariable analysis
+* qualitative and quantitative multi-variable analysis
+* statistical formulas
+* sentiment analysis
+
+Timeline :
+* until milestone 2 : clear definition of the objectives, analysis steps of the database and individual exploration
+* week 10 : invidivual / pair work
+* week 11 : sharing progress, redifining objectives / work distribution
+* week 12 : individual / pair work
+* week 13 : individual / pair work, pooling
+* week 14 : finishing touches
+
+Organization within the team (internal milestones up until Milestone P3) :
+week 9 - clear objectives, roles and tasks
+week 11 - first draft of the Jupyter Notebook (story telling included)
+week 13 - 90% of the Jupyter Notebook finished
+week 14 - finishing touches, UX & Artistic Direction (design, colors etc)
+
+
+
+
+
+
+**villain**
+The Ultimate Super-Villain Guide
 
 The ADAlien, a curious alien coming from a peaceful and harmonious planet, dreams of conquering a new planet and is determined to master the art of villainy to do so. During his journey in space, he discovers an old videotape guide untitled : "The Ultimate Super-Villain Guide.". The guide gathers and exploits data provided by thousands of human-made movies, a famous race in the villain community. It does not only provide insight regarding classic villain attributes, actions, and concrete movie portrayal but also analyses in depth character data and actor-character combinations amongst others. This guide will help the ADAlien to become the villain he is destined to be and prepare it for any planetary encounter.
 
