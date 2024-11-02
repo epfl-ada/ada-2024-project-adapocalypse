@@ -28,10 +28,10 @@ Timeline :
 * week 14 : finishing touches
 
 Organization within the team (internal milestones up until Milestone P3) :
-week 9 - clear objectives, roles and tasks
-week 11 - first draft of the Jupyter Notebook (story telling included)
-week 13 - 90% of the Jupyter Notebook finished
-week 14 - finishing touches, UX & Artistic Direction (design, colors etc)
+* week 9 - clear objectives, roles and tasks
+* week 11 - first draft of the Jupyter Notebook (story telling included)
+* week 13 - 90% of the Jupyter Notebook finished
+* week 14 - finishing touches, UX & Artistic Direction (design, colors etc)
 
 
 
