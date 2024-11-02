@@ -13,11 +13,20 @@ and more specifically, precised questions could be answered such as :
 * Does parity amongst the actors of a movie influence its success (economically, rating, global reach)
 
 The methods used will combine :
-* epuration of the database (detecting any missing or atypical data and treating it accordingly)
-* qualitative and quantitative univariable analysis
-* qualitative and quantitative multi-variable analysis
-* statistical formulas
-* sentiment analysis
+1. data wrangling : epuration of the database by extracting and standardizing initial data files (detecting any missing, inconsistent or atypical data and applying accordingly resampling, deletion or transformation of data)
+2. visual interactive representation of the analysis results
+* qualitative and quantitative univariable analysis (histograms, box plot, scatter plot, ...)
+* qualitative and quantitative multi-variable analysis (scatter plot, line plot, heatmap, ...)
+* applying transformation on the axes if necessary
+* displaying only essential data and expliciting the result for the audience
+3. statistical analysis using robust statistics, tests
+4. perform linear regression to build models and predictors
+5. ML techniques including decision trees
+6. sentiment analysis (?)
+
+The tools used would be the following :
+* wikipedia-api python library, to access data regarding the budget of the movie and the awards the movie or its actors received thanks to it
+* interactive tools : (choose some amongst vega, vincent, bokeh, find other ?)
 
 Timeline :
 * until milestone 2 : clear definition of the objectives, analysis steps of the database and individual exploration
@@ -50,12 +59,7 @@ More specifically, the guide will help the ADALien address the following questio
 * How do the different combinations of actor-character correlate with specific movie genres or roles ?
 * Based on one’s individual information and movies preferences, which actor of the database could he/she impersonate ?
 
-The methods used will combine :
-* epuration of the database (detecting any missing or atypical data and treating it accordingly)
-* qualitative and quantitative univariable analysis
-* qualitative and quantitative multi-variable analysis
-* statistical formulas
-* sentiment analysis
+
 
 Timeline :
 * until milestone 2 : individual exploration of the database
