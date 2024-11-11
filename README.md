@@ -1,16 +1,15 @@
-# Movinder
+# Mov'She
 
-Movinder offers an immersive experience that can be explored from three different perspectives. By impersonating either a movie producer, an actor or a spectator, create your own experience and uncover data regarding movie features. From the perspective of a movie producer, will you prioritize maximizing box office revenues over achieving worldwide reach ? As an actor, do awards hold greater importance for you than acting in movies maintaining parity amongst actors ? Through the eyes of a spectator, which movie features will capture the most your attention ? These seemingly straightforwards questions will reveal key movie features and subtle details shape the movie industry in impactful ways. Through a playful and interactive adventure, one will discover unexpected details over a movie he/she would be keen to produce, act in or spectate.
+Mov'She explores dynamics in the movie industry, focusing on gender representations. The projects invites users to step into the shoes of different movie-industry perspectives such as a movie director, an actor or a spectator to uncover how gender equity influences cinematic outcomes. Through an interactive user interface, our project provides insights regarding the evolution of gender representation regarding specific features such as the repartition of movie-female director and actresses, as well as the roles impersonated by female actors over time and accross the world. By focusing how gender representation in movies has evolved over time, particularly after specific female empowering events such as obtaining the right to vote or the #MeToo movement.
 
-This project aims to uncover trends and patterns in movies.
+Mov'She aims to raise awareness, promote the female impact over the movie industry and contribute to a more informed conversation on gender equality in cinema.
+# 141 mots
 
 More specifically, Movinder will address the following questions :
-* general questions.. je sèche j'avoue
-
-and more specifically, precised questions could be answered such as :
-* How does the name of a movie correlate with its genre, theme and mediatic success ?
-* How to produce the most economically profitable movie starting with a low budget ?
-* Does parity amongst the actors of a movie influence its success (economically, rating, global reach)
+* How are women kicksided in movies ?
+* Does the gender of the movie director influences the gender equity within actors ?
+* Does gender parity among actors influence a movie’s economic performance, ratings, and global reach ?
+* How does the gender of a movie director correlates with the role repartition between male and female actors ?
 
 The methods used will combine :
 1. data wrangling : epuration of the database by extracting and standardizing initial data files (detecting any missing, inconsistent or atypical data and applying accordingly resampling, deletion or transformation of data)
@@ -42,58 +41,7 @@ Organization within the team (internal milestones up until Milestone P3) :
 * week 13 - 90% of the Jupyter Notebook finished
 * week 14 - finishing touches, UX & Artistic Direction (design, colors etc)
 
-
-
-
-
-
-**villain**
-The Ultimate Super-Villain Guide
-
-The ADAlien, a curious alien coming from a peaceful and harmonious planet, dreams of conquering a new planet and is determined to master the art of villainy to do so. During his journey in space, he discovers an old videotape guide untitled : "The Ultimate Super-Villain Guide.". The guide gathers and exploits data provided by thousands of human-made movies, a famous race in the villain community. It does not only provide insight regarding classic villain attributes, actions, and concrete movie portrayal but also analyses in depth character data and actor-character combinations amongst others. This guide will help the ADAlien to become the villain he is destined to be and prepare it for any planetary encounter.
-
-The goal of this project is to understand what makes a good villain, in order for the ADAlien to adopt the most appropriate villain character for his space conquest.
-
-More specifically, the guide will help the ADALien address the following questions :
-* What are the main profiles of villain characters according to movie genres ?
-* How do the different combinations of actor-character correlate with specific movie genres or roles ?
-* Based on one’s individual information and movies preferences, which actor of the database could he/she impersonate ?
-
-
-
-Timeline :
-* until milestone 2 : individual exploration of the database
-* week 9 : sharing of findings and clear definition of roles & tasks (1 HMW 2 :) )
-* week 10 : individual work (& HMW 2 :) )
-* week 11 : sharing progress, redifining objectives / work distribution
-* week 12 : individual work
-* week 13 : individual work, pooling
-* week 14 : finishing touches
-
-Organization within the team (internal milestones up until Milestone P3) :
-* attribution of roles
-week 11 - first draft of the Jupyter Notebook (story telling included)
-
-
-UP TO 1000 WORDS
-
-Title
-
-Abstract: A 150 word description of the project idea and goals. What’s the motivation behind your project? What story would you like to tell, and why?
-
-Research Questions: A list of research questions you would like to address during the project.
-
-Proposed additional datasets (if any): List the additional dataset(s) you want to use (if any), and some ideas on how you expect to get, manage, process, and enrich it/them. Show us that you’ve read the docs and some examples, and that you have a clear idea on what to expect. Discuss data size and format if relevant. It is your responsibility to check that what you propose is feasible.
-
-Methods
-
-Proposed timeline
-
-Organization within the team: A list of internal milestones up until project Milestone P3.
-
-Questions for TAs (optional): Add here any questions you have for us related to the proposed project.
-
-When describing the relevant aspects of the data, and any other datasets you may intend to use, you should in particular show (non-exhaustive list):
+# 427 mots
 
 you have to show -
 That you can handle the data in its size.
