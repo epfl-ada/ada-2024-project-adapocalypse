@@ -5,7 +5,7 @@ Mov'She explores dynamics in the movie industry, focusing on gender representati
 Mov'She aims to raise awareness, promote the female impact over the movie industry and contribute to a more informed conversation on gender equality in cinema.
 # 141 mots
 
-More specifically, Movinder will address the following questions :
+More specifically, Mov'She will address the following questions :
 * How are women kicksided in movies ?
 * Does the gender of the movie director influences the gender equity within actors ?
 * Does gender parity among actors influence a movie’s economic performance, ratings, and global reach ?
@@ -42,6 +42,9 @@ Organization within the team (internal milestones up until Milestone P3) :
 * week 14 - finishing touches, UX & Artistic Direction (design, colors etc)
 
 # 427 mots
+
+Questions for the TAs :
+* we noticed that our dataset registers is a drastic drop of movies released after 2010, we think that might be because of lack of such recent data. Would it be possible to leave these data out of our analysis ?
 
 you have to show -
 That you can handle the data in its size.
