@@ -21,7 +21,8 @@
         "French": [
             "French Language",
             "Corsican Language",
-            "France"
+            "France",
+            "Picard Language"
         ],
         "Italian": [
             "Italian Language",
@@ -42,12 +43,21 @@
             "German Language",
             "Swiss German Language",
             "Deutsch",
-            "Dutch Language",
-            "Flemish language",
             "Frisian, Western Language",
-            "Scanian Language",
             "Plautdietsch Language",
             "Yiddish Language"
+        ],
+        "Scandinavian Languages": [
+            "Scanian Language",
+            "Swedish Language",
+            "Danish Language",
+            "Norwegian Language",
+            "Saami, North Language",
+            "Icelandic Language"
+        ],
+        "Dutch": [
+            "Dutch Language",
+            "Flemish language"
         ],
         "Luxembourgish": [
             "Luxembourgish language"
@@ -60,7 +70,6 @@
             "Chinese language",
             "Chinese, Hakka Language",
             "Chinese, Jinyu Language",
-            "Taiwanese",
             "Shanghainese",
             "Guanzhong Hua",
             "Hokkien",
@@ -70,7 +79,12 @@
             "Shanxi",
             "Teochew",
             "Burmese Language",
-            "Dzongkha Language"
+            "Dzongkha Language",
+            "Hmong language"
+        ],
+        "Taiwanese": [
+            "Taiwanese Language",
+            "Taiwanese"  
         ],
         "Japanese": [
             "Japanese Language",
@@ -92,7 +106,10 @@
             "Aceh Language",
             "Thai, Northeastern Language",
             "Thai Language",
-            "Sinhala Language"
+            "Sinhala Language",
+            "Banyumasan language",
+            "Tok Pisin Language",
+            "Hiligaynon language"
         ],
         "Middle Eastern and Central Asian Languages": [
             "Persian Language",
@@ -110,7 +127,8 @@
             "Crow Language",
             "Georgian Language",
             "Tamang language",
-            "Chechen Language"
+            "Chechen Language",
+            "Mongolian language"
         ],
         "Indian": [
             "Hindi Language",
@@ -130,12 +148,18 @@
             "Hariyani",
             "Haryanvi Language",
             "Awadhi Language",
-            "Nepali Language",
-            "Armenian Language",
             "Hindustani language",
             "Urdu Language",
-            "Tulu Language"
+            "Tulu Language",
+            "Romani language"
         ],
+        "Nepali": [
+            "Nepali Language"
+        ],
+        "Armenian": [
+            "Armenian Language"
+        ],
+
         "Baltic Languages": [
             "Lithuanian language"
         ],
@@ -162,20 +186,8 @@
             "Aramaic language",
             "Assyrian Neo-Aramaic Language",
             "Assyrian language",
-            "Judeo-Georgian Language"
-        ],
-        "Swedish": [
-            "Swedish Language"
-        ],
-        "Danish": [
-            "Danish Language"
-        ],
-        "Norwegian": [
-            "Norwegian Language",
-            "Saami, North Language"
-        ],
-        "Icelandic": [
-            "Icelandic Language"
+            "Judeo-Georgian Language",
+            "Chadian Arabic"
         ],
         "Finnish": [
             "Finnish Language"
@@ -245,7 +257,12 @@
             "Sami languages",
             "Australian Aboriginal Pidgin English",
             "Aboriginal Malay languages",
-            "Apache, Western Language"
+            "Apache, Western Language",
+            "Maya, Yucatán Language",
+            "Quechua",
+            "Tzotzil language",
+            "Nahuatl languages",
+            "Kuna language"
         ],
         "Ancient Languages": [
             "Ancient Greek",
@@ -255,22 +272,10 @@
             "Latin Language",
             "Greek Language"
         ],
-        "Miscellaneous Languages": [
-            "Mongolian language",
-            "Maya, Yucatán Language",
-            "Quechua",
-            "Inuktitut",
-            "Hmong language",
-            "Romani language",
-            "Banyumasan language",
-            "Picard Language",
-            "Tok Pisin Language",
-            "Chadian Arabic",
-            "Tzotzil language",
-            "Hiligaynon language",
-            "Algonquin Language",
-            "Nahuatl languages",
-            "Kuna language"
+        
+        "North American Languages": [
+            "Inuktitut", 
+            "Algonquin Language" 
         ]
     },
     "Countries": {
@@ -278,7 +283,8 @@
             "United States of America"
         ],
         "India": [
-            "India"
+            "India",
+            "Malayalam Language"
         ],
         "United Kingdom": [
             "United Kingdom",
@@ -657,7 +663,6 @@
             "Childhood Drama",
             "Courtroom Drama",
             "Historical drama",
-            "Domestic Comedy",
             "Inspirational Drama",
             "Political drama",
             "Period piece",
@@ -668,7 +673,6 @@
             "Social problem film",
             "Addiction Drama",
             "Kitchen sink realism",
-            "Biographical film",
             "Legal drama",
             "Juvenile Delinquency Film",
             "Escape Film",
@@ -686,27 +690,28 @@
             "Film à clef",
             "Women in prison films"
         ],
+        "Holiday Movie": [
+            "Christmas movie",
+            "Holiday Film"
+        ],
         "Comedy": [
             "Humour",
             "Fan film",
+            "Domestic Comedy",
             "Heavenly Comedy",
-            "Holiday Film",
             "Political satire",
-            "Christmas movie",
             "Comedy",
             "Black comedy",
             "Romantic comedy",
             "Screwball comedy",
             "Comedy of manners",
             "Comedy-drama",
-            "Comedy horror",
             "Satire",
             "Slapstick",
             "Parody",
             "Stand-up comedy",
             "Workplace Comedy",
             "Domestic Comedy",
-            "Musical comedy",
             "Horror Comedy",
             "Comedy Thriller",
             "Absurdism",
@@ -714,7 +719,6 @@
             "Sex comedy",
             "Buddy film",
             "Buddy Picture",
-            "Sexploitation",
             "Gross out",
             "Comedy film",
             "Comedy Western",
@@ -728,11 +732,10 @@
             "Stoner film",
             "Media Satire",
             "Romantic comedy",
-            "Bollywood",
             "Mumblecore",
-            "Singing cowboy",
             "Comdedy",
-            "Ealing Comedies"
+            "Ealing Comedies",
+            "Action Comedy"
         ],
         "Adventure" : [
             "Adventure",
@@ -767,19 +770,20 @@
             "Prison escape",
             "Martial Arts Film",
             "Superhero movie",
-            "Action Comedy",
             "Adventure Comedy",
             "Doomsday film",
-            "Fantasy Drama",
             "Samurai cinema",
             "Wuxia",
-            "Fantasy Drama",
             "Chase Movie",
             "Doomsday film",
             "Ninja movie",
             "Biker Film",
             "Outlaw biker film",
-            "Outlaw"
+            "Outlaw",
+            "Extreme Sports",
+            "Glamorized Spy Film",
+            "Live action",
+            "Cavalry Film"
         ],
         "Thriller": [
             "Thriller",
@@ -817,7 +821,8 @@
             "Prison film",
             "Psychological horror",
             "Road-Horror",
-            "Psycho-biddy"
+            "Psycho-biddy",
+            "Comedy horror"
         ],
         "Romance": [
             "Romance Film",
@@ -900,7 +905,8 @@
             "Northern",
             "Samurai cinema",
             "Costume Adventure",
-            "Indian Western"
+            "Indian Western",
+            "Singing cowboy"
         ],
         "Music and Dance": [
             "Musical",
@@ -962,7 +968,10 @@
             "Education",
             "Archaeology",
             "Anthropology",
-            "Libraries and librarians"
+            "Libraries and librarians",
+            "Political cinema", 
+            "Journalism",
+            "Culture & Society"
         ],
         "Biographical and Real-Life Inspired": [
             "Biography",
@@ -976,32 +985,30 @@
             "Cult",
             "Experimental film",
             "Avant-garde",
-            "Indie",
             "Essay Film",
-            "Mumblecore",
             "Dogme 95",
-            "Black-and-white",
             "Existentialism",
-            "Political cinema",
-            "Film adaptation",
-            "Mumblecore"
+            "Fictional film",
+            "Ensemble Film",
+            "Point of view shot"
         ],
         "Artistic": [
             "Art film",
             "Essay Film",
-            "Dogme 95",
             "Expressionism",
             "Media Studies",
             "Surrealism",
             "Neorealism",
             "Language & Literature",
-            "Graphic & Applied Arts"
+            "Graphic & Applied Arts",
+            "Anthology"
         ],
         "Feminist" : [
             "Feminist Film"
         ],
         "Silent film":[
-            "Silent film"
+            "Silent film",
+            "Goat gland"
         ],
         "Black-and-white":[
             "Black-and-white"
@@ -1057,23 +1064,28 @@
             "Americana",
             "British New Wave",
             "Latino",
-            "Early Black Cinema"            
+            "Early Black Cinema",
+            "Bollywood",
+            "Indie",
+            "Filipino"         
+        ],
+        "Reboot": [
+            "Reboot",
+            "Remake",
+            "Film adaptation"
+        ],
+        "Short Film": [
+            "Short Film"
+        ],
+        "Theatrical Movie": [
+            "Roadshow theatrical release",
+            "Feature film",
+            "Filmed Play"
         ],
         "Other Genres": [
             "C-Movie",
             "Z movie",
-            "B-movie",
-            "Reboot",
-            "Fictional film",
-            "Goat gland",
-            "Roadshow theatrical release",
-            "Short Film",
-            "Remake",
-            "Feature film",
-            "Filmed Play",
-            "Ensemble Film",
-            "Point of view shot"
-            
+            "B-movie"
         ]
     }
 }
