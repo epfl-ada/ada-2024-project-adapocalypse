@@ -1,55 +1,99 @@
-# Mov'She
+## "Her Side Story" - Beyond the Bechdel Test: Studying How Women Are Put Aside in Cinema  
 
-Mov'She explores dynamics in the movie industry, focusing on gender representations. The projects invites users to step into the shoes of different movie-industry perspectives such as a movie director, an actor or a spectator to uncover how gender equity influences cinematic outcomes. Through an interactive user interface, our project provides insights regarding the evolution of gender representation regarding specific features such as the repartition of movie-female director and actresses, as well as the roles impersonated by female actors over time and accross the world. By focusing how gender representation in movies has evolved over time, particularly after specific female empowering events such as obtaining the right to vote or the #MeToo movement.
+### Abstract
 
-Mov'She aims to raise awareness, promote the female impact over the movie industry and contribute to a more informed conversation on gender equality in cinema.
-# 141 mots
+This project examines gender dynamics in cinema through the lens of the Bechdel Test, a metric introduced in 1985 by Alison Bechdel to assess female interaction in films. The Bechdel Test requires that a movie feature at least two named women who converse about something other than a man. While a simple benchmark, it uncovers significant gender disparities in films. This project aims to go beyond the test by exploring how women are represented through character tropes, roles, and narrative functions. We focus on how women are often sidelined, reduced to secondary characters, or defined by their relationships with men. By analyzing plot summaries and character features, this project identifies trends in female representation, tracking changes across genres and historical contexts. The goal is to uncover patterns of gender representation over time, spark discussions on gender equality, and advocate for more inclusive and balanced storytelling.
 
-More specifically, Mov'She will address the following questions :
-* How are women kicksided in movies ?
-* Does the gender of the movie director influences the gender equity within actors ?
-* Does gender parity among actors influence a movie’s economic performance, ratings, and global reach ?
-* How does the gender of a movie director correlates with the role repartition between male and female actors ?
+### Research Questions
 
-The methods used will combine :
-1. data wrangling : epuration of the database by extracting and standardizing initial data files (detecting any missing, inconsistent or atypical data and applying accordingly resampling, deletion or transformation of data)
-2. visual interactive representation of the analysis results
-* qualitative and quantitative univariable analysis (histograms, box plot, scatter plot, ...)
-* qualitative and quantitative multi-variable analysis (scatter plot, line plot, heatmap, ...)
-* applying transformation on the axes if necessary
-* displaying only essential data and expliciting the result for the audience
-3. statistical analysis using robust statistics, tests
-4. perform linear regression to build models and predictors
-5. ML techniques including decision trees
-6. sentiment analysis (?)
+"Her Side Story" will explore the following research questions:
 
-The tools used would be the following :
-* wikipedia-api python library, to access data regarding the budget of the movie and the awards the movie or its actors received thanks to it
-* interactive tools : (choose some amongst vega, vincent, bokeh, find other ?)
+1. How are women sidelined in movies, and in what ways are their roles limited or diminished within narratives?
+2. Does gender parity among actors influence a movie's economic performance, ratings, and global reach?
+3. How does the gender of a movie’s director influence the gender equity in the representation of actors, particularly women?
+4. How do character tropes related to women affect their narrative function and presence in films over time?
+5. What role does the Bechdel Test play in predicting a film's portrayal of gender roles, and how does it correlate with the critical and financial success of films?
 
-Timeline :
-* until milestone 2 : clear definition of the objectives, analysis steps of the database and individual exploration
-* week 10 : invidivual / pair work
-* week 11 : sharing progress, redifining objectives / work distribution
-* week 12 : individual / pair work
-* week 13 : individual / pair work, pooling
-* week 14 : finishing touches
+### Tools, Libraries, and Datasets
 
-Organization within the team (internal milestones up until Milestone P3) :
-* week 9 - clear objectives, roles and tasks
-* week 11 - first draft of the Jupyter Notebook (story telling included)
-* week 13 - 90% of the Jupyter Notebook finished
-* week 14 - finishing touches, UX & Artistic Direction (design, colors etc)
+#### Tools and Libraries
+- **Python Libraries**: Pandas, Matplotlib, Seaborn, Scikit-learn, NLTK, and Hugging Face’s transformers library for sentiment analysis.
+- **Visualization**: Interactive visualization libraries like Plotly and Dash will be used to create engaging data visualizations.
 
-# 427 mots
+#### Datasets
+- **CMU Movie Summaries Dataset**: this dataset contains the following files:
+  - **characters_metadata.tsv**  
+  - **movie_metadata.tsv**  
+  - **name_clusters.txt**  
+  - **plot_summaries.txt**  
+  - **tvtropes.clusters.txt**  
+  The dataset will serve as the primary data source for our analysis. We will extract and standardize information, focusing on character roles and plot summaries.
+  
+- **IMDb Ratings**: This dataset provides movie ratings, box office data, and other metrics. It will be used to explore correlations between gender representation and film performance.
+  
+- **Bechdel Test API**: This dataset provides information about whether films pass or fail the Bechdel Test. It is essential for assessing gender interaction trends and understanding the accuracy of the Bechdel Test as a predictor of gender equality in film.
+  
+- **First Name Dataset (Irvine Dataset)**: This dataset will help analyze how gendered names correlate with character roles, further enriching our analysis of how women are represented in film.
 
-Questions for the TAs :
-* we noticed that our dataset registers is a drastic drop of movies released after 2010, we think that might be because of lack of such recent data. Would it be possible to leave these data out of our analysis ?
+- **Sentiment Analysis Model**: We will use a pre-trained sentiment analysis model from Hugging Face’s transformers library to gauge the emotional tone of character descriptions and plot summaries.
 
-you have to show -
-That you can handle the data in its size.
-That you understand what’s in the data (formats, distributions, missing values, correlations, etc.).
-That you considered ways to enrich, filter, transform the data according to your needs.
-That you have a reasonable plan and ideas for methods you’re going to use, giving their essential mathematical details in the notebook.
-That your plan for analysis and communication is reasonable and sound, potentially discussing alternatives to your choices that you considered but dropped.
-We will evaluate this milestone according to how well these steps have been done and documented, the quality of the code and its documentation, the feasibility and critical awareness of the project. We will also evaluate this milestone according to how clear, reasonable, and well thought-through the project idea is. Please use the second milestone to really check with us that everything is in order with your project (idea, feasibility, etc.) before you advance too much with the final Milestone P3! There will be project office hours dedicated to helping you.
+#### Data Handling
+- Data will be extracted and pre-processed for consistency and completeness. Missing or inconsistent data will be handled through resampling, deletion, or transformation.
+- We will ensure the datasets are properly aligned for analysis by standardizing key features such as character names and movie metadata. Data wrangling techniques will be employed to merge the datasets, ensuring compatibility across sources.
+
+### Methods
+
+#### 1. Data Handling
+- **Data Wrangling**: The initial step involves cleaning and standardizing the datasets. We will detect missing or inconsistent data, which will be addressed by resampling or excluding incomplete entries. The focus will be on aligning the datasets with respect to key attributes such as character roles, plot descriptions, and genre classifications.
+
+#### 2. Data Visualization
+- **Univariable Analysis**: We will create histograms, box plots, and scatter plots to visualize the distribution of gender roles and their characteristics in films.
+- **Multivariable Analysis**: Scatter plots, line plots, and heatmaps will be used to visualize relationships between various factors, such as the presence of female characters, movie ratings, and box office performance.
+
+#### 3. Statistical Analysis
+- We will apply robust statistical methods to evaluate correlations, distributions, and outliers in the data, using t-tests and chi-square tests to examine the significance of our findings.
+
+#### 4. Predictive Modeling
+- **Linear Regression**: We will use linear regression models to predict gender equality in film based on certain features such as director gender, character roles, and plot summary attributes.
+
+#### 5. Machine Learning Techniques
+- **Decision Trees** and **Support Vector Machines (SVM)** will be employed to create models for classifying films based on their gender representation and to predict whether a film will pass or fail the Bechdel Test.
+
+#### 6. Sentiment Analysis
+- The sentiment of character descriptions and plot summaries will be analyzed using pre-trained sentiment models to assess how women’s roles are portrayed emotionally in the text.
+
+### Timeline
+
+**Week 9**:  
+- Define project objectives, establish roles, and determine the necessary datasets.
+
+**Week 10**:  
+- Begin individual exploration and data wrangling. Start preliminary analysis on the CMU Movie Summaries dataset.
+
+**Week 11**:  
+- Team collaboration to refine data handling steps. Work on initial visualizations and testing basic machine learning models.
+
+**Week 12**:  
+- Finalize data analysis and visualizations. Begin sentiment analysis on character descriptions and plot summaries.
+
+**Week 13**:  
+- Focus on predictive modeling and refining the analysis based on feedback. Pool results for final presentation.
+
+**Week 14**:  
+- Complete the final project notebook. Focus on styling, design, and integrating interactive visualizations.
+
+### Organization within the Team
+
+1. **Week 9**: Define clear objectives, roles, and tasks.
+2. **Week 11**: Deliver the first draft of the Jupyter notebook (including initial analysis and story narration).
+3. **Week 13**: Complete 90% of the Jupyter notebook with full analysis and predictions.
+4. **Week 14**: Finalize project, including presentation design, interactive visualizations, and ensure coherence across all components.
+
+### Questions for TAs
+
+- We’ve noticed a significant drop in the number of movies released after 2010 in our dataset. Could this be due to missing data for recent years? Would it be acceptable to exclude these years from our analysis or find supplementary sources?
+- Are there any known issues with integrating datasets like IMDb ratings with the CMU dataset? If so, how can we address potential discrepancies?
+
+---
+
+The **Methods** and **Tools, Libraries, and Datasets** sections have been swapped, and the additional datasets are now included in the **Tools, Libraries, and Datasets** section. Let me know if further modifications are needed!
