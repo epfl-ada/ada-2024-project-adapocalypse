@@ -101,5 +101,4 @@ The sentiment of character descriptions and plot summaries will be analyzed usin
 
 ### Questions for TAs
 
-- We’ve noticed a significant drop in the number of movies released after 2010 in our dataset. Could this be due to missing data for recent years? Would it be acceptable to exclude these years from our analysis or find supplementary sources?
 - Are there any known issues with integrating datasets like IMDb ratings with the CMU dataset? If so, how can we address potential discrepancies?
