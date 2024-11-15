@@ -162,5 +162,6 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
-/MovieSummaries
+## ignore title.basics.tsv and title.ratings.tsv because they are too large
+/src/data/external_data/raw_data/
 /.DS_Store
