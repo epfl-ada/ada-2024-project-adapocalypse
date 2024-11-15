@@ -50,18 +50,18 @@ Our project examines gender dynamics in cinema through the lens of the Bechdel T
   - used to recover missing gender in the character_metadata.tsv file
   - indirectly helps to analyze how genders correlate with character types
 
-#### Data Handling
-- Data will be extracted and pre-processed for consistency and completeness. Missing or inconsistent data will be handled through resampling, deletion or transformation.
-- Data wrangling techniques will be employed to merge the datasets and standardize it according to key features such as character names and movie metadata, ensuring compatibility across sources.
 
 ### Methods
 
-#### 1. Data Handling
-- **Data Wrangling**: The initial step involves cleaning and standardizing the data. First, one detects missing or inconsistent data in each dataset, by resampling or excluding incomplete (NaN) entries. The focus is set on aligning the datasets with respect to key attributes such as character tv tropes, character and actors respective names and genders, plots, and movie genres. Then, the data is further filtered in order to comply with the proposed additional datasets. This second step considerably reduces the size of the usable data, creating a more suitable dataset for our project. Finally, data is clustered ...
+#### 1. Data Handling & preprocessing
+- **Data Wrangling**: extraction, cleaning and standardization of the data
+- Focus on aligning the datasets with respect to key attributes such as character tv tropes, character and actors respective names and genders, plots, and movie genres
+- Data filtering to comply with the proposed additional datasets and assure compatibility across sources + reduction of the usable data size and 
+- Data clustering
 
 #### 2. Data Visualization
-- **Univariable Analysis**: use of data visualisation techniques (histograms, box and scatter plots...) to conduct a graphical analysis of the gender distribution of characters and actors.
-- **Multivariable Analysis**: further analysis to identify relationships between various factors (e.g. the presence of female characters, movie ratings, box office performance, etc...)
+**Univariable Analysis**: use of data visualisation techniques (histograms, box and scatter plots...) to conduct a graphical analysis of the gender distribution of characters and actors.
+**Multivariable Analysis**: further analysis to identify relationships between various factors (e.g. the presence of female characters, movie ratings, box office performance, etc...)
 
 #### 3. Data Description
 Robust statistical methods is used to evaluate correlations, distributions, and outliers in the data, using t-tests and chi-square tests to examine the significance of the findings.
@@ -109,7 +109,7 @@ The sentiment of character descriptions and plot summaries will be analyzed usin
 
 -**Coralie**: "movie metadata" analysis
 -**Juliette**: "movie metadata" analysis, project timeline management 
--**Mahlia**: "character metadata" analysis
+-**Mahlia**: "character metadata" analysis, "transformer" model analysis
 -**Maximilien**: "tvtropes" and "plot_summaries" analysis
 -**Pernelle**: "character metadata" managment of copywriting and visual/graphical web interface
 
