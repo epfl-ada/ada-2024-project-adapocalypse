@@ -19,9 +19,10 @@ Our project examines gender dynamics in cinema through the lens of the Bechdel T
 #### Tools and Libraries
 - **Python Libraries**:
   - **Pandas**
+  - **Numpy**
   - **Matplotlib**
   - **Seaborn** (display graphs)
-  - **json** (clustering movie languages, genres and countries-
+  - **json** (clustering movie languages, genres and countries)
   - **tqdm** (progression bar when running functions)
   - **collections** (Counter)
   - **Hugging Face’s transformers library** (sentiment analysis)
@@ -35,12 +36,16 @@ Our project examines gender dynamics in cinema through the lens of the Bechdel T
   - **name_clusters.txt**  
   - **plot_summaries.txt**  
   - **tvtropes.clusters.txt**  
-  The dataset will serve as the primary data source for our analysis. We will extract and standardize information, focusing on character roles and plot summaries.
 
 #### Proposed additional datasets
-- **IMDb Ratings**: This dataset provides movie ratings, box office data, and other metrics. It will be used to explore correlations between gender representation and film performance. It will also allow to reduce the initial dataset size, going from 81741 to ? movies.
-- **Bechdel Test API**: This dataset provides information about whether films pass or fail the Bechdel Test. It is essential for assessing gender interaction trends and understanding the accuracy of the Bechdel Test as a predictor of gender equality in film. This dataset provides Bechdel Test output for ? movies, drastically reducing dataset size. 
-- **Gender by name - UCI** : doi : 10.24432/C55G7X - acessible at: https://archive.ics.uci.edu/dataset/591/gender+by+name : providing names (both male and female) and associated gender, this dataset is used to recover missing gender in the character_metadata.tsv file.
+- **IMDb Ratings**:
+  - provides movie ratings and box office data
+  - reduces the initial dataset size by only keeping movies whose ratings are available
+- [**Bechdel Test API**]([url](https://bechdeltest.com/api/v1/doc)): This dataset
+  - provides Bechdel Test result ('rating') for a group of movies.
+  - drastically reduces primary dataset size
+  - essential for assessing gender interaction trends and understanding the accuracy of the Bechdel Test as a predictor of gender equality in film.
+- [**Gender by name - UCI** :](https://archive.ics.uci.edu/dataset/591/gender+by+name) doi : 10.24432/C55G7X - acessible at:  : providing names (both male and female) and associated gender, this dataset is used to recover missing gender in the character_metadata.tsv file.
 More globally, this dataset will help analyze how gendered names correlate with character roles, further enriching our analysis of how women are represented in film.
 - **Sentiment Analysis Model**: We will use a pre-trained sentiment analysis model from Hugging Face’s transformers library to gauge the emotional tone of character descriptions and plot summaries.
 
