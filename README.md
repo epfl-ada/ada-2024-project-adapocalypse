@@ -25,7 +25,7 @@ Our project examines gender dynamics in cinema through the lens of the Bechdel T
   - **json** (clustering movie languages, genres and countries)
   - **tqdm** (progression bar when running functions)
   - **collections** (Counter)
-  - **Hugging Face’s transformers library** (sentiment analysis)
+  - [**Hugging Face’s transformers library**](https://huggingface.co/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2) (sentiment analysis)
   
 - **Visualization**: Interactive visualization libraries (to be determined) will be used to create engaging data visualizations.
 
@@ -38,16 +38,17 @@ Our project examines gender dynamics in cinema through the lens of the Bechdel T
   - **tvtropes.clusters.txt**  
 
 #### Proposed additional datasets
-- **IMDb Ratings**:
+- [**IMDb Ratings**](https://datasets.imdbws.com/):
   - provides movie ratings and box office data
   - reduces the initial dataset size by only keeping movies whose ratings are available
-- [**Bechdel Test API**]([url](https://bechdeltest.com/api/v1/doc)): This dataset
+- [**Bechdel Test API**](https://bechdeltest.com/api/v1/doc): This dataset
   - provides Bechdel Test result ('rating') for a group of movies.
   - drastically reduces primary dataset size
   - essential for assessing gender interaction trends and understanding the accuracy of the Bechdel Test as a predictor of gender equality in film.
-- [**Gender by name - UCI** :](https://archive.ics.uci.edu/dataset/591/gender+by+name) doi : 10.24432/C55G7X - acessible at:  : providing names (both male and female) and associated gender, this dataset is used to recover missing gender in the character_metadata.tsv file.
-More globally, this dataset will help analyze how gendered names correlate with character roles, further enriching our analysis of how women are represented in film.
-- **Sentiment Analysis Model**: We will use a pre-trained sentiment analysis model from Hugging Face’s transformers library to gauge the emotional tone of character descriptions and plot summaries.
+- [**Gender by name - UCI** :](https://archive.ics.uci.edu/dataset/591/gender+by+name)
+  - provides a wide range of first names and associated gender
+  - used to recover missing gender in the character_metadata.tsv file
+  - indirectly helps to analyze how gendered names correlate with character types
 
 #### Data Handling
 - Data will be extracted and pre-processed for consistency and completeness. Missing or inconsistent data will be handled through resampling, deletion, or transformation.
