@@ -78,26 +78,35 @@ The sentiment of character descriptions and plot summaries will be analyzed usin
 
 ### Timeline
 
-**Week 9**:  
-- Define project objectives, establish roles, and determine the necessary datasets.
+**Until week 9**:
+- Individual exploration and data wrangling
+- Preliminary analysis on the CMU Movie Summaries dataset
+- Definition of project objectives, allocation of tasks and delineation of additional datasets
 **Week 10**:  
-- Begin individual exploration and data wrangling. Start preliminary analysis on the CMU Movie Summaries dataset.
+- further data wrangling
+- analysis on the preprocessed data
 **Week 11**:  
-- Team collaboration to refine data handling steps. Work on initial visualizations and testing basic machine learning models.
+- Team collaboration in order refine data handling steps
+- Work on initial visualizations and testing basic machine learning models
+- Creation of web interface, work on storytelling and interactive features
 **Week 12**:  
-- Finalize data analysis and visualizations. Begin sentiment analysis on character descriptions and plot summaries.
+- Finalization of data analysis and visualizations.
+- Sentiment analysis on character descriptions and plot summaries
+- Further work on web interface structure, improvment of interactivness 
 **Week 13**:  
-- Focus on predictive modeling and refining the analysis based on feedback. Pool results for final presentation.
+- Focus on predictive modeling and refining the analysis based on feedback
+- Final touches on interface
 **Week 14**:  
-- Complete the final project notebook. Focus on styling, design, and integrating interactive visualizations.
+- Completion of the final project notebook
+- Focus on styling, design, and content proofreading
 
 
 ### Organization within the Team
 
-1. **Week 9**: Define clear objectives, roles, and tasks.
-2. **Week 11**: Deliver the first draft of the Jupyter notebook (including initial analysis and story narration).
+1. **Until week 9**: Define clear objectives, roles, and tasks.
+2. **Week 10**: Deliver the first draft of the Jupyter notebook (including key objectives and initial analysis).
 3. **Week 13**: Complete 90% of the Jupyter notebook with full analysis and predictions.
-4. **Week 14**: Finalize project, including presentation design, interactive visualizations, and ensure coherence across all components.
+4. **Week 14**: Finalize project, including interface design and interactive visualizations.
 
 ### Questions for TAs
 
