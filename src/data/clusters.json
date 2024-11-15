@@ -916,7 +916,8 @@
             "Music",
             "Concert film",
             "Hip hop movies",
-            "Film-Opera"
+            "Film-Opera",
+            "Punk rock"
         ],
         "Children's Films":[
             "Children's",
@@ -971,28 +972,39 @@
             "Hagiography",
             "Sports"
         ],
-        "Cult and Independent": [
+        "Independent": [
             "Cult",
             "Experimental film",
-            "Indie",
-            "Art film",
             "Avant-garde",
+            "Indie",
             "Essay Film",
             "Mumblecore",
             "Dogme 95",
-            "Punk rock",
-            "Silent film",
-            "Feminist Film",
             "Black-and-white",
             "Existentialism",
             "Political cinema",
-            "Expressionism",
             "Film adaptation",
+            "Mumblecore"
+        ],
+        "Artistic": [
+            "Art film",
+            "Essay Film",
+            "Dogme 95",
+            "Expressionism",
             "Media Studies",
             "Surrealism",
             "Neorealism",
             "Language & Literature",
             "Graphic & Applied Arts"
+        ],
+        "Feminist" : [
+            "Feminist Film"
+        ],
+        "Silent film":[
+            "Silent film"
+        ],
+        "Black-and-white":[
+            "Black-and-white"
         ],
         "War and Military": [
             "War film",
