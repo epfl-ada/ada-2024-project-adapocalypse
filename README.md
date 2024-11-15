@@ -8,19 +8,25 @@ This project examines gender dynamics in cinema through the lens of the Bechdel 
 
 "Her Side Story" will explore the following research questions:
 
-1. How are women sidelined in movies, and in what ways are their roles limited or diminished within narratives?
+1. How are women sidelined in movies?
 2. Does gender parity among actors influence a movie's economic performance, ratings, and global reach?
-3. How does the gender of a movie’s director influence the gender equity in the representation of actors, particularly women?
-4. How do character tropes related to women affect their narrative function and presence in films over time?
-5. What role does the Bechdel Test play in predicting a film's portrayal of gender roles, and how does it correlate with the critical and financial success of films?
+3. How do character tropes related to women affect their narrative function and presence in films over time?
+4. How does the gender of a movie’s director influence the gender equity in the representation of actors, particularly women?
+5. What role does the Bechdel Test play in predicting a film's representation of genders, and how does it correlate with the critical and financial success of films?
 
 ### Tools, Libraries, and Datasets
 
 #### Tools and Libraries
-- **Python Libraries**: Pandas, Matplotlib, Seaborn, Scikit-learn, NLTK, and Hugging Face’s transformers library for sentiment analysis.
-- **Visualization**: Interactive visualization libraries like Plotly and Dash will be used to create engaging data visualizations.
+- **Python Libraries**: P
+  - **Pandas**
+  - **Matplotlib**
+  - **Seaborn**
+  - **Scikit-learn**
+  - **Hugging Face’s transformers library** (sentiment analysis)
+  
+- **Visualization**: Interactive visualization libraries (to be determined) will be used to create engaging data visualizations.
 
-#### Datasets
+#### Main dataset
 - **CMU Movie Summaries Dataset**: this dataset contains the following files:
   - **characters_metadata.tsv**  
   - **movie_metadata.tsv**  
@@ -28,13 +34,11 @@ This project examines gender dynamics in cinema through the lens of the Bechdel 
   - **plot_summaries.txt**  
   - **tvtropes.clusters.txt**  
   The dataset will serve as the primary data source for our analysis. We will extract and standardize information, focusing on character roles and plot summaries.
-  
-- **IMDb Ratings**: This dataset provides movie ratings, box office data, and other metrics. It will be used to explore correlations between gender representation and film performance.
-  
-- **Bechdel Test API**: This dataset provides information about whether films pass or fail the Bechdel Test. It is essential for assessing gender interaction trends and understanding the accuracy of the Bechdel Test as a predictor of gender equality in film.
-  
-- **First Name Dataset (Irvine Dataset)**: This dataset will help analyze how gendered names correlate with character roles, further enriching our analysis of how women are represented in film.
 
+#### Proposed additional datasets
+- **IMDb Ratings**: This dataset provides movie ratings, box office data, and other metrics. It will be used to explore correlations between gender representation and film performance. It will also allow to reduce the initial dataset size, going from 81741 to ? movies.
+- **Bechdel Test API**: This dataset provides information about whether films pass or fail the Bechdel Test. It is essential for assessing gender interaction trends and understanding the accuracy of the Bechdel Test as a predictor of gender equality in film. This dataset provides Bechdel Test output for ? movies, drastically reducing dataset size. 
+- **First Name Dataset (Irvine Dataset)**: This dataset will help analyze how gendered names correlate with character roles, further enriching our analysis of how women are represented in film.
 - **Sentiment Analysis Model**: We will use a pre-trained sentiment analysis model from Hugging Face’s transformers library to gauge the emotional tone of character descriptions and plot summaries.
 
 #### Data Handling
