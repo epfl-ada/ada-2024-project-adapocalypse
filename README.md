@@ -78,28 +78,32 @@ The sentiment of character descriptions and plot summaries will be analyzed usin
 
 ### Timeline
 
--**Until week 9**:
+**Until week 9**:
   - Individual exploration and data wrangling
   - Preliminary analysis on the CMU Movie Summaries dataset
   - Definition of project objectives, allocation of tasks and delineation of additional datasets
--**Week 10**:  
+
+**Week 10**:  
   - further data wrangling
   - analysis on the preprocessed data
--**Week 11**:  
+
+**Week 11**:  
   - Team collaboration in order refine data handling steps
   - Work on initial visualizations and testing basic machine learning models
   - Creation of web interface, work on storytelling and interactive features
--**Week 12**:  
+
+**Week 12**:  
   - Finalization of data analysis and visualizations.
   - Sentiment analysis on character descriptions and plot summaries
   - Further work on web interface structure, improvment of interactivness 
--**Week 13**:  
+
+**Week 13**:  
   - Focus on predictive modeling and refining the analysis based on feedback
   - Final touches on interface
--**Week 14**:  
+
+**Week 14**:  
   - Completion of the final project notebook
   - Focus on styling, design, and content proofreading
-
 
 ### Organization within the Team
 
