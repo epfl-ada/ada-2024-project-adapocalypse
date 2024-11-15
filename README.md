@@ -20,11 +20,10 @@ Our project examines gender dynamics in cinema through the lens of the Bechdel T
 - **Python Libraries**:
   - **Pandas**
   - **Matplotlib**
-  - **Seaborn**
-  - **json**
-  - **tqdm**
-  - **collections**
-  - **Scikit-learn**
+  - **Seaborn** (display graphs)
+  - **json** (clustering movie languages, genres and countries-
+  - **tqdm** (progression bar when running functions)
+  - **collections** (Counter)
   - **Hugging Face’s transformers library** (sentiment analysis)
   
 - **Visualization**: Interactive visualization libraries (to be determined) will be used to create engaging data visualizations.
