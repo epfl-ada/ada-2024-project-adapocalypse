@@ -60,9 +60,9 @@ Our project examines gender dynamics in cinema through the lens of the Bechdel T
 - Data clustering
 
 #### 2. Data Visualization
-**Univariable Analysis**: use of data visualisation techniques (histograms, box and scatter plots...) to conduct a graphical analysis of the gender distribution of characters and actors.
+- **Univariable Analysis**: use of data visualisation techniques (histograms, box and scatter plots...) to conduct a graphical analysis of the gender distribution of characters and actors.
 
-**Multivariable Analysis**: further analysis to identify relationships between various factors (e.g. the presence of female characters, movie ratings, box office performance, etc...)
+- **Multivariable Analysis**: further analysis to identify relationships between various factors (e.g. the presence of female characters, movie ratings, box office performance, etc...)
 
 #### 3. Data Description
 Robust statistical methods is used to evaluate correlations, distributions, and outliers in the data, using t-tests and chi-square tests to examine the significance of the findings.
@@ -71,8 +71,8 @@ Robust statistical methods is used to evaluate correlations, distributions, and 
 Sensitivity analysis is performed to evaluate result uncertainty and assess model feasibility.
 
 #### 5. Learning From Data
-**Predictive Modeling**: use of linear regression models to predict gender equality in film based on certain features such as character roles (tv tropes),genres and plot summary attributes.
-**Machine Learning Techniques**: techniques such as Decision Trees and Support Vector Machines (SVM) (to be determined) will be employed to create models for classifying films based on their gender representation and to predict whether a film will pass or fail the Bechdel Test.
+- **Predictive Modeling**: use of linear regression models to predict gender equality in film based on certain features such as character roles (tv tropes),genres and plot summary attributes.
+- **Machine Learning Techniques**: techniques such as Decision Trees and Support Vector Machines (SVM) (to be determined) will be employed to create models for classifying films based on their gender representation and to predict whether a film will pass or fail the Bechdel Test.
 
 #### 6. Sentiment Analysis
 The sentiment of character descriptions and plot summaries will be analyzed using pre-trained sentiment models to assess how women’s roles are portrayed physically and emotionally.
