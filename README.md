@@ -2,7 +2,7 @@
 
 ### Abstract
 
-This project examines gender dynamics in cinema through the lens of the Bechdel Test, a metric introduced in 1985 by Alison Bechdel to assess female interaction in films. The Bechdel Test requires that a movie feature at least two named women who converse about something other than a man. While a simple benchmark, it uncovers significant gender disparities in films. This project aims to go beyond the test by exploring how women are represented through character tropes, roles, and narrative functions. We focus on how women are often sidelined, reduced to secondary characters, or defined by their relationships with men. By analyzing plot summaries and character features, this project identifies trends in female representation, tracking changes across genres and historical contexts. The goal is to uncover patterns of gender representation over time, spark discussions on gender equality, and advocate for more inclusive and balanced storytelling.
+Our project examines gender dynamics in cinema through the lens of the Bechdel Test, a metric introduced in 1985 by Alison Bechdel to assess female interaction in films. The Bechdel Test requires that a movie feature at least two named women who converse about something other than a man. While a simple benchmark, it uncovers significant gender disparities in films. This project aims to go beyond the test by exploring how women are represented through character tropes, roles, and narrative functions. We focus on how women are often sidelined, reduced to their appeareance, or defined by their relationships with men. By analyzing plot summaries and character features, this project identifies trends in female representation, tracking changes across genres and historical contexts. Our goal is to uncover patterns of gender representation over time, spark discussions on gender equality, and advocate for more inclusive and balanced storytelling.
 
 ### Research Questions
 
@@ -21,6 +21,9 @@ This project examines gender dynamics in cinema through the lens of the Bechdel 
   - **Pandas**
   - **Matplotlib**
   - **Seaborn**
+  - **json**
+  - **tqdm**
+  - **collections**
   - **Scikit-learn**
   - **Hugging Face’s transformers library** (sentiment analysis)
   
