@@ -61,6 +61,7 @@ Our project examines gender dynamics in cinema through the lens of the Bechdel T
 
 #### 2. Data Visualization
 **Univariable Analysis**: use of data visualisation techniques (histograms, box and scatter plots...) to conduct a graphical analysis of the gender distribution of characters and actors.
+
 **Multivariable Analysis**: further analysis to identify relationships between various factors (e.g. the presence of female characters, movie ratings, box office performance, etc...)
 
 #### 3. Data Description
