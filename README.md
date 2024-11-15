@@ -60,40 +60,37 @@ Our project examines gender dynamics in cinema through the lens of the Bechdel T
 - **Data Wrangling**: The initial step involves cleaning and standardizing the data. First, one detects missing or inconsistent data in each dataset, by resampling or excluding incomplete (NaN) entries. The focus is set on aligning the datasets with respect to key attributes such as character tv tropes, character and actors respective names and genders, plots, and movie genres. Then, the data is further filtered in order to comply with the proposed additional datasets. This second step considerably reduces the size of the usable data, creating a more suitable dataset for our project. Finally, data is clustered ...
 
 #### 2. Data Visualization
-- **Univariable Analysis**: We will create histograms, box plots, and scatter plots to visualize the distribution of gender roles and their characteristics in films.
-- **Multivariable Analysis**: Scatter plots, line plots, and heatmaps will be used to visualize relationships between various factors, such as the presence of female characters, movie ratings, and box office performance.
+- **Univariable Analysis**: use of data visualisation techniques (histograms, box and scatter plots) to conduct a graphical analysis of the gender distribution of characters and actors.
+- **Multivariable Analysis**: further analysis to identify relationships between various factors (e.g. the presence of female characters, movie ratings, box office performance, etc...)
 
-#### 3. Statistical Analysis
-- We will apply robust statistical methods to evaluate correlations, distributions, and outliers in the data, using t-tests and chi-square tests to examine the significance of our findings.
+#### 3. Data Description
+Robust statistical methods is used to evaluate correlations, distributions, and outliers in the data, using t-tests and chi-square tests to examine the significance of the findings.
 
-#### 4. Predictive Modeling
-- **Linear Regression**: We will use linear regression models to predict gender equality in film based on certain features such as director gender, character roles, and plot summary attributes.
+#### 4. Causal Analysis
+Sensitivity analysis is performed to evaluate result uncertainty and assess model feasibility.
 
-#### 5. Machine Learning Techniques
-- **Decision Trees** and **Support Vector Machines (SVM)** will be employed to create models for classifying films based on their gender representation and to predict whether a film will pass or fail the Bechdel Test.
+#### 5. Learning From Data
+**Predictive Modeling**: use of linear regression models to predict gender equality in film based on certain features such as character roles (tv tropes),genres and plot summary attributes.
+**Machine Learning Techniques**: techniques such as Decision Trees and Support Vector Machines (SVM) (to be determined) will be employed to create models for classifying films based on their gender representation and to predict whether a film will pass or fail the Bechdel Test.
 
 #### 6. Sentiment Analysis
-- The sentiment of character descriptions and plot summaries will be analyzed using pre-trained sentiment models to assess how women’s roles are portrayed emotionally in the text.
+The sentiment of character descriptions and plot summaries will be analyzed using pre-trained sentiment models to assess how women’s roles are portrayed physically and emotionally.
 
 ### Timeline
 
 **Week 9**:  
 - Define project objectives, establish roles, and determine the necessary datasets.
-
 **Week 10**:  
 - Begin individual exploration and data wrangling. Start preliminary analysis on the CMU Movie Summaries dataset.
-
 **Week 11**:  
 - Team collaboration to refine data handling steps. Work on initial visualizations and testing basic machine learning models.
-
 **Week 12**:  
 - Finalize data analysis and visualizations. Begin sentiment analysis on character descriptions and plot summaries.
-
 **Week 13**:  
 - Focus on predictive modeling and refining the analysis based on feedback. Pool results for final presentation.
-
 **Week 14**:  
 - Complete the final project notebook. Focus on styling, design, and integrating interactive visualizations.
+
 
 ### Organization within the Team
 
@@ -106,7 +103,3 @@ Our project examines gender dynamics in cinema through the lens of the Bechdel T
 
 - We’ve noticed a significant drop in the number of movies released after 2010 in our dataset. Could this be due to missing data for recent years? Would it be acceptable to exclude these years from our analysis or find supplementary sources?
 - Are there any known issues with integrating datasets like IMDb ratings with the CMU dataset? If so, how can we address potential discrepancies?
-
----
-
-The **Methods** and **Tools, Libraries, and Datasets** sections have been swapped, and the additional datasets are now included in the **Tools, Libraries, and Datasets** section. Let me know if further modifications are needed!
