@@ -40,7 +40,7 @@ Our project examines gender dynamics in cinema through the lens of the Bechdel T
 #### Proposed additional datasets
 - **IMDb Ratings**: This dataset provides movie ratings, box office data, and other metrics. It will be used to explore correlations between gender representation and film performance. It will also allow to reduce the initial dataset size, going from 81741 to ? movies.
 - **Bechdel Test API**: This dataset provides information about whether films pass or fail the Bechdel Test. It is essential for assessing gender interaction trends and understanding the accuracy of the Bechdel Test as a predictor of gender equality in film. This dataset provides Bechdel Test output for ? movies, drastically reducing dataset size. 
-- **Gender by name - UCI : doi : 10.24432/C55G7X - acessible at: https://archive.ics.uci.edu/dataset/591/gender+by+name : providing names (both male and female) and associated gender, this dataset is used to recover missing gender in the character_metadata.tsv file.
+- **Gender by name - UCI** : doi : 10.24432/C55G7X - acessible at: https://archive.ics.uci.edu/dataset/591/gender+by+name : providing names (both male and female) and associated gender, this dataset is used to recover missing gender in the character_metadata.tsv file.
 More globally, this dataset will help analyze how gendered names correlate with character roles, further enriching our analysis of how women are represented in film.
 - **Sentiment Analysis Model**: We will use a pre-trained sentiment analysis model from Hugging Face’s transformers library to gauge the emotional tone of character descriptions and plot summaries.
 
@@ -51,7 +51,7 @@ More globally, this dataset will help analyze how gendered names correlate with 
 ### Methods
 
 #### 1. Data Handling
-- **Data Wrangling**: The initial step involves cleaning and standardizing the datasets. We will detect missing or inconsistent data, which will be addressed by resampling or excluding incomplete entries. The focus will be on aligning the datasets with respect to key attributes such as character roles, plot descriptions, and genre classifications.
+- **Data Wrangling**: The initial step involves cleaning and standardizing the data. First, one detects missing or inconsistent data in each dataset, by resampling or excluding incomplete (NaN) entries. The focus is set on aligning the datasets with respect to key attributes such as character tv tropes, character and actors respective names and genders, plots, and movie genres. Then, the data is further filtered in order to comply with the proposed additional datasets. This second step considerably reduces the size of the usable data, creating a more suitable dataset for our project. Finally, data is clustered ...
 
 #### 2. Data Visualization
 - **Univariable Analysis**: We will create histograms, box plots, and scatter plots to visualize the distribution of gender roles and their characteristics in films.
