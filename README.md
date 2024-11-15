@@ -11,8 +11,8 @@ Our project examines gender dynamics in cinema through the lens of the Bechdel T
 1. How are women sidelined in movies?
 2. Does gender parity among actors influence a movie's economic performance, ratings, and global reach?
 3. How do character tropes related to women affect their narrative function and presence in films over time?
-4. How does the gender of a movie’s director influence the gender equity in the representation of actors, particularly women?
-5. What role does the Bechdel Test play in predicting a film's representation of genders, and how does it correlate with the critical and financial success of films?
+4. How does the gender of a movie director influence gender equity in a movie ?
+5. What role does the Bechdel Test play in predicting cinematic gender representation, and how does it correlate with mediatic and financial success ?
 
 ### Tools, Libraries, and Datasets
 
@@ -27,10 +27,10 @@ Our project examines gender dynamics in cinema through the lens of the Bechdel T
   - **collections** (Counter)
   - [**Hugging Face’s transformers library**](https://huggingface.co/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2) (sentiment analysis)
   
-- **Visualization**: Interactive visualization libraries (to be determined) will be used to create engaging data visualizations.
+- **Visualization**: Interactive visualization libraries (to be determined)
 
 #### Main dataset
-- **CMU Movie Summaries Dataset**: this dataset contains the following files:
+- **CMU Movie Summaries Dataset**: contains the following files:
   - **characters_metadata.tsv**  
   - **movie_metadata.tsv**  
   - **name_clusters.txt**  
@@ -48,11 +48,11 @@ Our project examines gender dynamics in cinema through the lens of the Bechdel T
 - [**Gender by name - UCI** :](https://archive.ics.uci.edu/dataset/591/gender+by+name)
   - provides a wide range of first names and associated gender
   - used to recover missing gender in the character_metadata.tsv file
-  - indirectly helps to analyze how gendered names correlate with character types
+  - indirectly helps to analyze how genders correlate with character types
 
 #### Data Handling
-- Data will be extracted and pre-processed for consistency and completeness. Missing or inconsistent data will be handled through resampling, deletion, or transformation.
-- We will ensure the datasets are properly aligned for analysis by standardizing key features such as character names and movie metadata. Data wrangling techniques will be employed to merge the datasets, ensuring compatibility across sources.
+- Data will be extracted and pre-processed for consistency and completeness. Missing or inconsistent data will be handled through resampling, deletion or transformation.
+- Data wrangling techniques will be employed to merge the datasets and standardize it according to key features such as character names and movie metadata, ensuring compatibility across sources.
 
 ### Methods
 
@@ -60,7 +60,7 @@ Our project examines gender dynamics in cinema through the lens of the Bechdel T
 - **Data Wrangling**: The initial step involves cleaning and standardizing the data. First, one detects missing or inconsistent data in each dataset, by resampling or excluding incomplete (NaN) entries. The focus is set on aligning the datasets with respect to key attributes such as character tv tropes, character and actors respective names and genders, plots, and movie genres. Then, the data is further filtered in order to comply with the proposed additional datasets. This second step considerably reduces the size of the usable data, creating a more suitable dataset for our project. Finally, data is clustered ...
 
 #### 2. Data Visualization
-- **Univariable Analysis**: use of data visualisation techniques (histograms, box and scatter plots) to conduct a graphical analysis of the gender distribution of characters and actors.
+- **Univariable Analysis**: use of data visualisation techniques (histograms, box and scatter plots...) to conduct a graphical analysis of the gender distribution of characters and actors.
 - **Multivariable Analysis**: further analysis to identify relationships between various factors (e.g. the presence of female characters, movie ratings, box office performance, etc...)
 
 #### 3. Data Description
@@ -84,11 +84,11 @@ The sentiment of character descriptions and plot summaries will be analyzed usin
   - Definition of project objectives, allocation of tasks and delineation of additional datasets
 
 **Week 10**:  
-  - further data wrangling
-  - analysis on the preprocessed data
+  - Further data wrangling
+  - Analysis on the preprocessed data
 
 **Week 11**:  
-  - Team collaboration in order refine data handling steps
+  - Team collaboration in order to refine data handling steps
   - Work on initial visualizations and testing basic machine learning models
   - Creation of web interface, work on storytelling and interactive features
 
@@ -107,10 +107,11 @@ The sentiment of character descriptions and plot summaries will be analyzed usin
 
 ### Organization within the Team
 
-1. **Until week 9**: Define clear objectives, roles, and tasks.
-2. **Week 10**: Deliver the first draft of the Jupyter notebook (including key objectives and initial analysis).
-3. **Week 13**: Complete 90% of the Jupyter notebook with full analysis and predictions.
-4. **Week 14**: Finalize project, including interface design and interactive visualizations.
+-**Coralie**: "movie metadata" analysis
+-**Juliette**: "movie metadata" analysis, project timeline management 
+-**Mahlia**: "character metadata" analysis
+-**Maximilien**: "tvtropes" and "plot_summaries" analysis
+-**Pernelle**: "character metadata" managment of copywriting and visual/graphical web interface
 
 ### Questions for TAs
 
