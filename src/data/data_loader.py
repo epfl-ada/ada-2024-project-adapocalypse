@@ -1,4 +1,6 @@
 import pandas as pd
+import requests
+from bs4 import BeautifulSoup
 
 def load_movies_metadata(DATA_FOLDER_PATH):
     movies_metadata_df = pd.read_csv(DATA_FOLDER_PATH+'movie.metadata.tsv', sep='\t', header=None, 
@@ -31,3 +33,8 @@ def load_name_clusters(DATA_FOLDER_PATH):
     names_df = pd.read_csv(DATA_FOLDER_PATH+'name.clusters.txt', sep='\t', header=None, 
                     names=['Cluster_name', 'Char_actor_id'])
     return names_df
+
+def load_movies_director(DATA_FOLDER_PATH):
+    movies_director_df = pd.read_csv(DATA_FOLDER_PATH+'movies_director.csv', header=None, 
+                    names=['wikipedia_movie_id', 'director_name', 'gender'])
+    return movies_director_df[1:]

@@ -1,4 +1,6 @@
 import pandas as pd
+from tqdm import tqdm
+from bs4 import BeautifulSoup
 
 
 def get_gender_from_name(name, name_gender_df):
@@ -168,3 +170,83 @@ def process_imdb_ratings(cmu_df):
     imdb_in_cmu.to_csv("data/imdb_ratings.csv", index=False)
     
     return imdb_in_cmu
+
+
+def get_wikipedia_infobox_by_id(page_id):
+    # Define the URL for accessing the Wikipedia page via the page ID
+    url = f"https://en.wikipedia.org/w/api.php?action=parse&pageid={page_id}&format=json"
+    headers = {
+        "User-Agent": "MyWikipediaApp/1.0 (contact@example.com)"  # Update with your information
+    }
+    
+    # Make a request to the Wikipedia API
+    response = requests.get(url, headers=headers)
+    
+    if response.status_code != 200:
+        print("Error: Could not retrieve page.")
+        return None
+
+    # Parse the JSON response
+    json_data = response.json()
+
+    # Check if the "parse" key is in the response (indicating successful retrieval)
+    if "parse" not in json_data:
+        print("Error: Page data not found in response.")
+        return None
+
+    # Get the HTML content of the page
+    html_content = json_data["parse"]["text"]["*"]
+
+    # Use BeautifulSoup to parse the HTML and find the infobox
+    soup = BeautifulSoup(html_content, 'html.parser')
+    infobox = soup.find('table', {'class': 'infobox'})
+
+    # Extract data from the infobox if it exists
+    if infobox:
+        infobox_data = {}
+        
+        # Go through each row in the infobox table
+        for row in infobox.find_all('tr'):
+            header = row.find('th')
+            data = row.find('td')
+            
+            if header and data:
+                header_text = header.get_text(" ", strip=True)
+                data_text = data.get_text(" ", strip=True)
+                infobox_data[header_text] = data_text
+        return infobox_data
+    else:
+        print("No infobox found on the page.")
+        return None
+    
+def attribute_gender_to_dir(name_dir, gender_db):
+    current_best_prob = 0
+    gender = None
+    if type(name_dir)!=str:
+        name_dir = str(name_dir)
+    for string in name_dir.split():
+        if string in gender_db['Name'].values :
+            prob_str = gender_db[gender_db['Name'] == string]['Probability'].values[0]
+            if prob_str > current_best_prob:
+                current_best_prob = prob_str
+                gender = gender_db[gender_db['Name'] == string]['Gender'].values[0]
+    return gender
+
+def get_director_name_and_gender():
+    # extract second colomn from data/imdb_ratings.csv
+    wiki_movies_id = pd.read_csv('data/imdb_ratings.csv')['wikipedia_movie_id']
+    movie_directors = []
+    for i in tqdm(wiki_movies_id, desc="Processing movies"):
+        infobox_data = get_wikipedia_infobox_by_id(i)
+        if (infobox_data is None) or ("Directed by" not in infobox_data):
+            continue
+    director = infobox_data.get("Directed by")
+    movie_directors.append({"wikipedia_movie_id": i, "Director": director})
+
+    movie_directors = pd.DataFrame(movie_directors)
+    movie_directors = movie_directors.drop_duplicates()
+    gender_db = pd.read_csv("src/data/name_gender_dataset.csv")
+    tqdm.pandas()
+    movie_directors['Gender'] = movie_directors['Director'].progress_apply(lambda x: attribute_gender_to_dir(x, gender_db))
+    movie_directors = movie_directors[movie_directors['Gender'].notna()]
+    movie_directors.to_csv('data/movies_director.csv', index=False)
