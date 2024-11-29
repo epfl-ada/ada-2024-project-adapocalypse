@@ -1,0 +1,1091 @@
+{
+    "Languages": {
+        "Silent": [
+            "Silent film"
+        ],
+        "English": [
+            "English Language",
+            "American English",
+            "South African English",
+            "Australian English",
+            "Indian English",
+            "Hinglish",
+            "Jamaican Creole English Language",
+            "Old English language"
+        ],
+        "Spanish": [
+            "Spanish Language",
+            "Catalan language",
+            "Galician Language"
+        ],
+        "French": [
+            "French Language",
+            "Corsican Language",
+            "France",
+            "Picard Language"
+        ],
+        "Italian": [
+            "Italian Language",
+            "Sicilian Language",
+            "Napoletano-Calabrese Language",
+            "Venetian Language",
+            "Friulian Language",
+            "Italian"
+        ],
+        "Portuguese": [
+            "Portuguese Language",
+            "Brazilian Portuguese",
+            "Kriolu",
+            "Papiamento language"
+        ],
+        "German": [
+            "German",
+            "German Language",
+            "Swiss German Language",
+            "Deutsch",
+            "Frisian, Western Language",
+            "Plautdietsch Language",
+            "Yiddish Language"
+        ],
+        "Scandinavian Languages": [
+            "Scanian Language",
+            "Swedish Language",
+            "Danish Language",
+            "Norwegian Language",
+            "Saami, North Language",
+            "Icelandic Language"
+        ],
+        "Dutch": [
+            "Dutch Language",
+            "Flemish language"
+        ],
+        "Luxembourgish": [
+            "Luxembourgish language"
+        ],
+        "Chinese": [
+            "Standard Mandarin",
+            "Mandarin Chinese",
+            "Cantonese",
+            "Standard Cantonese",
+            "Chinese language",
+            "Chinese, Hakka Language",
+            "Chinese, Jinyu Language",
+            "Shanghainese",
+            "Guanzhong Hua",
+            "Hokkien",
+            "Hainanese",
+            "Southwestern Mandarin",
+            "Min Nan",
+            "Shanxi",
+            "Teochew",
+            "Burmese Language",
+            "Dzongkha Language",
+            "Hmong language"
+        ],
+        "Taiwanese": [
+            "Taiwanese Language",
+            "Taiwanese"  
+        ],
+        "Japanese": [
+            "Japanese Language",
+            "Japan"
+        ],
+        "Korean": [
+            "Korean Language"
+        ],
+        "Southeast Asian Languages": [
+            "Filipino language",
+            "Tagalog language",
+            "Vietnamese Language",
+            "Khmer language",
+            "Khmer, Central Language",
+            "Malay Language",
+            "Indonesian Language",
+            "Cebuano language",
+            "Sunda Language",
+            "Aceh Language",
+            "Thai, Northeastern Language",
+            "Thai Language",
+            "Sinhala Language",
+            "Banyumasan language",
+            "Tok Pisin Language",
+            "Hiligaynon language"
+        ],
+        "Middle Eastern and Central Asian Languages": [
+            "Persian Language",
+            "Farsi, Western Language",
+            "Dari",
+            "Kurdish language",
+            "Azerbaijani language",
+            "Turkish Language",
+            "Uzbek language",
+            "Tibetan languages",
+            "Standard Tibetan",
+            "Osetin Language",
+            "Hazaragi Language",
+            "Pashto language",
+            "Crow Language",
+            "Georgian Language",
+            "Tamang language",
+            "Chechen Language",
+            "Mongolian language"
+        ],
+        "Indian": [
+            "Hindi Language",
+            "Bengali Language",
+            "Tamil Language",
+            "Malayalam Language",
+            "Telugu language",
+            "Kannada Language",
+            "Punjabi language",
+            "Marathi Language",
+            "Gujarati Language",
+            "Assamese Language",
+            "Oriya Language",
+            "Rajasthani language",
+            "Bhojpuri Language",
+            "Chhattisgarhi Language",
+            "Hariyani",
+            "Haryanvi Language",
+            "Awadhi Language",
+            "Hindustani language",
+            "Urdu Language",
+            "Tulu Language",
+            "Romani language"
+        ],
+        "Nepali": [
+            "Nepali Language"
+        ],
+        "Armenian": [
+            "Armenian Language"
+        ],
+
+        "Baltic Languages": [
+            "Lithuanian language"
+        ],
+        "Slavic Languages": [
+            "Serbo-Croatian",
+            "Bulgarian Language",
+            "Serbian language",
+            "Croatian language",
+            "Bosnian language",
+            "Czech Language",
+            "Polish Language",
+            "Slovak Language",
+            "Russian Language",
+            "Slovenian language",
+            "Ukrainian Language",
+            "Belarusian language",
+            "Macedonian Language"
+        ],
+        "Arabic": [
+            "Arabic Language",
+            "Egyptian Arabic",
+            "Classical Arabic",
+            "Hebrew Language",
+            "Aramaic language",
+            "Assyrian Neo-Aramaic Language",
+            "Assyrian language",
+            "Judeo-Georgian Language",
+            "Chadian Arabic"
+        ],
+        "Finnish": [
+            "Finnish Language"
+        ],
+        "Estonian": [
+            "Estonian Language"
+        ],
+        "Hungarian": [
+            "Hungarian language",
+            "Hungary"
+        ],
+        "Romanian": [
+            "Romanian Language"
+        ],
+        "Albanian": [
+            "Albanian language"
+        ],
+        "Celtic Languages": [
+            "Irish",
+            "Welsh Language",
+            "Scottish Gaelic language",
+            "Gaelic",
+            "Māori language"
+        ],
+        "African Languages": [
+            "Swahili Language",
+            "Xhosa Language",
+            "Zulu Language",
+            "Wolof Language",
+            "Somali Language",
+            "Amharic Language",
+            "Hausa Language",
+            "Bambara language",
+            "Fulfulde, Adamawa Language",
+            "Akan Language",
+            "Chewa language",
+            "Kinyarwanda language",
+            "Maasai Language",
+            "Krio Language",
+            "Afrikaans Language",
+            "Maninka language",
+            "Mende Language",
+            "Fula language",
+            "Sotho language"
+        ],
+        "Sign Languages": [
+            "American Sign Language",
+            "French Sign Language",
+            "Korean Sign Language"
+        ],
+        "Fictional Languages": [
+            "Esperanto Language",
+            "Klingon language"
+        ],
+        "Indigenous Languages": [
+            "Sioux language",
+            "Navajo Language",
+            "Mohawk Language",
+            "Pawnee Language",
+            "Cree language",
+            "Gumatj Language",
+            "Hopi Language",
+            "Yolngu Matha",
+            "Palawa kani",
+            "Cheyenne Language",
+            "Hawaiian language",
+            "Sami languages",
+            "Australian Aboriginal Pidgin English",
+            "Aboriginal Malay languages",
+            "Apache, Western Language",
+            "Maya, Yucatán Language",
+            "Quechua",
+            "Tzotzil language",
+            "Nahuatl languages",
+            "Kuna language"
+        ],
+        "Ancient Languages": [
+            "Ancient Greek",
+            "Sanskrit Language",
+            "Egyptian, Ancient",
+            "Sumerian",
+            "Latin Language",
+            "Greek Language"
+        ],
+        
+        "North American Languages": [
+            "Inuktitut", 
+            "Algonquin Language" 
+        ]
+    },
+    "Countries": {
+        "United States": [
+            "United States of America"
+        ],
+        "India": [
+            "India",
+            "Malayalam Language"
+        ],
+        "United Kingdom": [
+            "United Kingdom",
+            "England",
+            "Wales",
+            "Scotland",
+            "Northern Ireland",
+            "Kingdom of Great Britain",
+            "Isle of Man"
+        ],
+        "Germany": [
+            "Germany",
+            "West Germany",
+            "Weimar Republic",
+            "Nazi Germany",
+            "German Language",
+            "German Democratic Republic"
+        ],
+        "Montenegro": [
+            "Montenegro"
+        ],
+        "Italy": [
+            "Italy",
+            "Kingdom of Italy"
+        ],
+        "China": [
+            "China",
+            "Hong Kong",
+            "Macau",
+            "Republic of China"
+        ],
+        "Norway": [
+            "Norway"
+        ],
+        "Georgia": [
+            "Georgia"
+        ],
+        "Zimbabwe": [
+            "Zimbabwe"
+        ],
+        "Cambodia": [
+            "Cambodia"
+        ],
+        "Bahamas": [
+            "Bahamas"
+        ],
+        "Burma": [
+            "Burma"
+        ],
+        "Russia": [
+            "Russia",
+            "Soviet Union",
+            "Georgian SSR",
+            "Uzbek SSR",
+            "Ukrainian SSR",
+            "Czechoslovakia",
+            "Ukranian SSR",
+            "Soviet occupation zone"
+        ],
+        "France": [
+            "France"
+        ],
+        "Japan": [
+            "Japan"
+        ],
+        "Canada": [
+            "Canada"
+        ],
+        "Argentina": [
+            "Argentina"
+        ],
+        "Spain": [
+            "Spain"
+        ],
+        "Iceland": [
+            "Iceland"
+        ],
+        "Australia": [
+            "Australia"
+        ],
+        "South Korea": [
+            "South Korea"
+        ],
+        "Mexico": [
+            "Mexico"
+        ],
+        "Netherlands": [
+            "Netherlands",
+            "Aruba"
+        ],
+        "Sweden": [
+            "Sweden"
+        ],
+        "Denmark": [
+            "Denmark"
+        ],
+        "Philippines": [
+            "Philippines"
+        ],
+        "Poland": [
+            "Poland"
+        ],
+        "Belgium": [
+            "Belgium"
+        ],
+        "New Zealand": [
+            "New Zealand"
+        ],
+        "Brazil": [
+            "Brazil"
+        ],
+        "Hungary": [
+            "Hungary"
+        ],
+        "Yugoslavia": [
+            "Yugoslavia",
+            "Socialist Federal Republic of Yugoslavia",
+            "Federal Republic of Yugoslavia"
+        ],
+        "Ireland": [
+            "Ireland"
+        ],
+        "Switzerland": [
+            "Switzerland"
+        ],
+        "Austria": [
+            "Austria"
+        ],
+        "Finland": [
+            "Finland"
+        ],
+        "Czech Republic": [
+            "Czech Republic"
+        ],
+        "Israel": [
+            "Israel"
+        ],
+        "Turkey": [
+            "Turkey"
+        ],
+        "Iran": [
+            "Iran"
+        ],
+        "Thailand": [
+            "Thailand"
+        ],
+        "South Africa": [
+            "South Africa"
+        ],
+        "Greece": [
+            "Greece"
+        ],
+        "Pakistan": [
+            "Pakistan"
+        ],
+        "Taiwan": [
+            "Taiwan"
+        ],
+        "Portugal": [
+            "Portugal"
+        ],
+        "Croatia": [
+            "Croatia"
+        ],
+        "Egypt": [
+            "Egypt"
+        ],
+        "Romania": [
+            "Romania"
+        ],
+        "Indonesia": [
+            "Indonesia"
+        ],
+        "Malaysia": [
+            "Malaysia"
+        ],
+        "Bulgaria": [
+            "Bulgaria"
+        ],
+        "Sri Lanka": [
+            "Sri Lanka"
+        ],
+        "Singapore": [
+            "Singapore"
+        ],
+        "Luxembourg": [
+            "Luxembourg"
+        ],
+        "Bangladesh": [
+            "Bangladesh"
+        ],
+        "Chile": [
+            "Chile"
+        ],
+        "Serbia": [
+            "Serbia",
+            "Serbia and Montenegro"
+        ],
+        "Morocco": [
+            "Morocco"
+        ],
+        "Cuba": [
+            "Cuba"
+        ],
+        "Colombia": [
+            "Colombia"
+        ],
+        "Algeria": [
+            "Algeria"
+        ],
+        "Nepal": [
+            "Nepal"
+        ],
+        "Tunisia": [
+            "Tunisia"
+        ],
+        "Lebanon": [
+            "Lebanon"
+        ],
+        "Burkina Faso": [
+            "Burkina Faso"
+        ],
+        "Estonia": [
+            "Estonia"
+        ],
+        "Bosnia and Herzegovina": [
+            "Bosnia and Herzegovina"
+        ],
+        "Slovakia": [
+            "Slovakia",
+            "Slovak Republic"
+        ],
+        "Senegal": [
+            "Senegal"
+        ],
+        "Slovenia": [
+            "Slovenia"
+        ],
+        "Venezuela": [
+            "Venezuela"
+        ],
+        "Puerto Rico": [
+            "Puerto Rico"
+        ],
+        "Vietnam": [
+            "Vietnam"
+        ],
+        "Albania": [
+            "Albania"
+        ],
+        "Ukraine": [
+            "Ukraine"
+        ],
+        "Korea": [
+            "Korea"
+        ],
+        "Azerbaijan": [
+            "Azerbaijan"
+        ],
+        "Peru": [
+            "Peru"
+        ],
+        "Nigeria": [
+            "Nigeria"
+        ],
+        "Democratic Republic of the Congo": [
+            "Democratic Republic of the Congo",
+            "Congo"
+        ],
+        "Republic of Macedonia": [
+            "Republic of Macedonia"
+        ],
+        "Uruguay": [
+            "Uruguay"
+        ],
+        "Mali": [
+            "Mali"
+        ],
+        "Iraq": [
+            "Iraq",
+            "Iraqi Kurdistan"
+        ],
+        "Lithuania": [
+            "Lithuania"
+        ],
+        "Kenya": [
+            "Kenya"
+        ],
+        "United Arab Emirates": [
+            "United Arab Emirates"
+        ],
+        "Armenia": [
+            "Armenia"
+        ],
+        "Cameroon": [
+            "Cameroon"
+        ],
+        "Bolivia": [
+            "Bolivia"
+        ],
+        "Afghanistan": [
+            "Afghanistan"
+        ],
+        "Jamaica": [
+            "Jamaica"
+        ],
+        "Ethiopia": [
+            "Ethiopia"
+        ],
+        "Palestine": [
+            "Palestinian territories",
+            "Mandatory Palestine",
+            "Palestinian Territories"
+        ],
+        "Panama": [
+            "Panama"
+        ],
+        "Uzbekistan": [
+            "Uzbekistan"
+        ],
+        "Costa Rica": [
+            "Costa Rica"
+        ],
+        "Malta": [
+            "Malta"
+        ],
+        "Monaco": [
+            "Monaco"
+        ],
+        "Cyprus": [
+            "Cyprus"
+        ],
+        "Mongolia": [
+            "Mongolia"
+        ],
+        "Guinea": [
+            "Guinea"
+        ],
+        "Libya": [
+            "Libya"
+        ],
+        "Haiti": [
+            "Haiti"
+        ],
+        "Kuwait": [
+            "Kuwait"
+        ],
+        "Bhutan": [
+            "Bhutan"
+        ],
+        "Bahrain": [
+            "Bahrain"
+        ],
+        "Qatar": [
+            "Qatar"
+        ],
+        "Zambia": [
+            "Zambia"
+        ],
+        "Jordan": [
+            "Jordan"
+        ],
+        "Turkmenistan": [
+            "Turkmenistan"
+        ],
+        "Guinea-Bissau": [
+            "Guinea-Bissau"
+        ]
+    },
+    "Genres": {
+        "Drama": [
+            "Drama",
+            "Romantic drama",
+            "Family Drama",
+            "Marriage Drama",
+            "Childhood Drama",
+            "Courtroom Drama",
+            "Historical drama",
+            "Inspirational Drama",
+            "Political drama",
+            "Period piece",
+            "Costume drama",
+            "Coming of age",
+            "Tragedy",
+            "Melodrama",
+            "Social problem film",
+            "Addiction Drama",
+            "Kitchen sink realism",
+            "Legal drama",
+            "Juvenile Delinquency Film",
+            "Escape Film",
+            "Social issues",
+            "Gender Issues",
+            "Illnesses & Disabilities",
+            "Interpersonal Relationships",
+            "Historical Epic",
+            "Melodrama",
+            "Family & Personal Relationships",
+            "Marriage Drama",
+            "Tragicomedy",
+            "Natural disaster",
+            "Prison",
+            "Film à clef",
+            "Women in prison films"
+        ],
+        "Holiday Movie": [
+            "Christmas movie",
+            "Holiday Film"
+        ],
+        "Comedy": [
+            "Humour",
+            "Fan film",
+            "Domestic Comedy",
+            "Heavenly Comedy",
+            "Political satire",
+            "Comedy",
+            "Black comedy",
+            "Romantic comedy",
+            "Screwball comedy",
+            "Comedy of manners",
+            "Comedy-drama",
+            "Satire",
+            "Slapstick",
+            "Parody",
+            "Stand-up comedy",
+            "Workplace Comedy",
+            "Domestic Comedy",
+            "Horror Comedy",
+            "Comedy Thriller",
+            "Absurdism",
+            "Gross-out film",
+            "Sex comedy",
+            "Buddy film",
+            "Buddy Picture",
+            "Gross out",
+            "Comedy film",
+            "Comedy Western",
+            "Teen",
+            "Chick flick",
+            "Courtroom Comedy",
+            "Adventure Comedy",
+            "Buddy cop",
+            "Fantasy Comedy",
+            "Comedy of Errors",
+            "Stoner film",
+            "Media Satire",
+            "Romantic comedy",
+            "Mumblecore",
+            "Comdedy",
+            "Ealing Comedies",
+            "Action Comedy"
+        ],
+        "Adventure" : [
+            "Adventure",
+            "Fantasy Adventure",
+            "Action/Adventure",
+            "Travel",
+            "Jungle Film",
+            "Airplanes and airports", 
+            "Caper story", 
+            "Epic", 
+            "Space western", 
+            "Sword and sorcery films", 
+            "Movies About Gladiators",
+            "Beach Party film", 
+            "Tokusatsu", 
+            "Beach Film", 
+            "Horse racing", 
+            "Auto racing", 
+            "Baseball", 
+            "Boxing"
+        ],
+        "Action": [
+            "Parkour in popular culture",
+            "Action",
+            "Action/Adventure",
+            "Action Thrillers",
+            "Swashbuckler films",
+            "Road movie",
+            "Heist",
+            "Spy",
+            "Race movie",
+            "Prison escape",
+            "Martial Arts Film",
+            "Superhero movie",
+            "Adventure Comedy",
+            "Doomsday film",
+            "Samurai cinema",
+            "Wuxia",
+            "Chase Movie",
+            "Doomsday film",
+            "Ninja movie",
+            "Biker Film",
+            "Outlaw biker film",
+            "Outlaw",
+            "Extreme Sports",
+            "Glamorized Spy Film",
+            "Live action",
+            "Cavalry Film"
+        ],
+        "Thriller": [
+            "Thriller",
+            "Psychological thriller",
+            "Crime Thriller",
+            "Erotic thriller",
+            "Conspiracy fiction",
+            "Political thriller"
+        ],
+        "Horror": [
+            "Monster",
+            "Horror",
+            "Slasher",
+            "Creature Film",
+            "Sci-Fi Horror",
+            "Giallo",
+            "Disaster",
+            "Splatter film",
+            "Zombie Film",
+            "Haunted House Film",
+            "Natural horror films",
+            "Suspense",
+            "Supernatural",
+            "Horror Comedy",
+            "Psychological horror",
+            "Mystery",
+            "Neo-noir",
+            "Film noir",
+            "Period Horror",
+            "Monster movie",
+            "Gothic Film",
+            "Costume Horror",
+            "Demonic child",
+            "Exploitation",
+            "Prison film",
+            "Psychological horror",
+            "Road-Horror",
+            "Psycho-biddy",
+            "Comedy horror"
+        ],
+        "Romance": [
+            "Romance Film",
+            "Romantic comedy",
+            "Romantic drama",
+            "Marriage Drama",
+            "Romantic thriller",
+            "Romantic fantasy"
+        ],
+        "LGBT":[
+            "Gay",
+            "LGBT",
+            "Gay Interest",
+            "Gay Themed",
+            "New Queer Cinema"
+        ],
+        "Fantasy": [
+            "Fantasy",
+            "Fantasy Adventure",
+            "Mythological Fantasy",
+            "Superhero movie",
+            "Alien invasion",
+            "Vampire movies",
+            "Werewolf fiction",
+            "Fairy tale",
+            "Revisionist Fairy Tale",
+            "Pinku eiga",
+            "Fantasy Drama",
+            "Supernatural",
+            "Heaven-Can-Wait Fantasies"
+        ],
+        "Science Fiction": [
+            "Science Fiction",
+            "Science fiction Western",
+            "Superhero",
+            "Alien Film",
+            "Time travel",
+            "Sword and sorcery",
+            "Apocalyptic and post-apocalyptic fiction",
+            "Dystopia",
+            "Computers",
+            "Nuclear warfare",
+            "Sci-Fi Adventure",
+            "Space opera",
+            "Alien invasion",
+            "Cyberpunk",
+            "Future noir",
+            "Steampunk",
+            "Sword and Sandal",
+            "Sci-Fi Thriller",
+            "Medical fiction",
+            "Sci Fi Pictures original films"
+        ],
+        "Crime and Mystery": [
+            "Crime Fiction",
+            "Crime Drama",
+            "Crime",
+            "Film noir",
+            "Neo-noir",
+            "Crime Thriller",
+            "Crime Comedy",
+            "Heist",
+            "Detective",
+            "Detective fiction",
+            "Master Criminal Films",
+            "Whodunit",
+            "Courtroom Drama",
+            "Law & Crime",
+            "Revenge",
+            "Gangster Film"
+        ],
+        "Western": [
+            "Western",
+            "Spaghetti Western",
+            "Revisionist Western",
+            "Epic Western",
+            "Hybrid Western",
+            "B-Western",
+            "Acid western",
+            "Northern",
+            "Samurai cinema",
+            "Costume Adventure",
+            "Indian Western",
+            "Singing cowboy"
+        ],
+        "Music and Dance": [
+            "Musical",
+            "Rockumentary",
+            "Musical Drama",
+            "Musical comedy",
+            "Backstage Musical",
+            "Jukebox musical",
+            "Operetta",
+            "Instrumental Music",
+            "Dance",
+            "Breakdance",
+            "Music",
+            "Concert film",
+            "Hip hop movies",
+            "Film-Opera",
+            "Punk rock"
+        ],
+        "Children's Films":[
+            "Children's",
+            "Children's Entertainment",
+            "Children's/Family",
+            "Children's Issues",
+            "Children's Fantasy",
+            "Animal Picture",
+            "Animals"
+        ],
+        "Family's Films": [
+            "Family Film",
+            "Family-Oriented Adventure",
+            "School story"
+        ],
+        "Animation": [
+            "Animation",
+            "Computer Animation",
+            "Anime",
+            "Silhouette animation",
+            "Animated cartoon",
+            "Animated Musical",
+            "Clay animation",
+            "Stop motion",
+            "Supermarionation"
+        ],
+        "Documentary": [
+            "Archives and records",
+            "Documentary",
+            "Docudrama",
+            "Political Documetary",
+            "Rockumentary",
+            "Historical Documentaries",
+            "Propaganda film",
+            "Sponsored film",
+            "Mockumentary",
+            "Educational",
+            "News",
+            "Historical Documentaries",
+            "Environmental Science",
+            "Film & Television History",
+            "Education",
+            "Archaeology",
+            "Anthropology",
+            "Libraries and librarians",
+            "Political cinema", 
+            "Journalism",
+            "Culture & Society"
+        ],
+        "Biographical and Real-Life Inspired": [
+            "Biography",
+            "Biographical film",
+            "Docudrama",
+            "Biopic [feature]",
+            "Hagiography",
+            "Sports"
+        ],
+        "Independent": [
+            "Cult",
+            "Experimental film",
+            "Avant-garde",
+            "Essay Film",
+            "Dogme 95",
+            "Existentialism",
+            "Fictional film",
+            "Ensemble Film",
+            "Point of view shot"
+        ],
+        "Artistic": [
+            "Art film",
+            "Essay Film",
+            "Expressionism",
+            "Media Studies",
+            "Surrealism",
+            "Neorealism",
+            "Language & Literature",
+            "Graphic & Applied Arts",
+            "Anthology"
+        ],
+        "Feminist" : [
+            "Feminist Film"
+        ],
+        "Silent film":[
+            "Silent film",
+            "Goat gland"
+        ],
+        "Black-and-white":[
+            "Black-and-white"
+        ],
+        "War and Military": [
+            "War film",
+            "Combat Films",
+            "Anti-war",
+            "Anti-war film",
+            "Patriotic film",
+            "Cold War",
+            "Gulf War",
+            "War effort",
+            "Foreign legion",
+            "Private military company"
+        ],
+        "Historical Films": [
+            "Historical drama",
+            "Period piece",
+            "History",
+            "British Empire Film",
+            "Historical fiction",
+            "Historical Epic",
+            "Period Horror",
+            "Historical drama",
+            "World History",
+            "The Netherlands in World War II"
+        ],
+        "Erotic and Adult Films": [
+            "Erotic Drama",
+            "Erotic thriller",
+            "Erotica",
+            "Softcore Porn",
+            "Pornography",
+            "Hardcore pornography",
+            "Sexploitation",
+            "Homoeroticism",
+            "Gay pornography",
+            "Adult",
+            "Pornographic movie"
+        ],
+        "World Cinema":[
+            "Japanese Movies",
+            "Tamil cinema",
+            "Filipino Movies", 
+            "Chinese Movies", 
+            "Bengali Cinema", 
+            "Malayalam Cinema", 
+            "Czechoslovak New Wave", 
+            "New Hollywood", 
+            "World cinema",
+            "Tollywood",
+            "Americana",
+            "British New Wave",
+            "Latino",
+            "Early Black Cinema",
+            "Bollywood",
+            "Indie",
+            "Filipino"         
+        ],
+        "Reboot": [
+            "Reboot",
+            "Remake",
+            "Film adaptation"
+        ],
+        "Short Film": [
+            "Short Film"
+        ],
+        "Theatrical Movie": [
+            "Roadshow theatrical release",
+            "Feature film",
+            "Filmed Play"
+        ],
+        "Other Genres": [
+            "C-Movie",
+            "Z movie",
+            "B-movie"
+        ]
+    }
+}
