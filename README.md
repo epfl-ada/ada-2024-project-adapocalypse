@@ -39,8 +39,10 @@ Our project examines gender dynamics in cinema through the lens of the Bechdel T
 
 #### Proposed additional datasets
 - [**IMDb Ratings**](https://datasets.imdbws.com/):
-  - provides movie ratings and box office data
+  - provides movie ratings data
   - reduces the initial dataset size by only keeping movies whose ratings are available
+- [**TMDB Ratings**](https://www.kaggle.com/datasets/juzershakir/tmdb-movies-dataset):
+  - provides box office and budget data
 - [**Bechdel Test API**](https://bechdeltest.com/api/v1/doc): This dataset
   - provides Bechdel Test result ('rating') for a group of movies.
   - drastically reduces primary dataset size
