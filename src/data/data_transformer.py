@@ -3,6 +3,7 @@ from src.data.data_cleaner import to_datetime, get_gender_from_name, extract_nam
 from tqdm import tqdm
 import json
 import pandas as pd
+import numpy as np
 DATA_FOLDER_PATH = "data/raw/"
 
 def preprocess_movie_metadata():
@@ -198,3 +199,46 @@ def process_directors():
     movies_directors_combined = movies_metadata_df.join(movies_director.set_index('wikipedia_movie_id'), on='wikipedia_movie_id')
     movies_directors_combined = movies_directors_combined[movies_directors_combined['director_gender'].notna()]
     movies_directors_combined.to_csv('data/processed/movies_directors_combined.csv', index=False)
+    
+def compute_movies_metadata_success():
+    # Loading and preprocessing the data of tmdb
+    tmdb_ratings = pd.read_csv('src/data/external_data/TMDB_movie_dataset_v11.csv')
+    tmdb_ratings = tmdb_ratings[['title', 'vote_average', 'vote_count', 'release_date', 'revenue', 'budget']]
+    # We also thought of keeping the popularity column, but we could not retrieve information about the parameters that made a movie "popular" or not, so we decided to drop it.
+    # convert 0 values into nan
+    tmdb_ratings['revenue'] = tmdb_ratings['revenue'].replace('0', np.nan)
+    tmdb_ratings['budget'] = tmdb_ratings['budget'].replace('0', np.nan)
+    # We have two different sources (tmdb & imdb) form which we can retrieve the average rating given by people who have watched the movie. In order to decide which dataset we will keep, we will check a specific parameter.
+    imdb_ratings = pd.read_csv('data/processed/imdb_ratings.csv')
+    # As the analysis of ratings will be truthful if there is a consequent number of ratings in the first place, we decided to pursue our analysis with the ratings of the imdb dataset instead of the tmdb one.
+    # If more details needed, imdb_ratings[imdb_ratings['numVotes'] > 50].count() gave us 40084 values, and tmdb_ratings[tmdb_ratings['vote_count'] > 50].count() only 27689 values
+    imdb_ratings = imdb_ratings[imdb_ratings['numVotes'] > 50]
+    imdb_ratings['numVotes'] = imdb_ratings['numVotes'].astype(int)
+    tmdb_ratings = tmdb_ratings.drop(['vote_count', 'vote_average'], axis=1)
+    # to avoid matching errors, we will merge datasets based on the name of the movie AND the release year, so weneed to drop any NaN value
+    tmdb_ratings = tmdb_ratings.dropna(subset=['release_date'])
+    # only keep the release year
+    tmdb_ratings['release_date'] = tmdb_ratings['release_date'].apply(lambda x: x if type(x)==float else x.split('-')[0])
+    tmdb_ratings['release_date'] = tmdb_ratings['release_date'].astype(int)
+    # Many revenues and budgets values of the dataframe are 0s, in order to prevent those values from falsing our analysis results we will convert them into NaN values.
+    tmdb_ratings['revenue'] = tmdb_ratings['revenue'].apply(lambda x: np.NaN if x==0 else x)
+    tmdb_ratings['budget'] = tmdb_ratings['budget'].apply(lambda x: np.NaN if x==0 else x)
+    # Before merging the two datasets, we remove any useless column of imdb ratings and rename the remaining ones.
+    imdb_ratings.drop(columns=['imdb_movie_id'], inplace=True)
+    imdb_ratings.columns = ['wikipedia_movie_id', 'movie_name', 'release_date', 'average_rating', 'num_votes']
+    tmdb_ratings.rename(columns={'title': 'movie_name'}, inplace=True)
+    movies_metadata_success = pd.merge(tmdb_ratings, imdb_ratings, on=['movie_name', 'release_date'], how='inner')
+    # renaiming the columns
+    movies_metadata_success = movies_metadata_success[['wikipedia_movie_id','movie_name', 'release_date', 'revenue', 'budget', 'average_rating', 'num_votes']]
+    # then, we pursue the merging with movies metadata df
+    movies_metadata = pd.read_csv('data/processed/movies_metadata.csv')
+    movies_metadata_success = pd.merge(movies_metadata_success, movies_metadata, how='inner', on=['wikipedia_movie_id'])
+    movies_metadata_success = movies_metadata_success[['wikipedia_movie_id', 'movie_name_x', 'release_date_x', 'revenue', 'budget', 'average_rating', 'num_votes', 'genres', 'countries']]
+    movies_metadata_success.rename(columns={'movie_name_x': 'movie_name', 'release_date_x': 'release_date'}, inplace=True)
+    # the next step is to merge the resulted dataframe with the movies directors df
+    movies_directors = pd.read_csv('data/processed/movies_director.csv')
+    movies_metadata_success = pd.merge(movies_metadata_success, movies_directors, how='inner', on=['wikipedia_movie_id'])
+    movies_metadata_success.drop(columns=['Director'], inplace=True)
+    movies_metadata_success.rename(columns={'Gender':'director_gender'}, inplace=True)
+    # we can finally export our csv
+    movies_metadata_success.to_csv('data/processed/movies_metadata_success.csv', index=False)
