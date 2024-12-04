@@ -230,15 +230,10 @@ def compute_movies_metadata_success():
     movies_metadata_success = pd.merge(tmdb_ratings, imdb_ratings, on=['movie_name', 'release_date'], how='inner')
     # renaiming the columns
     movies_metadata_success = movies_metadata_success[['wikipedia_movie_id','movie_name', 'release_date', 'revenue', 'budget', 'average_rating', 'num_votes']]
-    # then, we pursue the merging with movies metadata df
-    movies_metadata = pd.read_csv('data/processed/movies_metadata.csv')
-    movies_metadata_success = pd.merge(movies_metadata_success, movies_metadata, how='inner', on=['wikipedia_movie_id'])
-    movies_metadata_success = movies_metadata_success[['wikipedia_movie_id', 'movie_name_x', 'release_date_x', 'revenue', 'budget', 'average_rating', 'num_votes', 'genres', 'countries']]
-    movies_metadata_success.rename(columns={'movie_name_x': 'movie_name', 'release_date_x': 'release_date'}, inplace=True)
-    # the next step is to merge the resulted dataframe with the movies directors df
-    movies_directors = pd.read_csv('data/processed/movies_director.csv')
-    movies_metadata_success = pd.merge(movies_metadata_success, movies_directors, how='inner', on=['wikipedia_movie_id'])
-    movies_metadata_success.drop(columns=['Director'], inplace=True)
-    movies_metadata_success.rename(columns={'Gender':'director_gender'}, inplace=True)
+    # then, we pursue the merging with movies directors combined df
+    movies_metadata_and_directors = pd.read_csv('data/processed/movies_directors_combined.csv')
+    movies_metadata_success = pd.merge(movies_metadata_success, movies_metadata_and_directors, how='inner', on=['wikipedia_movie_id'])
+    movies_metadata_success = movies_metadata_success[['wikipedia_movie_id', 'movie_name_x', 'movie_release_date', 'revenue', 'budget', 'average_rating', 'num_votes', 'movie_genres', 'movie_countries', 'director_gender']]
+    movies_metadata_success.rename(columns={'movie_name_x': 'movie_name', 'revenue': 'box_office_revenue', 'budget': 'movie_budget'}, inplace=True)
     # we can finally export our csv
     movies_metadata_success.to_csv('data/processed/movies_metadata_success.csv', index=False)
