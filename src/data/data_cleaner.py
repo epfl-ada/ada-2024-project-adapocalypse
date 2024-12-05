@@ -4,13 +4,19 @@ import ast
 
 def to_datetime(df, column):
     # filtering of data for panda.dataframe compliances
+    df[column] = df[column].astype(str)
+
     df = df[(
     df[column] > '1850-01-01') & (df[column] < '2022-01-01'
     )]
     # handling the nan case
     df[column] = df[column].fillna('1850-01-01')
     # keeping only year
-    df[column] = pd.to_datetime(df[column], format="mixed").dt.year
+    df[column] = pd.to_datetime(df[column], format="mixed", errors="coerce")
+    
+    df = df[df[column].notna()]
+    print("removing nan")    # Extract only the year
+    df[column] = df[column].dt.year
     # converting to int
     df[column] = df[column].apply(lambda x: int(x))
 
