@@ -1,0 +1,332 @@
+{
+    "data": {
+        "name": "flare"
+    },
+    "height": 4,
+    "depth": 0,
+    "parent": null,
+    "children": [
+        {
+            "data": {
+                "name": "Health & Fitness",
+                "Female Percentage": 70.0,
+                "Total Characters": 10,
+                "Total Movies": 3
+            },
+            "height": 3,
+            "depth": 1,
+            "parent": "flare",
+            "children": []
+        },
+        {
+            "data": {
+                "name": "Mondo film",
+                "Female Percentage": 61.904761904761905,
+                "Total Characters": 21,
+                "Total Movies": 4
+            },
+            "height": 3,
+            "depth": 1,
+            "parent": "flare",
+            "children": []
+        },
+        {
+            "data": {
+                "name": "Feminist",
+                "Female Percentage": 50.697674418604656,
+                "Total Characters": 430,
+                "Total Movies": 43
+            },
+            "height": 3,
+            "depth": 1,
+            "parent": "flare",
+            "children": [
+                {
+                    "data": {
+                        "name": "Feminist Film"
+                    },
+                    "height": 2,
+                    "depth": 2,
+                    "parent": "Feminist",
+                    "children": []
+                },
+                {
+                    "data": {
+                        "name": "Women in prison films"
+                    },
+                    "height": 2,
+                    "depth": 2,
+                    "parent": "Feminist",
+                    "children": []
+                }
+            ]
+        },
+        {
+            "data": {
+                "name": "Erotic and Adult Films",
+                "Female Percentage": 45.526193787668056,
+                "Total Characters": 2157,
+                "Total Movies": 292
+            },
+            "height": 3,
+            "depth": 1,
+            "parent": "flare",
+            "children": [
+                {
+                    "data": {
+                        "name": "Erotic Drama"
+                    },
+                    "height": 2,
+                    "depth": 2,
+                    "parent": "Erotic and Adult Films",
+                    "children": []
+                },
+                {
+                    "data": {
+                        "name": "Erotic thriller"
+                    },
+                    "height": 2,
+                    "depth": 2,
+                    "parent": "Erotic and Adult Films",
+                    "children": []
+                },
+                {
+                    "data": {
+                        "name": "Erotica"
+                    },
+                    "height": 2,
+                    "depth": 2,
+                    "parent": "Erotic and Adult Films",
+                    "children": []
+                },
+                {
+                    "data": {
+                        "name": "Softcore Porn"
+                    },
+                    "height": 2,
+                    "depth": 2,
+                    "parent": "Erotic and Adult Films",
+                    "children": []
+                },
+                {
+                    "data": {
+                        "name": "Pornography"
+                    },
+                    "height": 2,
+                    "depth": 2,
+                    "parent": "Erotic and Adult Films",
+                    "children": []
+                },
+                {
+                    "data": {
+                        "name": "Hardcore pornography"
+                    },
+                    "height": 2,
+                    "depth": 2,
+                    "parent": "Erotic and Adult Films",
+                    "children": []
+                },
+                {
+                    "data": {
+                        "name": "Sexploitation"
+                    },
+                    "height": 2,
+                    "depth": 2,
+                    "parent": "Erotic and Adult Films",
+                    "children": []
+                },
+                {
+                    "data": {
+                        "name": "Homoeroticism"
+                    },
+                    "height": 2,
+                    "depth": 2,
+                    "parent": "Erotic and Adult Films",
+                    "children": []
+                },
+                {
+                    "data": {
+                        "name": "Gay pornography"
+                    },
+                    "height": 2,
+                    "depth": 2,
+                    "parent": "Erotic and Adult Films",
+                    "children": []
+                },
+                {
+                    "data": {
+                        "name": "Adult"
+                    },
+                    "height": 2,
+                    "depth": 2,
+                    "parent": "Erotic and Adult Films",
+                    "children": []
+                },
+                {
+                    "data": {
+                        "name": "Pornographic movie"
+                    },
+                    "height": 2,
+                    "depth": 2,
+                    "parent": "Erotic and Adult Films",
+                    "children": []
+                }
+            ]
+        },
+        {
+            "data": {
+                "name": "Coming-of-age film",
+                "Female Percentage": 44.680851063829785,
+                "Total Characters": 47,
+                "Total Movies": 4
+            },
+            "height": 3,
+            "depth": 1,
+            "parent": "flare",
+            "children": []
+        },
+        {
+            "data": {
+                "name": "Roadshow/Carny",
+                "Female Percentage": 44.44444444444444,
+                "Total Characters": 27,
+                "Total Movies": 3
+            },
+            "height": 3,
+            "depth": 1,
+            "parent": "flare",
+            "children": []
+        },
+        {
+            "data": {
+                "name": "Slice of life story",
+                "Female Percentage": 41.62162162162162,
+                "Total Characters": 740,
+                "Total Movies": 62
+            },
+            "height": 3,
+            "depth": 1,
+            "parent": "flare",
+            "children": []
+        },
+        {
+            "data": {
+                "name": "Romance",
+                "Female Percentage": 38.84845482604885,
+                "Total Characters": 52486,
+                "Total Movies": 5712
+            },
+            "height": 3,
+            "depth": 1,
+            "parent": "flare",
+            "children": [
+                {
+                    "data": {
+                        "name": "Romance Film"
+                    },
+                    "height": 2,
+                    "depth": 2,
+                    "parent": "Romance",
+                    "children": []
+                },
+                {
+                    "data": {
+                        "name": "Romantic comedy"
+                    },
+                    "height": 2,
+                    "depth": 2,
+                    "parent": "Romance",
+                    "children": []
+                },
+                {
+                    "data": {
+                        "name": "Romantic drama"
+                    },
+                    "height": 2,
+                    "depth": 2,
+                    "parent": "Romance",
+                    "children": []
+                },
+                {
+                    "data": {
+                        "name": "Marriage Drama"
+                    },
+                    "height": 2,
+                    "depth": 2,
+                    "parent": "Romance",
+                    "children": []
+                },
+                {
+                    "data": {
+                        "name": "Romantic thriller"
+                    },
+                    "height": 2,
+                    "depth": 2,
+                    "parent": "Romance",
+                    "children": []
+                },
+                {
+                    "data": {
+                        "name": "Romantic fantasy"
+                    },
+                    "height": 2,
+                    "depth": 2,
+                    "parent": "Romance",
+                    "children": []
+                }
+            ]
+        },
+        {
+            "data": {
+                "name": "Female buddy film",
+                "Female Percentage": 38.297872340425535,
+                "Total Characters": 47,
+                "Total Movies": 4
+            },
+            "height": 3,
+            "depth": 1,
+            "parent": "flare",
+            "children": []
+        },
+        {
+            "data": {
+                "name": "Other Genres",
+                "Female Percentage": 37.024087024087024,
+                "Total Characters": 2574,
+                "Total Movies": 314
+            },
+            "height": 3,
+            "depth": 1,
+            "parent": "flare",
+            "children": [
+                {
+                    "data": {
+                        "name": "C-Movie"
+                    },
+                    "height": 2,
+                    "depth": 2,
+                    "parent": "Other Genres",
+                    "children": []
+                },
+                {
+                    "data": {
+                        "name": "Z movie"
+                    },
+                    "height": 2,
+                    "depth": 2,
+                    "parent": "Other Genres",
+                    "children": []
+                },
+                {
+                    "data": {
+                        "name": "B-movie"
+                    },
+                    "height": 2,
+                    "depth": 2,
+                    "parent": "Other Genres",
+                    "children": []
+                }
+            ]
+        }
+    ]
+}

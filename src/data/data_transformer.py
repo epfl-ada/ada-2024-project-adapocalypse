@@ -25,7 +25,7 @@ def preprocess_movie_metadata():
     df['movie_languages'] = df['movie_languages'].apply(lambda x: list(dict.fromkeys([map_cluster(languages_cluster, elem) for elem in x]).keys()))
     df['movie_countries'] = df['movie_countries'].apply(lambda x: list(dict.fromkeys([map_cluster(countries_cluster, elem) for elem in x]).keys()))
     df['movie_genres'] = df['movie_genres'].apply(lambda x: list(dict.fromkeys([map_cluster(genres_cluster, elem) for elem in x]).keys()))
-    df.to_csv('data/processed/movies_metadata.csv', index=False)
+    df.to_csv('data/processed/movies_metadata_new.csv', index=False)
     
     return df
 
