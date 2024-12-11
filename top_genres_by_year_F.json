@@ -1,0 +1,3527 @@
+[
+    [
+        1930,
+        [
+            {
+                "name": "Drama",
+                "value": 5,
+                "rank": 0
+            },
+            {
+                "name": "Comedy",
+                "value": 3,
+                "rank": 1
+            },
+            {
+                "name": "Horror",
+                "value": 2,
+                "rank": 2
+            },
+            {
+                "name": "Romance",
+                "value": 2,
+                "rank": 3
+            },
+            {
+                "name": "Action",
+                "value": 1,
+                "rank": 4
+            },
+            {
+                "name": "Adventure",
+                "value": 1,
+                "rank": 5
+            },
+            {
+                "name": "World Cinema",
+                "value": 1,
+                "rank": 6
+            }
+        ]
+    ],
+    [
+        1931,
+        [
+            {
+                "name": "Drama",
+                "value": 6,
+                "rank": 0
+            },
+            {
+                "name": "Romance",
+                "value": 5,
+                "rank": 1
+            },
+            {
+                "name": "Horror",
+                "value": 4,
+                "rank": 2
+            },
+            {
+                "name": "Comedy",
+                "value": 2,
+                "rank": 3
+            },
+            {
+                "name": "Thriller",
+                "value": 2,
+                "rank": 4
+            },
+            {
+                "name": "Action",
+                "value": 1,
+                "rank": 5
+            },
+            {
+                "name": "Adventure",
+                "value": 1,
+                "rank": 6
+            }
+        ]
+    ],
+    [
+        1932,
+        [
+            {
+                "name": "Drama",
+                "value": 8,
+                "rank": 0
+            },
+            {
+                "name": "Comedy",
+                "value": 3,
+                "rank": 1
+            },
+            {
+                "name": "World Cinema",
+                "value": 2,
+                "rank": 2
+            },
+            {
+                "name": "Horror",
+                "value": 1,
+                "rank": 3
+            },
+            {
+                "name": "Romance",
+                "value": 1,
+                "rank": 4
+            }
+        ]
+    ],
+    [
+        1933,
+        [
+            {
+                "name": "Drama",
+                "value": 8,
+                "rank": 0
+            },
+            {
+                "name": "Comedy",
+                "value": 3,
+                "rank": 1
+            },
+            {
+                "name": "Action",
+                "value": 2,
+                "rank": 2
+            },
+            {
+                "name": "Adventure",
+                "value": 2,
+                "rank": 3
+            },
+            {
+                "name": "Horror",
+                "value": 1,
+                "rank": 4
+            },
+            {
+                "name": "Romance",
+                "value": 1,
+                "rank": 5
+            },
+            {
+                "name": "Thriller",
+                "value": 1,
+                "rank": 6
+            },
+            {
+                "name": "World Cinema",
+                "value": 1,
+                "rank": 7
+            }
+        ]
+    ],
+    [
+        1934,
+        [
+            {
+                "name": "Comedy",
+                "value": 7,
+                "rank": 0
+            },
+            {
+                "name": "Adventure",
+                "value": 3,
+                "rank": 1
+            },
+            {
+                "name": "Drama",
+                "value": 3,
+                "rank": 2
+            },
+            {
+                "name": "Romance",
+                "value": 3,
+                "rank": 3
+            },
+            {
+                "name": "Action",
+                "value": 2,
+                "rank": 4
+            },
+            {
+                "name": "Horror",
+                "value": 2,
+                "rank": 5
+            },
+            {
+                "name": "Thriller",
+                "value": 2,
+                "rank": 6
+            },
+            {
+                "name": "World Cinema",
+                "value": 2,
+                "rank": 7
+            }
+        ]
+    ],
+    [
+        1935,
+        [
+            {
+                "name": "Comedy",
+                "value": 4,
+                "rank": 0
+            },
+            {
+                "name": "Action",
+                "value": 2,
+                "rank": 1
+            },
+            {
+                "name": "Adventure",
+                "value": 2,
+                "rank": 2
+            },
+            {
+                "name": "Drama",
+                "value": 2,
+                "rank": 3
+            },
+            {
+                "name": "Horror",
+                "value": 2,
+                "rank": 4
+            },
+            {
+                "name": "Thriller",
+                "value": 2,
+                "rank": 5
+            },
+            {
+                "name": "Romance",
+                "value": 1,
+                "rank": 6
+            }
+        ]
+    ],
+    [
+        1936,
+        [
+            {
+                "name": "Drama",
+                "value": 6,
+                "rank": 0
+            },
+            {
+                "name": "Adventure",
+                "value": 4,
+                "rank": 1
+            },
+            {
+                "name": "Comedy",
+                "value": 4,
+                "rank": 2
+            },
+            {
+                "name": "Action",
+                "value": 3,
+                "rank": 3
+            },
+            {
+                "name": "World Cinema",
+                "value": 2,
+                "rank": 4
+            },
+            {
+                "name": "Romance",
+                "value": 1,
+                "rank": 5
+            },
+            {
+                "name": "Thriller",
+                "value": 1,
+                "rank": 6
+            }
+        ]
+    ],
+    [
+        1937,
+        [
+            {
+                "name": "Comedy",
+                "value": 6,
+                "rank": 0
+            },
+            {
+                "name": "Action",
+                "value": 3,
+                "rank": 1
+            },
+            {
+                "name": "Drama",
+                "value": 3,
+                "rank": 2
+            },
+            {
+                "name": "Horror",
+                "value": 3,
+                "rank": 3
+            },
+            {
+                "name": "Romance",
+                "value": 3,
+                "rank": 4
+            },
+            {
+                "name": "Adventure",
+                "value": 1,
+                "rank": 5
+            },
+            {
+                "name": "Thriller",
+                "value": 1,
+                "rank": 6
+            }
+        ]
+    ],
+    [
+        1938,
+        [
+            {
+                "name": "Drama",
+                "value": 3,
+                "rank": 0
+            },
+            {
+                "name": "Comedy",
+                "value": 2,
+                "rank": 1
+            },
+            {
+                "name": "Romance",
+                "value": 2,
+                "rank": 2
+            },
+            {
+                "name": "Thriller",
+                "value": 2,
+                "rank": 3
+            },
+            {
+                "name": "Adventure",
+                "value": 1,
+                "rank": 4
+            },
+            {
+                "name": "World Cinema",
+                "value": 1,
+                "rank": 5
+            }
+        ]
+    ],
+    [
+        1939,
+        [
+            {
+                "name": "Drama",
+                "value": 7,
+                "rank": 0
+            },
+            {
+                "name": "Comedy",
+                "value": 5,
+                "rank": 1
+            },
+            {
+                "name": "Romance",
+                "value": 3,
+                "rank": 2
+            },
+            {
+                "name": "World Cinema",
+                "value": 1,
+                "rank": 3
+            }
+        ]
+    ],
+    [
+        1940,
+        [
+            {
+                "name": "Drama",
+                "value": 6,
+                "rank": 0
+            },
+            {
+                "name": "Horror",
+                "value": 6,
+                "rank": 1
+            },
+            {
+                "name": "Action",
+                "value": 5,
+                "rank": 2
+            },
+            {
+                "name": "Comedy",
+                "value": 4,
+                "rank": 3
+            },
+            {
+                "name": "Adventure",
+                "value": 3,
+                "rank": 4
+            },
+            {
+                "name": "Romance",
+                "value": 3,
+                "rank": 5
+            },
+            {
+                "name": "Thriller",
+                "value": 2,
+                "rank": 6
+            }
+        ]
+    ],
+    [
+        1941,
+        [
+            {
+                "name": "Comedy",
+                "value": 7,
+                "rank": 0
+            },
+            {
+                "name": "Drama",
+                "value": 6,
+                "rank": 1
+            },
+            {
+                "name": "Adventure",
+                "value": 4,
+                "rank": 2
+            },
+            {
+                "name": "Horror",
+                "value": 4,
+                "rank": 3
+            },
+            {
+                "name": "Thriller",
+                "value": 4,
+                "rank": 4
+            },
+            {
+                "name": "Action",
+                "value": 3,
+                "rank": 5
+            }
+        ]
+    ],
+    [
+        1942,
+        [
+            {
+                "name": "Comedy",
+                "value": 7,
+                "rank": 0
+            },
+            {
+                "name": "Action",
+                "value": 4,
+                "rank": 1
+            },
+            {
+                "name": "Adventure",
+                "value": 4,
+                "rank": 2
+            },
+            {
+                "name": "Romance",
+                "value": 2,
+                "rank": 3
+            },
+            {
+                "name": "Drama",
+                "value": 1,
+                "rank": 4
+            }
+        ]
+    ],
+    [
+        1943,
+        [
+            {
+                "name": "Action",
+                "value": 4,
+                "rank": 0
+            },
+            {
+                "name": "Drama",
+                "value": 4,
+                "rank": 1
+            },
+            {
+                "name": "Adventure",
+                "value": 3,
+                "rank": 2
+            },
+            {
+                "name": "Romance",
+                "value": 2,
+                "rank": 3
+            },
+            {
+                "name": "Comedy",
+                "value": 1,
+                "rank": 4
+            },
+            {
+                "name": "Horror",
+                "value": 1,
+                "rank": 5
+            },
+            {
+                "name": "World Cinema",
+                "value": 1,
+                "rank": 6
+            }
+        ]
+    ],
+    [
+        1944,
+        [
+            {
+                "name": "Drama",
+                "value": 8,
+                "rank": 0
+            },
+            {
+                "name": "Comedy",
+                "value": 7,
+                "rank": 1
+            },
+            {
+                "name": "Adventure",
+                "value": 4,
+                "rank": 2
+            },
+            {
+                "name": "Romance",
+                "value": 4,
+                "rank": 3
+            },
+            {
+                "name": "Action",
+                "value": 3,
+                "rank": 4
+            },
+            {
+                "name": "Horror",
+                "value": 3,
+                "rank": 5
+            },
+            {
+                "name": "Thriller",
+                "value": 2,
+                "rank": 6
+            },
+            {
+                "name": "World Cinema",
+                "value": 2,
+                "rank": 7
+            }
+        ]
+    ],
+    [
+        1945,
+        [
+            {
+                "name": "Comedy",
+                "value": 7,
+                "rank": 0
+            },
+            {
+                "name": "Action",
+                "value": 5,
+                "rank": 1
+            },
+            {
+                "name": "Adventure",
+                "value": 5,
+                "rank": 2
+            },
+            {
+                "name": "Drama",
+                "value": 3,
+                "rank": 3
+            },
+            {
+                "name": "Romance",
+                "value": 1,
+                "rank": 4
+            }
+        ]
+    ],
+    [
+        1946,
+        [
+            {
+                "name": "Drama",
+                "value": 7,
+                "rank": 0
+            },
+            {
+                "name": "Horror",
+                "value": 4,
+                "rank": 1
+            },
+            {
+                "name": "Romance",
+                "value": 4,
+                "rank": 2
+            },
+            {
+                "name": "World Cinema",
+                "value": 4,
+                "rank": 3
+            },
+            {
+                "name": "Action",
+                "value": 3,
+                "rank": 4
+            },
+            {
+                "name": "Adventure",
+                "value": 3,
+                "rank": 5
+            },
+            {
+                "name": "Comedy",
+                "value": 2,
+                "rank": 6
+            },
+            {
+                "name": "Thriller",
+                "value": 2,
+                "rank": 7
+            }
+        ]
+    ],
+    [
+        1947,
+        [
+            {
+                "name": "Drama",
+                "value": 10,
+                "rank": 0
+            },
+            {
+                "name": "Comedy",
+                "value": 5,
+                "rank": 1
+            },
+            {
+                "name": "Romance",
+                "value": 5,
+                "rank": 2
+            },
+            {
+                "name": "Adventure",
+                "value": 4,
+                "rank": 3
+            },
+            {
+                "name": "Horror",
+                "value": 4,
+                "rank": 4
+            },
+            {
+                "name": "Action",
+                "value": 2,
+                "rank": 5
+            },
+            {
+                "name": "Thriller",
+                "value": 1,
+                "rank": 6
+            },
+            {
+                "name": "World Cinema",
+                "value": 1,
+                "rank": 7
+            }
+        ]
+    ],
+    [
+        1948,
+        [
+            {
+                "name": "Drama",
+                "value": 12,
+                "rank": 0
+            },
+            {
+                "name": "Comedy",
+                "value": 3,
+                "rank": 1
+            },
+            {
+                "name": "Romance",
+                "value": 3,
+                "rank": 2
+            },
+            {
+                "name": "Action",
+                "value": 2,
+                "rank": 3
+            },
+            {
+                "name": "Adventure",
+                "value": 2,
+                "rank": 4
+            },
+            {
+                "name": "Horror",
+                "value": 2,
+                "rank": 5
+            },
+            {
+                "name": "Thriller",
+                "value": 2,
+                "rank": 6
+            },
+            {
+                "name": "World Cinema",
+                "value": 2,
+                "rank": 7
+            }
+        ]
+    ],
+    [
+        1949,
+        [
+            {
+                "name": "Drama",
+                "value": 12,
+                "rank": 0
+            },
+            {
+                "name": "Comedy",
+                "value": 9,
+                "rank": 1
+            },
+            {
+                "name": "Horror",
+                "value": 4,
+                "rank": 2
+            },
+            {
+                "name": "World Cinema",
+                "value": 3,
+                "rank": 3
+            },
+            {
+                "name": "Romance",
+                "value": 2,
+                "rank": 4
+            },
+            {
+                "name": "Thriller",
+                "value": 2,
+                "rank": 5
+            }
+        ]
+    ],
+    [
+        1950,
+        [
+            {
+                "name": "Drama",
+                "value": 13,
+                "rank": 0
+            },
+            {
+                "name": "Comedy",
+                "value": 5,
+                "rank": 1
+            },
+            {
+                "name": "Action",
+                "value": 4,
+                "rank": 2
+            },
+            {
+                "name": "Romance",
+                "value": 4,
+                "rank": 3
+            },
+            {
+                "name": "Horror",
+                "value": 3,
+                "rank": 4
+            },
+            {
+                "name": "World Cinema",
+                "value": 3,
+                "rank": 5
+            },
+            {
+                "name": "Adventure",
+                "value": 1,
+                "rank": 6
+            },
+            {
+                "name": "Thriller",
+                "value": 1,
+                "rank": 7
+            }
+        ]
+    ],
+    [
+        1951,
+        [
+            {
+                "name": "Drama",
+                "value": 9,
+                "rank": 0
+            },
+            {
+                "name": "Comedy",
+                "value": 5,
+                "rank": 1
+            },
+            {
+                "name": "Adventure",
+                "value": 4,
+                "rank": 2
+            },
+            {
+                "name": "Romance",
+                "value": 4,
+                "rank": 3
+            },
+            {
+                "name": "Action",
+                "value": 2,
+                "rank": 4
+            },
+            {
+                "name": "Horror",
+                "value": 2,
+                "rank": 5
+            },
+            {
+                "name": "Thriller",
+                "value": 1,
+                "rank": 6
+            },
+            {
+                "name": "World Cinema",
+                "value": 1,
+                "rank": 7
+            }
+        ]
+    ],
+    [
+        1952,
+        [
+            {
+                "name": "Drama",
+                "value": 9,
+                "rank": 0
+            },
+            {
+                "name": "Comedy",
+                "value": 7,
+                "rank": 1
+            },
+            {
+                "name": "Adventure",
+                "value": 4,
+                "rank": 2
+            },
+            {
+                "name": "Romance",
+                "value": 3,
+                "rank": 3
+            },
+            {
+                "name": "World Cinema",
+                "value": 3,
+                "rank": 4
+            }
+        ]
+    ],
+    [
+        1953,
+        [
+            {
+                "name": "Drama",
+                "value": 12,
+                "rank": 0
+            },
+            {
+                "name": "Adventure",
+                "value": 5,
+                "rank": 1
+            },
+            {
+                "name": "Action",
+                "value": 3,
+                "rank": 2
+            },
+            {
+                "name": "Comedy",
+                "value": 3,
+                "rank": 3
+            },
+            {
+                "name": "Horror",
+                "value": 3,
+                "rank": 4
+            },
+            {
+                "name": "Romance",
+                "value": 3,
+                "rank": 5
+            },
+            {
+                "name": "Thriller",
+                "value": 3,
+                "rank": 6
+            },
+            {
+                "name": "World Cinema",
+                "value": 2,
+                "rank": 7
+            }
+        ]
+    ],
+    [
+        1954,
+        [
+            {
+                "name": "Drama",
+                "value": 16,
+                "rank": 0
+            },
+            {
+                "name": "Comedy",
+                "value": 7,
+                "rank": 1
+            },
+            {
+                "name": "Romance",
+                "value": 3,
+                "rank": 2
+            },
+            {
+                "name": "World Cinema",
+                "value": 3,
+                "rank": 3
+            },
+            {
+                "name": "Horror",
+                "value": 2,
+                "rank": 4
+            },
+            {
+                "name": "Action",
+                "value": 1,
+                "rank": 5
+            },
+            {
+                "name": "Adventure",
+                "value": 1,
+                "rank": 6
+            },
+            {
+                "name": "Thriller",
+                "value": 1,
+                "rank": 7
+            }
+        ]
+    ],
+    [
+        1955,
+        [
+            {
+                "name": "Drama",
+                "value": 13,
+                "rank": 0
+            },
+            {
+                "name": "Comedy",
+                "value": 7,
+                "rank": 1
+            },
+            {
+                "name": "Romance",
+                "value": 7,
+                "rank": 2
+            },
+            {
+                "name": "World Cinema",
+                "value": 5,
+                "rank": 3
+            },
+            {
+                "name": "Horror",
+                "value": 2,
+                "rank": 4
+            },
+            {
+                "name": "Action",
+                "value": 1,
+                "rank": 5
+            },
+            {
+                "name": "Thriller",
+                "value": 1,
+                "rank": 6
+            }
+        ]
+    ],
+    [
+        1956,
+        [
+            {
+                "name": "Drama",
+                "value": 9,
+                "rank": 0
+            },
+            {
+                "name": "Comedy",
+                "value": 5,
+                "rank": 1
+            },
+            {
+                "name": "Adventure",
+                "value": 3,
+                "rank": 2
+            },
+            {
+                "name": "World Cinema",
+                "value": 2,
+                "rank": 3
+            },
+            {
+                "name": "Action",
+                "value": 1,
+                "rank": 4
+            },
+            {
+                "name": "Romance",
+                "value": 1,
+                "rank": 5
+            },
+            {
+                "name": "Thriller",
+                "value": 1,
+                "rank": 6
+            }
+        ]
+    ],
+    [
+        1957,
+        [
+            {
+                "name": "Drama",
+                "value": 18,
+                "rank": 0
+            },
+            {
+                "name": "Comedy",
+                "value": 9,
+                "rank": 1
+            },
+            {
+                "name": "World Cinema",
+                "value": 7,
+                "rank": 2
+            },
+            {
+                "name": "Romance",
+                "value": 4,
+                "rank": 3
+            },
+            {
+                "name": "Thriller",
+                "value": 2,
+                "rank": 4
+            },
+            {
+                "name": "Action",
+                "value": 1,
+                "rank": 5
+            },
+            {
+                "name": "Adventure",
+                "value": 1,
+                "rank": 6
+            },
+            {
+                "name": "Horror",
+                "value": 1,
+                "rank": 7
+            }
+        ]
+    ],
+    [
+        1958,
+        [
+            {
+                "name": "Drama",
+                "value": 12,
+                "rank": 0
+            },
+            {
+                "name": "Comedy",
+                "value": 6,
+                "rank": 1
+            },
+            {
+                "name": "Action",
+                "value": 4,
+                "rank": 2
+            },
+            {
+                "name": "Adventure",
+                "value": 4,
+                "rank": 3
+            },
+            {
+                "name": "Romance",
+                "value": 4,
+                "rank": 4
+            },
+            {
+                "name": "World Cinema",
+                "value": 1,
+                "rank": 5
+            }
+        ]
+    ],
+    [
+        1959,
+        [
+            {
+                "name": "Drama",
+                "value": 9,
+                "rank": 0
+            },
+            {
+                "name": "Comedy",
+                "value": 7,
+                "rank": 1
+            },
+            {
+                "name": "Action",
+                "value": 3,
+                "rank": 2
+            },
+            {
+                "name": "Romance",
+                "value": 3,
+                "rank": 3
+            },
+            {
+                "name": "World Cinema",
+                "value": 3,
+                "rank": 4
+            },
+            {
+                "name": "Adventure",
+                "value": 1,
+                "rank": 5
+            },
+            {
+                "name": "Horror",
+                "value": 1,
+                "rank": 6
+            },
+            {
+                "name": "Thriller",
+                "value": 1,
+                "rank": 7
+            }
+        ]
+    ],
+    [
+        1960,
+        [
+            {
+                "name": "Drama",
+                "value": 16,
+                "rank": 0
+            },
+            {
+                "name": "World Cinema",
+                "value": 8,
+                "rank": 1
+            },
+            {
+                "name": "Romance",
+                "value": 6,
+                "rank": 2
+            },
+            {
+                "name": "Comedy",
+                "value": 5,
+                "rank": 3
+            },
+            {
+                "name": "Thriller",
+                "value": 4,
+                "rank": 4
+            },
+            {
+                "name": "Horror",
+                "value": 3,
+                "rank": 5
+            },
+            {
+                "name": "Action",
+                "value": 1,
+                "rank": 6
+            }
+        ]
+    ],
+    [
+        1961,
+        [
+            {
+                "name": "Drama",
+                "value": 16,
+                "rank": 0
+            },
+            {
+                "name": "Comedy",
+                "value": 6,
+                "rank": 1
+            },
+            {
+                "name": "Romance",
+                "value": 4,
+                "rank": 2
+            },
+            {
+                "name": "World Cinema",
+                "value": 4,
+                "rank": 3
+            },
+            {
+                "name": "Action",
+                "value": 3,
+                "rank": 4
+            },
+            {
+                "name": "Adventure",
+                "value": 3,
+                "rank": 5
+            },
+            {
+                "name": "Thriller",
+                "value": 1,
+                "rank": 6
+            }
+        ]
+    ],
+    [
+        1962,
+        [
+            {
+                "name": "Drama",
+                "value": 13,
+                "rank": 0
+            },
+            {
+                "name": "Comedy",
+                "value": 9,
+                "rank": 1
+            },
+            {
+                "name": "Adventure",
+                "value": 4,
+                "rank": 2
+            },
+            {
+                "name": "Romance",
+                "value": 4,
+                "rank": 3
+            },
+            {
+                "name": "World Cinema",
+                "value": 4,
+                "rank": 4
+            },
+            {
+                "name": "Action",
+                "value": 2,
+                "rank": 5
+            },
+            {
+                "name": "Horror",
+                "value": 2,
+                "rank": 6
+            }
+        ]
+    ],
+    [
+        1963,
+        [
+            {
+                "name": "Drama",
+                "value": 13,
+                "rank": 0
+            },
+            {
+                "name": "World Cinema",
+                "value": 7,
+                "rank": 1
+            },
+            {
+                "name": "Comedy",
+                "value": 3,
+                "rank": 2
+            },
+            {
+                "name": "Romance",
+                "value": 3,
+                "rank": 3
+            },
+            {
+                "name": "Action",
+                "value": 1,
+                "rank": 4
+            },
+            {
+                "name": "Thriller",
+                "value": 1,
+                "rank": 5
+            }
+        ]
+    ],
+    [
+        1964,
+        [
+            {
+                "name": "Comedy",
+                "value": 10,
+                "rank": 0
+            },
+            {
+                "name": "Drama",
+                "value": 6,
+                "rank": 1
+            },
+            {
+                "name": "Adventure",
+                "value": 3,
+                "rank": 2
+            },
+            {
+                "name": "Romance",
+                "value": 2,
+                "rank": 3
+            },
+            {
+                "name": "World Cinema",
+                "value": 2,
+                "rank": 4
+            },
+            {
+                "name": "Horror",
+                "value": 1,
+                "rank": 5
+            },
+            {
+                "name": "Thriller",
+                "value": 1,
+                "rank": 6
+            }
+        ]
+    ],
+    [
+        1965,
+        [
+            {
+                "name": "Drama",
+                "value": 9,
+                "rank": 0
+            },
+            {
+                "name": "Comedy",
+                "value": 4,
+                "rank": 1
+            },
+            {
+                "name": "World Cinema",
+                "value": 4,
+                "rank": 2
+            },
+            {
+                "name": "Romance",
+                "value": 2,
+                "rank": 3
+            },
+            {
+                "name": "Thriller",
+                "value": 2,
+                "rank": 4
+            },
+            {
+                "name": "Adventure",
+                "value": 1,
+                "rank": 5
+            },
+            {
+                "name": "Horror",
+                "value": 1,
+                "rank": 6
+            }
+        ]
+    ],
+    [
+        1966,
+        [
+            {
+                "name": "Drama",
+                "value": 10,
+                "rank": 0
+            },
+            {
+                "name": "Comedy",
+                "value": 4,
+                "rank": 1
+            },
+            {
+                "name": "Action",
+                "value": 3,
+                "rank": 2
+            },
+            {
+                "name": "Adventure",
+                "value": 3,
+                "rank": 3
+            },
+            {
+                "name": "Romance",
+                "value": 3,
+                "rank": 4
+            },
+            {
+                "name": "World Cinema",
+                "value": 3,
+                "rank": 5
+            },
+            {
+                "name": "Horror",
+                "value": 1,
+                "rank": 6
+            },
+            {
+                "name": "Thriller",
+                "value": 1,
+                "rank": 7
+            }
+        ]
+    ],
+    [
+        1967,
+        [
+            {
+                "name": "Drama",
+                "value": 8,
+                "rank": 0
+            },
+            {
+                "name": "Comedy",
+                "value": 7,
+                "rank": 1
+            },
+            {
+                "name": "Action",
+                "value": 6,
+                "rank": 2
+            },
+            {
+                "name": "Adventure",
+                "value": 6,
+                "rank": 3
+            },
+            {
+                "name": "Thriller",
+                "value": 3,
+                "rank": 4
+            },
+            {
+                "name": "World Cinema",
+                "value": 3,
+                "rank": 5
+            },
+            {
+                "name": "Horror",
+                "value": 2,
+                "rank": 6
+            },
+            {
+                "name": "Romance",
+                "value": 2,
+                "rank": 7
+            }
+        ]
+    ],
+    [
+        1968,
+        [
+            {
+                "name": "Drama",
+                "value": 10,
+                "rank": 0
+            },
+            {
+                "name": "Comedy",
+                "value": 8,
+                "rank": 1
+            },
+            {
+                "name": "World Cinema",
+                "value": 7,
+                "rank": 2
+            },
+            {
+                "name": "Thriller",
+                "value": 2,
+                "rank": 3
+            },
+            {
+                "name": "Action",
+                "value": 1,
+                "rank": 4
+            },
+            {
+                "name": "Adventure",
+                "value": 1,
+                "rank": 5
+            },
+            {
+                "name": "Horror",
+                "value": 1,
+                "rank": 6
+            },
+            {
+                "name": "Romance",
+                "value": 1,
+                "rank": 7
+            }
+        ]
+    ],
+    [
+        1969,
+        [
+            {
+                "name": "Drama",
+                "value": 13,
+                "rank": 0
+            },
+            {
+                "name": "Comedy",
+                "value": 6,
+                "rank": 1
+            },
+            {
+                "name": "World Cinema",
+                "value": 6,
+                "rank": 2
+            },
+            {
+                "name": "Action",
+                "value": 4,
+                "rank": 3
+            },
+            {
+                "name": "Adventure",
+                "value": 4,
+                "rank": 4
+            },
+            {
+                "name": "Romance",
+                "value": 3,
+                "rank": 5
+            },
+            {
+                "name": "Thriller",
+                "value": 2,
+                "rank": 6
+            },
+            {
+                "name": "Horror",
+                "value": 1,
+                "rank": 7
+            }
+        ]
+    ],
+    [
+        1970,
+        [
+            {
+                "name": "Comedy",
+                "value": 10,
+                "rank": 0
+            },
+            {
+                "name": "Drama",
+                "value": 9,
+                "rank": 1
+            },
+            {
+                "name": "Action",
+                "value": 5,
+                "rank": 2
+            },
+            {
+                "name": "World Cinema",
+                "value": 4,
+                "rank": 3
+            },
+            {
+                "name": "Adventure",
+                "value": 1,
+                "rank": 4
+            },
+            {
+                "name": "Romance",
+                "value": 1,
+                "rank": 5
+            },
+            {
+                "name": "Thriller",
+                "value": 1,
+                "rank": 6
+            }
+        ]
+    ],
+    [
+        1971,
+        [
+            {
+                "name": "Drama",
+                "value": 16,
+                "rank": 0
+            },
+            {
+                "name": "Comedy",
+                "value": 7,
+                "rank": 1
+            },
+            {
+                "name": "Adventure",
+                "value": 6,
+                "rank": 2
+            },
+            {
+                "name": "World Cinema",
+                "value": 6,
+                "rank": 3
+            },
+            {
+                "name": "Thriller",
+                "value": 5,
+                "rank": 4
+            },
+            {
+                "name": "Action",
+                "value": 3,
+                "rank": 5
+            },
+            {
+                "name": "Horror",
+                "value": 2,
+                "rank": 6
+            },
+            {
+                "name": "Romance",
+                "value": 2,
+                "rank": 7
+            }
+        ]
+    ],
+    [
+        1972,
+        [
+            {
+                "name": "Drama",
+                "value": 16,
+                "rank": 0
+            },
+            {
+                "name": "World Cinema",
+                "value": 9,
+                "rank": 1
+            },
+            {
+                "name": "Action",
+                "value": 7,
+                "rank": 2
+            },
+            {
+                "name": "Comedy",
+                "value": 4,
+                "rank": 3
+            },
+            {
+                "name": "Thriller",
+                "value": 4,
+                "rank": 4
+            },
+            {
+                "name": "Adventure",
+                "value": 3,
+                "rank": 5
+            },
+            {
+                "name": "Romance",
+                "value": 3,
+                "rank": 6
+            }
+        ]
+    ],
+    [
+        1973,
+        [
+            {
+                "name": "Drama",
+                "value": 16,
+                "rank": 0
+            },
+            {
+                "name": "World Cinema",
+                "value": 7,
+                "rank": 1
+            },
+            {
+                "name": "Thriller",
+                "value": 6,
+                "rank": 2
+            },
+            {
+                "name": "Adventure",
+                "value": 4,
+                "rank": 3
+            },
+            {
+                "name": "Romance",
+                "value": 3,
+                "rank": 4
+            },
+            {
+                "name": "Action",
+                "value": 2,
+                "rank": 5
+            },
+            {
+                "name": "Comedy",
+                "value": 2,
+                "rank": 6
+            },
+            {
+                "name": "Horror",
+                "value": 2,
+                "rank": 7
+            }
+        ]
+    ],
+    [
+        1974,
+        [
+            {
+                "name": "Drama",
+                "value": 13,
+                "rank": 0
+            },
+            {
+                "name": "Horror",
+                "value": 5,
+                "rank": 1
+            },
+            {
+                "name": "Adventure",
+                "value": 4,
+                "rank": 2
+            },
+            {
+                "name": "World Cinema",
+                "value": 4,
+                "rank": 3
+            },
+            {
+                "name": "Comedy",
+                "value": 3,
+                "rank": 4
+            },
+            {
+                "name": "Romance",
+                "value": 3,
+                "rank": 5
+            },
+            {
+                "name": "Thriller",
+                "value": 3,
+                "rank": 6
+            },
+            {
+                "name": "Action",
+                "value": 2,
+                "rank": 7
+            }
+        ]
+    ],
+    [
+        1975,
+        [
+            {
+                "name": "Drama",
+                "value": 15,
+                "rank": 0
+            },
+            {
+                "name": "World Cinema",
+                "value": 9,
+                "rank": 1
+            },
+            {
+                "name": "Comedy",
+                "value": 5,
+                "rank": 2
+            },
+            {
+                "name": "Horror",
+                "value": 4,
+                "rank": 3
+            },
+            {
+                "name": "Romance",
+                "value": 4,
+                "rank": 4
+            },
+            {
+                "name": "Action",
+                "value": 3,
+                "rank": 5
+            },
+            {
+                "name": "Adventure",
+                "value": 2,
+                "rank": 6
+            },
+            {
+                "name": "Thriller",
+                "value": 2,
+                "rank": 7
+            }
+        ]
+    ],
+    [
+        1976,
+        [
+            {
+                "name": "Drama",
+                "value": 16,
+                "rank": 0
+            },
+            {
+                "name": "World Cinema",
+                "value": 9,
+                "rank": 1
+            },
+            {
+                "name": "Romance",
+                "value": 7,
+                "rank": 2
+            },
+            {
+                "name": "Comedy",
+                "value": 4,
+                "rank": 3
+            },
+            {
+                "name": "Adventure",
+                "value": 3,
+                "rank": 4
+            },
+            {
+                "name": "Thriller",
+                "value": 2,
+                "rank": 5
+            },
+            {
+                "name": "Action",
+                "value": 1,
+                "rank": 6
+            },
+            {
+                "name": "Horror",
+                "value": 1,
+                "rank": 7
+            }
+        ]
+    ],
+    [
+        1977,
+        [
+            {
+                "name": "Drama",
+                "value": 22,
+                "rank": 0
+            },
+            {
+                "name": "World Cinema",
+                "value": 14,
+                "rank": 1
+            },
+            {
+                "name": "Action",
+                "value": 9,
+                "rank": 2
+            },
+            {
+                "name": "Romance",
+                "value": 6,
+                "rank": 3
+            },
+            {
+                "name": "Comedy",
+                "value": 4,
+                "rank": 4
+            },
+            {
+                "name": "Thriller",
+                "value": 4,
+                "rank": 5
+            },
+            {
+                "name": "Adventure",
+                "value": 2,
+                "rank": 6
+            },
+            {
+                "name": "Horror",
+                "value": 1,
+                "rank": 7
+            }
+        ]
+    ],
+    [
+        1978,
+        [
+            {
+                "name": "Drama",
+                "value": 12,
+                "rank": 0
+            },
+            {
+                "name": "World Cinema",
+                "value": 12,
+                "rank": 1
+            },
+            {
+                "name": "Action",
+                "value": 9,
+                "rank": 2
+            },
+            {
+                "name": "Comedy",
+                "value": 8,
+                "rank": 3
+            },
+            {
+                "name": "Adventure",
+                "value": 5,
+                "rank": 4
+            },
+            {
+                "name": "Thriller",
+                "value": 5,
+                "rank": 5
+            },
+            {
+                "name": "Romance",
+                "value": 3,
+                "rank": 6
+            },
+            {
+                "name": "Horror",
+                "value": 1,
+                "rank": 7
+            }
+        ]
+    ],
+    [
+        1979,
+        [
+            {
+                "name": "Drama",
+                "value": 20,
+                "rank": 0
+            },
+            {
+                "name": "Romance",
+                "value": 10,
+                "rank": 1
+            },
+            {
+                "name": "Comedy",
+                "value": 9,
+                "rank": 2
+            },
+            {
+                "name": "World Cinema",
+                "value": 9,
+                "rank": 3
+            },
+            {
+                "name": "Action",
+                "value": 8,
+                "rank": 4
+            },
+            {
+                "name": "Horror",
+                "value": 3,
+                "rank": 5
+            },
+            {
+                "name": "Adventure",
+                "value": 2,
+                "rank": 6
+            },
+            {
+                "name": "Thriller",
+                "value": 1,
+                "rank": 7
+            }
+        ]
+    ],
+    [
+        1980,
+        [
+            {
+                "name": "Drama",
+                "value": 24,
+                "rank": 0
+            },
+            {
+                "name": "World Cinema",
+                "value": 11,
+                "rank": 1
+            },
+            {
+                "name": "Action",
+                "value": 8,
+                "rank": 2
+            },
+            {
+                "name": "Comedy",
+                "value": 8,
+                "rank": 3
+            },
+            {
+                "name": "Romance",
+                "value": 7,
+                "rank": 4
+            },
+            {
+                "name": "Adventure",
+                "value": 6,
+                "rank": 5
+            },
+            {
+                "name": "Horror",
+                "value": 3,
+                "rank": 6
+            },
+            {
+                "name": "Thriller",
+                "value": 1,
+                "rank": 7
+            }
+        ]
+    ],
+    [
+        1981,
+        [
+            {
+                "name": "Drama",
+                "value": 15,
+                "rank": 0
+            },
+            {
+                "name": "World Cinema",
+                "value": 8,
+                "rank": 1
+            },
+            {
+                "name": "Action",
+                "value": 7,
+                "rank": 2
+            },
+            {
+                "name": "Comedy",
+                "value": 4,
+                "rank": 3
+            },
+            {
+                "name": "Horror",
+                "value": 3,
+                "rank": 4
+            },
+            {
+                "name": "Romance",
+                "value": 3,
+                "rank": 5
+            },
+            {
+                "name": "Adventure",
+                "value": 2,
+                "rank": 6
+            },
+            {
+                "name": "Thriller",
+                "value": 2,
+                "rank": 7
+            }
+        ]
+    ],
+    [
+        1982,
+        [
+            {
+                "name": "Drama",
+                "value": 27,
+                "rank": 0
+            },
+            {
+                "name": "Comedy",
+                "value": 14,
+                "rank": 1
+            },
+            {
+                "name": "World Cinema",
+                "value": 14,
+                "rank": 2
+            },
+            {
+                "name": "Romance",
+                "value": 10,
+                "rank": 3
+            },
+            {
+                "name": "Action",
+                "value": 6,
+                "rank": 4
+            },
+            {
+                "name": "Adventure",
+                "value": 2,
+                "rank": 5
+            },
+            {
+                "name": "Thriller",
+                "value": 2,
+                "rank": 6
+            },
+            {
+                "name": "Horror",
+                "value": 1,
+                "rank": 7
+            }
+        ]
+    ],
+    [
+        1983,
+        [
+            {
+                "name": "Drama",
+                "value": 25,
+                "rank": 0
+            },
+            {
+                "name": "Action",
+                "value": 10,
+                "rank": 1
+            },
+            {
+                "name": "Comedy",
+                "value": 10,
+                "rank": 2
+            },
+            {
+                "name": "World Cinema",
+                "value": 9,
+                "rank": 3
+            },
+            {
+                "name": "Romance",
+                "value": 6,
+                "rank": 4
+            },
+            {
+                "name": "Horror",
+                "value": 5,
+                "rank": 5
+            },
+            {
+                "name": "Adventure",
+                "value": 3,
+                "rank": 6
+            },
+            {
+                "name": "Thriller",
+                "value": 3,
+                "rank": 7
+            }
+        ]
+    ],
+    [
+        1984,
+        [
+            {
+                "name": "Drama",
+                "value": 30,
+                "rank": 0
+            },
+            {
+                "name": "Comedy",
+                "value": 11,
+                "rank": 1
+            },
+            {
+                "name": "Romance",
+                "value": 11,
+                "rank": 2
+            },
+            {
+                "name": "Action",
+                "value": 8,
+                "rank": 3
+            },
+            {
+                "name": "World Cinema",
+                "value": 8,
+                "rank": 4
+            },
+            {
+                "name": "Thriller",
+                "value": 3,
+                "rank": 5
+            },
+            {
+                "name": "Adventure",
+                "value": 1,
+                "rank": 6
+            },
+            {
+                "name": "Horror",
+                "value": 1,
+                "rank": 7
+            }
+        ]
+    ],
+    [
+        1985,
+        [
+            {
+                "name": "Drama",
+                "value": 41,
+                "rank": 0
+            },
+            {
+                "name": "World Cinema",
+                "value": 17,
+                "rank": 1
+            },
+            {
+                "name": "Comedy",
+                "value": 16,
+                "rank": 2
+            },
+            {
+                "name": "Romance",
+                "value": 12,
+                "rank": 3
+            },
+            {
+                "name": "Action",
+                "value": 10,
+                "rank": 4
+            },
+            {
+                "name": "Thriller",
+                "value": 7,
+                "rank": 5
+            },
+            {
+                "name": "Adventure",
+                "value": 5,
+                "rank": 6
+            },
+            {
+                "name": "Horror",
+                "value": 2,
+                "rank": 7
+            }
+        ]
+    ],
+    [
+        1986,
+        [
+            {
+                "name": "Drama",
+                "value": 28,
+                "rank": 0
+            },
+            {
+                "name": "Comedy",
+                "value": 10,
+                "rank": 1
+            },
+            {
+                "name": "World Cinema",
+                "value": 9,
+                "rank": 2
+            },
+            {
+                "name": "Romance",
+                "value": 8,
+                "rank": 3
+            },
+            {
+                "name": "Action",
+                "value": 6,
+                "rank": 4
+            },
+            {
+                "name": "Adventure",
+                "value": 3,
+                "rank": 5
+            },
+            {
+                "name": "Horror",
+                "value": 3,
+                "rank": 6
+            },
+            {
+                "name": "Thriller",
+                "value": 2,
+                "rank": 7
+            }
+        ]
+    ],
+    [
+        1987,
+        [
+            {
+                "name": "Drama",
+                "value": 21,
+                "rank": 0
+            },
+            {
+                "name": "Comedy",
+                "value": 14,
+                "rank": 1
+            },
+            {
+                "name": "World Cinema",
+                "value": 14,
+                "rank": 2
+            },
+            {
+                "name": "Action",
+                "value": 13,
+                "rank": 3
+            },
+            {
+                "name": "Romance",
+                "value": 11,
+                "rank": 4
+            },
+            {
+                "name": "Adventure",
+                "value": 7,
+                "rank": 5
+            },
+            {
+                "name": "Thriller",
+                "value": 7,
+                "rank": 6
+            },
+            {
+                "name": "Horror",
+                "value": 6,
+                "rank": 7
+            }
+        ]
+    ],
+    [
+        1988,
+        [
+            {
+                "name": "Drama",
+                "value": 23,
+                "rank": 0
+            },
+            {
+                "name": "Action",
+                "value": 17,
+                "rank": 1
+            },
+            {
+                "name": "Comedy",
+                "value": 16,
+                "rank": 2
+            },
+            {
+                "name": "World Cinema",
+                "value": 15,
+                "rank": 3
+            },
+            {
+                "name": "Romance",
+                "value": 12,
+                "rank": 4
+            },
+            {
+                "name": "Adventure",
+                "value": 7,
+                "rank": 5
+            },
+            {
+                "name": "Thriller",
+                "value": 6,
+                "rank": 6
+            },
+            {
+                "name": "Horror",
+                "value": 4,
+                "rank": 7
+            }
+        ]
+    ],
+    [
+        1989,
+        [
+            {
+                "name": "Drama",
+                "value": 27,
+                "rank": 0
+            },
+            {
+                "name": "Comedy",
+                "value": 15,
+                "rank": 1
+            },
+            {
+                "name": "World Cinema",
+                "value": 13,
+                "rank": 2
+            },
+            {
+                "name": "Romance",
+                "value": 11,
+                "rank": 3
+            },
+            {
+                "name": "Horror",
+                "value": 9,
+                "rank": 4
+            },
+            {
+                "name": "Thriller",
+                "value": 7,
+                "rank": 5
+            },
+            {
+                "name": "Action",
+                "value": 6,
+                "rank": 6
+            },
+            {
+                "name": "Adventure",
+                "value": 2,
+                "rank": 7
+            }
+        ]
+    ],
+    [
+        1990,
+        [
+            {
+                "name": "Drama",
+                "value": 29,
+                "rank": 0
+            },
+            {
+                "name": "Action",
+                "value": 12,
+                "rank": 1
+            },
+            {
+                "name": "Comedy",
+                "value": 9,
+                "rank": 2
+            },
+            {
+                "name": "World Cinema",
+                "value": 9,
+                "rank": 3
+            },
+            {
+                "name": "Romance",
+                "value": 8,
+                "rank": 4
+            },
+            {
+                "name": "Thriller",
+                "value": 7,
+                "rank": 5
+            },
+            {
+                "name": "Adventure",
+                "value": 4,
+                "rank": 6
+            },
+            {
+                "name": "Horror",
+                "value": 1,
+                "rank": 7
+            }
+        ]
+    ],
+    [
+        1991,
+        [
+            {
+                "name": "Drama",
+                "value": 32,
+                "rank": 0
+            },
+            {
+                "name": "Romance",
+                "value": 15,
+                "rank": 1
+            },
+            {
+                "name": "World Cinema",
+                "value": 13,
+                "rank": 2
+            },
+            {
+                "name": "Comedy",
+                "value": 11,
+                "rank": 3
+            },
+            {
+                "name": "Action",
+                "value": 10,
+                "rank": 4
+            },
+            {
+                "name": "Thriller",
+                "value": 7,
+                "rank": 5
+            },
+            {
+                "name": "Horror",
+                "value": 6,
+                "rank": 6
+            },
+            {
+                "name": "Adventure",
+                "value": 4,
+                "rank": 7
+            }
+        ]
+    ],
+    [
+        1992,
+        [
+            {
+                "name": "Drama",
+                "value": 26,
+                "rank": 0
+            },
+            {
+                "name": "Comedy",
+                "value": 20,
+                "rank": 1
+            },
+            {
+                "name": "World Cinema",
+                "value": 13,
+                "rank": 2
+            },
+            {
+                "name": "Action",
+                "value": 12,
+                "rank": 3
+            },
+            {
+                "name": "Romance",
+                "value": 10,
+                "rank": 4
+            },
+            {
+                "name": "Thriller",
+                "value": 7,
+                "rank": 5
+            },
+            {
+                "name": "Adventure",
+                "value": 6,
+                "rank": 6
+            },
+            {
+                "name": "Horror",
+                "value": 6,
+                "rank": 7
+            }
+        ]
+    ],
+    [
+        1993,
+        [
+            {
+                "name": "Drama",
+                "value": 39,
+                "rank": 0
+            },
+            {
+                "name": "World Cinema",
+                "value": 20,
+                "rank": 1
+            },
+            {
+                "name": "Comedy",
+                "value": 14,
+                "rank": 2
+            },
+            {
+                "name": "Romance",
+                "value": 11,
+                "rank": 3
+            },
+            {
+                "name": "Thriller",
+                "value": 9,
+                "rank": 4
+            },
+            {
+                "name": "Action",
+                "value": 7,
+                "rank": 5
+            },
+            {
+                "name": "Adventure",
+                "value": 7,
+                "rank": 6
+            },
+            {
+                "name": "Horror",
+                "value": 5,
+                "rank": 7
+            }
+        ]
+    ],
+    [
+        1994,
+        [
+            {
+                "name": "Drama",
+                "value": 42,
+                "rank": 0
+            },
+            {
+                "name": "Comedy",
+                "value": 22,
+                "rank": 1
+            },
+            {
+                "name": "Romance",
+                "value": 19,
+                "rank": 2
+            },
+            {
+                "name": "World Cinema",
+                "value": 18,
+                "rank": 3
+            },
+            {
+                "name": "Action",
+                "value": 12,
+                "rank": 4
+            },
+            {
+                "name": "Thriller",
+                "value": 10,
+                "rank": 5
+            },
+            {
+                "name": "Adventure",
+                "value": 7,
+                "rank": 6
+            },
+            {
+                "name": "Horror",
+                "value": 5,
+                "rank": 7
+            }
+        ]
+    ],
+    [
+        1995,
+        [
+            {
+                "name": "Drama",
+                "value": 42,
+                "rank": 0
+            },
+            {
+                "name": "World Cinema",
+                "value": 31,
+                "rank": 1
+            },
+            {
+                "name": "Comedy",
+                "value": 27,
+                "rank": 2
+            },
+            {
+                "name": "Romance",
+                "value": 20,
+                "rank": 3
+            },
+            {
+                "name": "Action",
+                "value": 12,
+                "rank": 4
+            },
+            {
+                "name": "Horror",
+                "value": 6,
+                "rank": 5
+            },
+            {
+                "name": "Thriller",
+                "value": 6,
+                "rank": 6
+            },
+            {
+                "name": "Adventure",
+                "value": 4,
+                "rank": 7
+            }
+        ]
+    ],
+    [
+        1996,
+        [
+            {
+                "name": "Drama",
+                "value": 45,
+                "rank": 0
+            },
+            {
+                "name": "Comedy",
+                "value": 36,
+                "rank": 1
+            },
+            {
+                "name": "World Cinema",
+                "value": 25,
+                "rank": 2
+            },
+            {
+                "name": "Romance",
+                "value": 20,
+                "rank": 3
+            },
+            {
+                "name": "Adventure",
+                "value": 8,
+                "rank": 4
+            },
+            {
+                "name": "Action",
+                "value": 7,
+                "rank": 5
+            },
+            {
+                "name": "Horror",
+                "value": 4,
+                "rank": 6
+            },
+            {
+                "name": "Thriller",
+                "value": 4,
+                "rank": 7
+            }
+        ]
+    ],
+    [
+        1997,
+        [
+            {
+                "name": "Drama",
+                "value": 39,
+                "rank": 0
+            },
+            {
+                "name": "Comedy",
+                "value": 24,
+                "rank": 1
+            },
+            {
+                "name": "World Cinema",
+                "value": 23,
+                "rank": 2
+            },
+            {
+                "name": "Romance",
+                "value": 15,
+                "rank": 3
+            },
+            {
+                "name": "Thriller",
+                "value": 14,
+                "rank": 4
+            },
+            {
+                "name": "Action",
+                "value": 10,
+                "rank": 5
+            },
+            {
+                "name": "Horror",
+                "value": 8,
+                "rank": 6
+            },
+            {
+                "name": "Adventure",
+                "value": 6,
+                "rank": 7
+            }
+        ]
+    ],
+    [
+        1998,
+        [
+            {
+                "name": "Drama",
+                "value": 54,
+                "rank": 0
+            },
+            {
+                "name": "World Cinema",
+                "value": 33,
+                "rank": 1
+            },
+            {
+                "name": "Comedy",
+                "value": 28,
+                "rank": 2
+            },
+            {
+                "name": "Romance",
+                "value": 25,
+                "rank": 3
+            },
+            {
+                "name": "Action",
+                "value": 9,
+                "rank": 4
+            },
+            {
+                "name": "Adventure",
+                "value": 9,
+                "rank": 5
+            },
+            {
+                "name": "Thriller",
+                "value": 8,
+                "rank": 6
+            },
+            {
+                "name": "Horror",
+                "value": 6,
+                "rank": 7
+            }
+        ]
+    ],
+    [
+        1999,
+        [
+            {
+                "name": "Drama",
+                "value": 68,
+                "rank": 0
+            },
+            {
+                "name": "World Cinema",
+                "value": 40,
+                "rank": 1
+            },
+            {
+                "name": "Comedy",
+                "value": 35,
+                "rank": 2
+            },
+            {
+                "name": "Romance",
+                "value": 30,
+                "rank": 3
+            },
+            {
+                "name": "Horror",
+                "value": 15,
+                "rank": 4
+            },
+            {
+                "name": "Thriller",
+                "value": 11,
+                "rank": 5
+            },
+            {
+                "name": "Action",
+                "value": 10,
+                "rank": 6
+            },
+            {
+                "name": "Adventure",
+                "value": 7,
+                "rank": 7
+            }
+        ]
+    ],
+    [
+        2000,
+        [
+            {
+                "name": "Drama",
+                "value": 59,
+                "rank": 0
+            },
+            {
+                "name": "World Cinema",
+                "value": 37,
+                "rank": 1
+            },
+            {
+                "name": "Comedy",
+                "value": 34,
+                "rank": 2
+            },
+            {
+                "name": "Romance",
+                "value": 30,
+                "rank": 3
+            },
+            {
+                "name": "Thriller",
+                "value": 14,
+                "rank": 4
+            },
+            {
+                "name": "Horror",
+                "value": 12,
+                "rank": 5
+            },
+            {
+                "name": "Action",
+                "value": 6,
+                "rank": 6
+            },
+            {
+                "name": "Adventure",
+                "value": 6,
+                "rank": 7
+            }
+        ]
+    ],
+    [
+        2001,
+        [
+            {
+                "name": "Drama",
+                "value": 84,
+                "rank": 0
+            },
+            {
+                "name": "World Cinema",
+                "value": 59,
+                "rank": 1
+            },
+            {
+                "name": "Comedy",
+                "value": 51,
+                "rank": 2
+            },
+            {
+                "name": "Romance",
+                "value": 42,
+                "rank": 3
+            },
+            {
+                "name": "Action",
+                "value": 17,
+                "rank": 4
+            },
+            {
+                "name": "Thriller",
+                "value": 14,
+                "rank": 5
+            },
+            {
+                "name": "Horror",
+                "value": 12,
+                "rank": 6
+            },
+            {
+                "name": "Adventure",
+                "value": 7,
+                "rank": 7
+            }
+        ]
+    ],
+    [
+        2002,
+        [
+            {
+                "name": "Drama",
+                "value": 71,
+                "rank": 0
+            },
+            {
+                "name": "World Cinema",
+                "value": 51,
+                "rank": 1
+            },
+            {
+                "name": "Comedy",
+                "value": 35,
+                "rank": 2
+            },
+            {
+                "name": "Romance",
+                "value": 30,
+                "rank": 3
+            },
+            {
+                "name": "Adventure",
+                "value": 15,
+                "rank": 4
+            },
+            {
+                "name": "Thriller",
+                "value": 15,
+                "rank": 5
+            },
+            {
+                "name": "Horror",
+                "value": 14,
+                "rank": 6
+            },
+            {
+                "name": "Action",
+                "value": 11,
+                "rank": 7
+            }
+        ]
+    ],
+    [
+        2003,
+        [
+            {
+                "name": "Drama",
+                "value": 87,
+                "rank": 0
+            },
+            {
+                "name": "World Cinema",
+                "value": 61,
+                "rank": 1
+            },
+            {
+                "name": "Comedy",
+                "value": 41,
+                "rank": 2
+            },
+            {
+                "name": "Romance",
+                "value": 39,
+                "rank": 3
+            },
+            {
+                "name": "Action",
+                "value": 20,
+                "rank": 4
+            },
+            {
+                "name": "Thriller",
+                "value": 17,
+                "rank": 5
+            },
+            {
+                "name": "Adventure",
+                "value": 16,
+                "rank": 6
+            },
+            {
+                "name": "Horror",
+                "value": 13,
+                "rank": 7
+            }
+        ]
+    ],
+    [
+        2004,
+        [
+            {
+                "name": "Drama",
+                "value": 81,
+                "rank": 0
+            },
+            {
+                "name": "World Cinema",
+                "value": 63,
+                "rank": 1
+            },
+            {
+                "name": "Comedy",
+                "value": 43,
+                "rank": 2
+            },
+            {
+                "name": "Romance",
+                "value": 32,
+                "rank": 3
+            },
+            {
+                "name": "Thriller",
+                "value": 21,
+                "rank": 4
+            },
+            {
+                "name": "Action",
+                "value": 16,
+                "rank": 5
+            },
+            {
+                "name": "Horror",
+                "value": 16,
+                "rank": 6
+            },
+            {
+                "name": "Adventure",
+                "value": 14,
+                "rank": 7
+            }
+        ]
+    ],
+    [
+        2005,
+        [
+            {
+                "name": "Drama",
+                "value": 93,
+                "rank": 0
+            },
+            {
+                "name": "World Cinema",
+                "value": 63,
+                "rank": 1
+            },
+            {
+                "name": "Comedy",
+                "value": 46,
+                "rank": 2
+            },
+            {
+                "name": "Romance",
+                "value": 41,
+                "rank": 3
+            },
+            {
+                "name": "Thriller",
+                "value": 21,
+                "rank": 4
+            },
+            {
+                "name": "Horror",
+                "value": 20,
+                "rank": 5
+            },
+            {
+                "name": "Action",
+                "value": 15,
+                "rank": 6
+            },
+            {
+                "name": "Adventure",
+                "value": 14,
+                "rank": 7
+            }
+        ]
+    ],
+    [
+        2006,
+        [
+            {
+                "name": "Drama",
+                "value": 118,
+                "rank": 0
+            },
+            {
+                "name": "World Cinema",
+                "value": 77,
+                "rank": 1
+            },
+            {
+                "name": "Comedy",
+                "value": 58,
+                "rank": 2
+            },
+            {
+                "name": "Romance",
+                "value": 40,
+                "rank": 3
+            },
+            {
+                "name": "Thriller",
+                "value": 27,
+                "rank": 4
+            },
+            {
+                "name": "Horror",
+                "value": 24,
+                "rank": 5
+            },
+            {
+                "name": "Action",
+                "value": 18,
+                "rank": 6
+            },
+            {
+                "name": "Adventure",
+                "value": 6,
+                "rank": 7
+            }
+        ]
+    ],
+    [
+        2007,
+        [
+            {
+                "name": "Drama",
+                "value": 96,
+                "rank": 0
+            },
+            {
+                "name": "World Cinema",
+                "value": 64,
+                "rank": 1
+            },
+            {
+                "name": "Comedy",
+                "value": 49,
+                "rank": 2
+            },
+            {
+                "name": "Romance",
+                "value": 41,
+                "rank": 3
+            },
+            {
+                "name": "Thriller",
+                "value": 22,
+                "rank": 4
+            },
+            {
+                "name": "Horror",
+                "value": 21,
+                "rank": 5
+            },
+            {
+                "name": "Adventure",
+                "value": 6,
+                "rank": 6
+            },
+            {
+                "name": "Action",
+                "value": 5,
+                "rank": 7
+            }
+        ]
+    ],
+    [
+        2008,
+        [
+            {
+                "name": "Drama",
+                "value": 109,
+                "rank": 0
+            },
+            {
+                "name": "World Cinema",
+                "value": 76,
+                "rank": 1
+            },
+            {
+                "name": "Comedy",
+                "value": 42,
+                "rank": 2
+            },
+            {
+                "name": "Romance",
+                "value": 39,
+                "rank": 3
+            },
+            {
+                "name": "Thriller",
+                "value": 27,
+                "rank": 4
+            },
+            {
+                "name": "Horror",
+                "value": 24,
+                "rank": 5
+            },
+            {
+                "name": "Action",
+                "value": 17,
+                "rank": 6
+            },
+            {
+                "name": "Adventure",
+                "value": 15,
+                "rank": 7
+            }
+        ]
+    ],
+    [
+        2009,
+        [
+            {
+                "name": "Drama",
+                "value": 121,
+                "rank": 0
+            },
+            {
+                "name": "World Cinema",
+                "value": 86,
+                "rank": 1
+            },
+            {
+                "name": "Comedy",
+                "value": 58,
+                "rank": 2
+            },
+            {
+                "name": "Romance",
+                "value": 42,
+                "rank": 3
+            },
+            {
+                "name": "Thriller",
+                "value": 26,
+                "rank": 4
+            },
+            {
+                "name": "Action",
+                "value": 19,
+                "rank": 5
+            },
+            {
+                "name": "Horror",
+                "value": 18,
+                "rank": 6
+            },
+            {
+                "name": "Adventure",
+                "value": 11,
+                "rank": 7
+            }
+        ]
+    ],
+    [
+        2010,
+        [
+            {
+                "name": "Drama",
+                "value": 91,
+                "rank": 0
+            },
+            {
+                "name": "World Cinema",
+                "value": 61,
+                "rank": 1
+            },
+            {
+                "name": "Comedy",
+                "value": 45,
+                "rank": 2
+            },
+            {
+                "name": "Romance",
+                "value": 36,
+                "rank": 3
+            },
+            {
+                "name": "Action",
+                "value": 22,
+                "rank": 4
+            },
+            {
+                "name": "Thriller",
+                "value": 19,
+                "rank": 5
+            },
+            {
+                "name": "Horror",
+                "value": 15,
+                "rank": 6
+            },
+            {
+                "name": "Adventure",
+                "value": 11,
+                "rank": 7
+            }
+        ]
+    ],
+    [
+        2011,
+        [
+            {
+                "name": "Drama",
+                "value": 71,
+                "rank": 0
+            },
+            {
+                "name": "Comedy",
+                "value": 27,
+                "rank": 1
+            },
+            {
+                "name": "Romance",
+                "value": 18,
+                "rank": 2
+            },
+            {
+                "name": "Thriller",
+                "value": 16,
+                "rank": 3
+            },
+            {
+                "name": "Horror",
+                "value": 12,
+                "rank": 4
+            },
+            {
+                "name": "World Cinema",
+                "value": 10,
+                "rank": 5
+            },
+            {
+                "name": "Action",
+                "value": 8,
+                "rank": 6
+            },
+            {
+                "name": "Adventure",
+                "value": 7,
+                "rank": 7
+            }
+        ]
+    ],
+    [
+        2012,
+        [
+            {
+                "name": "Drama",
+                "value": 33,
+                "rank": 0
+            },
+            {
+                "name": "Comedy",
+                "value": 25,
+                "rank": 1
+            },
+            {
+                "name": "Thriller",
+                "value": 18,
+                "rank": 2
+            },
+            {
+                "name": "Romance",
+                "value": 11,
+                "rank": 3
+            },
+            {
+                "name": "Action",
+                "value": 8,
+                "rank": 4
+            },
+            {
+                "name": "Horror",
+                "value": 8,
+                "rank": 5
+            },
+            {
+                "name": "World Cinema",
+                "value": 3,
+                "rank": 6
+            },
+            {
+                "name": "Adventure",
+                "value": 1,
+                "rank": 7
+            }
+        ]
+    ]
+]
