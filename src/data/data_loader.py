@@ -2,6 +2,7 @@ import pandas as pd
 import os
 import requests
 from bs4 import BeautifulSoup
+import numpy
     
 def load_csv(file_path, is_tsv=False, has_column_names=True,  column_names=None):
     if not os.path.exists(file_path):
