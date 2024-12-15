@@ -1,0 +1,42 @@
+{
+    "Bechdel Test Passed": {
+        "Female Directors": {
+            "neutral": 0.203484,
+            "sadness": 0.202632,
+            "anger": 0.167970,
+            "fear": 0.154815,
+            "disgust": 0.123382,
+            "surprise": 0.049994,
+            "joy": 0.097722
+        },
+        "Male Directors": {
+            "neutral": 0.198648,
+            "sadness": 0.182972,
+            "anger": 0.201342,
+            "fear": 0.173345,
+            "disgust": 0.122636,
+            "surprise": 0.052466,
+            "joy": 0.068592
+        }
+    },
+    "Bechdel Test Not Passed": {
+        "Female Directors": {
+            "neutral": 0.178137,
+            "sadness": 0.173206,
+            "anger": 0.194618,
+            "fear": 0.161675,
+            "disgust": 0.152146,
+            "surprise": 0.058818,
+            "joy": 0.081401
+        },
+        "Male Directors": {
+            "neutral": 0.205331,
+            "sadness": 0.157213,
+            "anger": 0.235355,
+            "fear": 0.178590,
+            "disgust": 0.123933,
+            "surprise": 0.047661,
+            "joy": 0.051917
+        }
+    }
+}
