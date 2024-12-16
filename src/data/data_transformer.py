@@ -1,19 +1,30 @@
 from src.data.data_loader import load_csv, load_txt, get_wikipedia_infobox_by_id
 from src.data.data_cleaner import to_datetime, get_gender_from_name, extract_names_from_tuples, map_cluster
 from tqdm import tqdm
+tqdm.pandas()
 import json
 import pandas as pd
 import numpy as np
-DATA_FOLDER_PATH = "data/raw/"
+import ast
+import os
+#from transformers import pipeline
+from collections import defaultdict
 
+
+RAW_DATA_FOLDER_PATH = "data/raw/"
+EXTERNAL_DATA_FOLDER_PATH = "src/data/external_data/"
+TRANSITIONARY_DATA_FOLDER_PATH = "data/processed/transitionary/"
+
+# PREPROCESSING MOVIES METADATA
 def preprocess_movie_metadata():
-    df = load_csv(DATA_FOLDER_PATH + 'movie.metadata.tsv',has_column_names=False, is_tsv=True, column_names=['wikipedia_movie_id', 'freebase_movie_id', 'movie_name', 'movie_release_date',
+    df = load_csv(RAW_DATA_FOLDER_PATH + 'movie.metadata.tsv',has_column_names=False, is_tsv=True, column_names=['wikipedia_movie_id', 'freebase_movie_id', 'movie_name', 'movie_release_date',
                             'movie_box_office_revenue', 'movie_runtime', 'movie_languages', 'movie_countries', 'movie_genres'])
     # here, we filter the movies on their date only
     df = to_datetime(df, column='movie_release_date')
     # filtering the years because we have very small data prior to 1910 and 2013
     df = df[(df['movie_release_date'] > 1913) & (df['movie_release_date'] <= 2013)]
-    # formatting the languages, countries and genres
+    # the data regarding countries, languages and genres are very broad,
+    # to avoid getting lost in interpretation we decided to cluster them
     df['movie_languages'] = df['movie_languages'].apply(extract_names_from_tuples)
     df['movie_countries'] = df['movie_countries'].apply(extract_names_from_tuples)
     df['movie_genres'] = df['movie_genres'].apply(extract_names_from_tuples)
@@ -25,13 +36,14 @@ def preprocess_movie_metadata():
     df['movie_languages'] = df['movie_languages'].apply(lambda x: list(dict.fromkeys([map_cluster(languages_cluster, elem) for elem in x]).keys()))
     df['movie_countries'] = df['movie_countries'].apply(lambda x: list(dict.fromkeys([map_cluster(countries_cluster, elem) for elem in x]).keys()))
     df['movie_genres'] = df['movie_genres'].apply(lambda x: list(dict.fromkeys([map_cluster(genres_cluster, elem) for elem in x]).keys()))
-    df.to_csv('data/processed/movies_metadata.csv', index=False)
     
+    df.to_csv(TRANSITIONARY_DATA_FOLDER_PATH + "movies_metadata.csv")
     return df
 
-def preprocess_char_metadata():
 
-    df = load_csv(DATA_FOLDER_PATH + 'character.metadata.tsv', has_column_names=False, is_tsv=True, column_names=['wikipedia_movie_id', 'freebase_movie_id', 'movie_release_date', 'char_name',
+# PREPROCESSING CHARACTER METADATA
+def preprocess_char_metadata():
+    df = load_csv(RAW_DATA_FOLDER_PATH + 'character.metadata.tsv', has_column_names=False, is_tsv=True, column_names=['wikipedia_movie_id', 'freebase_movie_id', 'movie_release_date', 'char_name',
                         'actor_date_of_birth', 'actor_gender', 'actor_height', 'actor_ethnicity', 'actor_name', 'actor_age', 
                         'char_actor_id', 'char_id', 'actor_id'])
     # we convert the columns to datetime
@@ -59,108 +71,14 @@ def preprocess_char_metadata():
             df.at[index, 'actor_gender'] = gender
     # we remove the rows that still have no gender
     df = df.dropna(subset=["actor_gender", "actor_name"]).reset_index(drop=True)
-    df.to_csv('data/processed/characters_metadata.csv', index=False)
+
+    df.to_csv(TRANSITIONARY_DATA_FOLDER_PATH + "characters_metadata.csv")
     return df
 
-def get_movie_ids(movie_df, char_df): 
-    """ Take raw dataframes, preprocess them and return the intersection 
-    of the wikipedia_movie_id column of both dataframes."""
-    
-    movie_ids = movie_df['wikipedia_movie_id']
-    # in character file, we must drop duplicates
-    character_movie_id = char_df.drop_duplicates(subset=['wikipedia_movie_id'])
-    # keep only the ids
-    character_movie_id = character_movie_id[['wikipedia_movie_id']]
-    # merge the two dataframes to get the intersection of the wikipedia_movie_id column
-    merged = pd.merge(movie_ids, character_movie_id, how='inner', on='wikipedia_movie_id')
-    # we keep only the rows that are in the intersection
-    movies_metadata_intersection = movie_df['wikipedia_movie_id'].apply(lambda x : x in merged['wikipedia_movie_id'].values)
-    movie_df = movie_df[movies_metadata_intersection]
-    # we keep only the rows that are in the intersection
-    character_metadata_intersection = char_df['wikipedia_movie_id'].apply(lambda x : x in merged['wikipedia_movie_id'].values)
-    char_df = char_df[character_metadata_intersection]
-    # storing the intersection ids of wikipedia_movie_id
-    ids = movie_df[["wikipedia_movie_id"]]
-    
-    return ids
 
-def process_imdb_ratings(cmu_df):
-    """ cmu_df is the dataframe containing the movies metadata """
-    
-    # Load the data
-    # the title.basics.tsv and title.ratings.tsv files are too big to be stored in the repository
-    
-    #imdb_title_df = pd.read_csv("src/data/external/title.basics.tsv", sep='\t')
-    #imdb_ratings_df = pd.read_csv("src/data/external_data/raw_data/title.ratings.tsv", sep='\t')
-    imdb_title_df = load_csv("data/external/title.basics.tsv", is_tsv=True)
-    imdb_ratings_df = load_csv("data/external/title.ratings.tsv", is_tsv=True)
-    # Merging the two IMDB DataFrames on the 'tconst' column
-    imdb_df = pd.merge(imdb_title_df, imdb_ratings_df[['tconst', 'averageRating', 'numVotes']], on='tconst', how='left')
-    
-    # To be sure to get all names, we consider the two columns primaryTitle and originalTitle
-    # We create a match name with the title and the year of the movie, lowercasing the str
-    # For IMDB
-    imdb_df['primaryTitle_match'] = imdb_df['primaryTitle'].str.lower() + imdb_df['startYear'].str.lower()
-    imdb_df['originalTitle_match'] = imdb_df['originalTitle'].str.lower() + imdb_df['startYear'].str.lower()
-    imdb_all_titles = pd.concat([imdb_df["primaryTitle_match"], imdb_df["originalTitle_match"]]).drop_duplicates()
-    # For CMU
-    cmu_titles = cmu_df["movie_name"].str.lower() + cmu_df["movie_release_date"].apply(lambda x: str(x))
-
-    # We get the indexes of the intersection of movies
-    intersecting_cmu_titles = cmu_titles.isin(imdb_all_titles)
-
-    # Reshape IMDb data by concatenating both title types into one column along with other columns
-    # We drop duplicates on the title
-    imdb_ratings_expanded = pd.concat([
-        imdb_df[['tconst', 'primaryTitle_match', "startYear", 'averageRating', 'numVotes']].rename(columns={'primaryTitle_match': 'title_match'}),
-        imdb_df[['tconst', 'originalTitle_match', "startYear", 'averageRating', 'numVotes']].rename(columns={'originalTitle_match': 'title_match'})
-    ]).dropna(subset=['title_match']).drop_duplicates(subset=['title_match'])
-
-    # We keep only the interected df
-    cmu_intersection_df = cmu_df.loc[intersecting_cmu_titles]
-    # We create the titles match column to merge easily
-    cmu_intersection_df['movie_name_match'] = cmu_titles
-    
-    # We merge
-    imdb_in_cmu = cmu_intersection_df.merge(
-        imdb_ratings_expanded,
-        left_on='movie_name_match',
-        right_on='title_match',
-        how='left'
-    )
-
-    # We drop the rows with no ratings
-    imdb_in_cmu = imdb_in_cmu.dropna(subset=["averageRating"])
-
-    # Some movies are duplicated on tconst, we handle them
-    # get tconst that are duplicated
-    duplicate_tconst_movies = imdb_in_cmu.tconst.value_counts().loc[imdb_in_cmu.tconst.value_counts()!=1]
-    # create a transition df with only duplicated movies
-    duplicate_df = imdb_in_cmu.loc[imdb_in_cmu.tconst.isin(duplicate_tconst_movies.index.values)]
-    # count the number of nans on the rows
-    duplicate_df["nan_number"] = duplicate_df.isna().sum(axis=1)
-    # chose the row where the number of nan is minimum 
-    min_nan = duplicate_df.groupby("tconst")["nan_number"].idxmin()
-    # take the opposite to get the movies to remove
-    duplicate_to_remove = duplicate_df.index.difference(min_nan)
-    # remove the duplicates
-    imdb_in_cmu = imdb_in_cmu.drop(duplicate_to_remove, axis=0)
-    
-    
-    # We clean our dataframe to export it
-    imdb_in_cmu = imdb_in_cmu[["wikipedia_movie_id", "tconst", "movie_name", "startYear", "averageRating", "numVotes"]].reset_index(drop=True)
-    # We rename the columns
-    cols_name = ["imdb_movie_id", "movie_release_date"]
-    cols_to_rename = ["tconst", "startYear"]
-    rename_mapping = dict(zip(cols_to_rename, cols_name))
-    imdb_in_cmu.rename(columns=rename_mapping, inplace=True)
-
-    # We are ready to export it
-    imdb_in_cmu.to_csv("data/processed/imdb_ratings.csv", index=False)
-    
-    return imdb_in_cmu
-
+# PREPROCESSING DIRECTOR METADATA
 def attribute_gender_to_dir(name_dir, gender_db):
+    # attribute gender to director name using the name dictionary
     current_best_prob = 0
     gender = None
     if type(name_dir)!=str:
@@ -173,43 +91,110 @@ def attribute_gender_to_dir(name_dir, gender_db):
                 gender = gender_db[gender_db['Name'] == string]['Gender'].values[0]
     return gender
 
-def get_director_name_and_gender():
-    # extract second colomn from data/imdb_ratings.csv
-    wiki_movies_id = pd.read_csv('data/imdb_ratings.csv')['wikipedia_movie_id']
-    movie_directors = []
+def preprocess_movies_director(wiki_movies_id):
+    # generation of the dataset movies director using wikipedia webscraping (~ 8h to run!!)
+    movies_director = []
     for i in tqdm(wiki_movies_id, desc="Processing movies"):
         infobox_data = get_wikipedia_infobox_by_id(i)
         if (infobox_data is None) or ("Directed by" not in infobox_data):
             continue
     director = infobox_data.get("Directed by")
-    movie_directors.append({"wikipedia_movie_id": i, "Director": director})
+    movies_director.append({"wikipedia_movie_id": i, "director_name": director})
 
-    movie_directors = pd.DataFrame(movie_directors)
-    movie_directors = movie_directors.drop_duplicates()
-    gender_db = pd.read_csv("src/data/name_gender_dataset.csv")
-    tqdm.pandas()
-    movie_directors['Gender'] = movie_directors['Director'].progress_apply(lambda x: attribute_gender_to_dir(x, gender_db))
-    movie_directors = movie_directors[movie_directors['Gender'].notna()]
-    movie_directors.to_csv('data/movies_director.csv', index=False)
-
-def process_directors():
-    movies_director = load_csv('data/processed/movies_director.csv', has_column_names=False, column_names=['wikipedia_movie_id', 'director_name', 'director_gender'])[1:]
-    movies_metadata_df = load_csv('data/processed/movies_metadata.csv')
-    movies_director['wikipedia_movie_id'] = movies_director['wikipedia_movie_id'].astype(int)
-    movies_directors_combined = movies_metadata_df.join(movies_director.set_index('wikipedia_movie_id'), on='wikipedia_movie_id')
-    movies_directors_combined = movies_directors_combined[movies_directors_combined['director_gender'].notna()]
-    movies_directors_combined.to_csv('data/processed/movies_directors_combined.csv', index=False)
+    movies_director = pd.DataFrame(movies_director)
+    movies_director = movies_director.drop_duplicates()
+    gender_db = pd.read_csv("src/data/external_data/name_gender_dataset.csv")
+    movies_director['director_gender'] = movies_director['director_name'].progress_apply(lambda x: attribute_gender_to_dir(x, gender_db))
+    movies_director = movies_director[movies_director['director_gender'].notna()]
     
-def compute_movies_metadata_success():
-    # Loading and preprocessing the data of tmdb
-    tmdb_ratings = pd.read_csv('src/data/external_data/TMDB_movie_dataset_v11.csv')
+    movies_director.to_csv(TRANSITIONARY_DATA_FOLDER_PATH + "movies_director.csv")
+    return movies_director
+ 
+ 
+# PREPROCESSING MOVIE SUCCESS
+def preprocess_imdb_ratings(movies_metadata_df):
+    """ cmu_df is the dataframe containing the movies metadata """
+    
+    # Load the data
+    # the title.basics.tsv and title.ratings.tsv files are too big to be stored in the repository
+    
+    #imdb_title_df = pd.read_csv("src/data/external/title.basics.tsv", sep='\t')
+    #imdb_ratings_df = pd.read_csv("src/data/external_data/raw_data/title.ratings.tsv", sep='\t')
+    imdb_title_df = load_csv("src/data/external_data/title.basics.tsv", is_tsv=True)
+    imdb_ratings_df = load_csv("src/data/external_data/title.ratings.tsv", is_tsv=True)
+    # Merging the two IMDB DataFrames on the 'tconst' column
+    imdb_df = pd.merge(imdb_title_df, imdb_ratings_df[['tconst', 'averageRating', 'numVotes']], on='tconst', how='left')
+    
+    # To be sure to get all names, we consider the two columns primaryTitle and originalTitle
+    # We create a match name with the title and the year of the movie, lowercasing the str
+    # For IMDB
+    imdb_df['primaryTitle_match'] = imdb_df['primaryTitle'].str.lower() + imdb_df['startYear'].str.lower()
+    imdb_df['originalTitle_match'] = imdb_df['originalTitle'].str.lower() + imdb_df['startYear'].str.lower()
+    imdb_all_titles = pd.concat([imdb_df["primaryTitle_match"], imdb_df["originalTitle_match"]]).drop_duplicates()
+    # For CMU
+    movies_metadata_titles = movies_metadata_df["movie_name"].str.lower() + movies_metadata_df["movie_release_date"].apply(lambda x: str(x))
+
+    # We get the indexes of the intersection of movies
+    intersecting_movies_metadata_titles = movies_metadata_titles.isin(imdb_all_titles)
+
+    # Reshape IMDb data by concatenating both title types into one column along with other columns
+    # We drop duplicates on the title
+    imdb_ratings_expanded = pd.concat([
+        imdb_df[['tconst', 'primaryTitle_match', "startYear", 'averageRating', 'numVotes']].rename(columns={'primaryTitle_match': 'title_match'}),
+        imdb_df[['tconst', 'originalTitle_match', "startYear", 'averageRating', 'numVotes']].rename(columns={'originalTitle_match': 'title_match'})
+    ]).dropna(subset=['title_match']).drop_duplicates(subset=['title_match'])
+
+    # We keep only the interected df
+    movies_metadata_intersection_df = movies_metadata_df.loc[intersecting_movies_metadata_titles]
+    # We create the titles match column to merge easily
+    movies_metadata_intersection_df['movie_name_match'] = movies_metadata_titles
+    
+    # We merge
+    imdb_in_movies = movies_metadata_intersection_df.merge(
+        imdb_ratings_expanded,
+        left_on='movie_name_match',
+        right_on='title_match',
+        how='left'
+    )
+
+    # We drop the rows with no ratings
+    imdb_in_movies = imdb_in_movies.dropna(subset=["averageRating"])
+
+    # Some movies are duplicated on tconst, we handle them
+    # get tconst that are duplicated
+    duplicate_tconst_movies = imdb_in_movies.tconst.value_counts().loc[imdb_in_movies.tconst.value_counts()!=1]
+    # create a transition df with only duplicated movies
+    duplicate_df = imdb_in_movies.loc[imdb_in_movies.tconst.isin(duplicate_tconst_movies.index.values)]
+    # count the number of nans on the rows
+    duplicate_df["nan_number"] = duplicate_df.isna().sum(axis=1)
+    # chose the row where the number of nan is minimum 
+    min_nan = duplicate_df.groupby("tconst")["nan_number"].idxmin()
+    # take the opposite to get the movies to remove
+    duplicate_to_remove = duplicate_df.index.difference(min_nan)
+    # remove the duplicates
+    imdb_in_movies = imdb_in_movies.drop(duplicate_to_remove, axis=0)
+    
+    
+    # We clean our dataframe to export it
+    imdb_in_movies = imdb_in_movies[["wikipedia_movie_id", "tconst", "movie_name", "startYear", "averageRating", "numVotes"]].reset_index(drop=True)
+    # We rename the columns
+    cols_name = ["imdb_movie_id", "movie_release_date"]
+    cols_to_rename = ["tconst", "startYear"]
+    rename_mapping = dict(zip(cols_to_rename, cols_name))
+    imdb_in_movies.rename(columns=rename_mapping, inplace=True)
+    
+    return imdb_in_movies
+   
+def preprocess_movies_success():
+    # Loading and preprocessing the data of tmdb (external data)
+    tmdb_ratings =  load_csv('src/data/external_data/TMDB_movie_dataset_v11.csv')
     tmdb_ratings = tmdb_ratings[['title', 'vote_average', 'vote_count', 'release_date', 'revenue', 'budget']]
     # We also thought of keeping the popularity column, but we could not retrieve information about the parameters that made a movie "popular" or not, so we decided to drop it.
     # convert 0 values into nan
     tmdb_ratings['revenue'] = tmdb_ratings['revenue'].replace('0', np.nan)
     tmdb_ratings['budget'] = tmdb_ratings['budget'].replace('0', np.nan)
     # We have two different sources (tmdb & imdb) form which we can retrieve the average rating given by people who have watched the movie. In order to decide which dataset we will keep, we will check a specific parameter.
-    imdb_ratings = pd.read_csv('data/processed/imdb_ratings.csv')
+    imdb_ratings = preprocess_imdb_ratings()
     # As the analysis of ratings will be truthful if there is a consequent number of ratings in the first place, we decided to pursue our analysis with the ratings of the imdb dataset instead of the tmdb one.
     # If more details needed, imdb_ratings[imdb_ratings['numVotes'] > 50].count() gave us 40084 values, and tmdb_ratings[tmdb_ratings['vote_count'] > 50].count() only 27689 values
     imdb_ratings = imdb_ratings[imdb_ratings['numVotes'] > 50]
@@ -227,13 +212,191 @@ def compute_movies_metadata_success():
     imdb_ratings.drop(columns=['imdb_movie_id'], inplace=True)
     imdb_ratings.columns = ['wikipedia_movie_id', 'movie_name', 'release_date', 'average_rating', 'num_votes']
     tmdb_ratings.rename(columns={'title': 'movie_name'}, inplace=True)
-    movies_metadata_success = pd.merge(tmdb_ratings, imdb_ratings, on=['movie_name', 'release_date'], how='inner')
+    movies_success_df = pd.merge(tmdb_ratings, imdb_ratings, on=['movie_name', 'release_date'], how='inner')
     # renaiming the columns
-    movies_metadata_success = movies_metadata_success[['wikipedia_movie_id','movie_name', 'release_date', 'revenue', 'budget', 'average_rating', 'num_votes']]
-    # then, we pursue the merging with movies directors combined df
-    movies_metadata_and_directors = pd.read_csv('data/processed/movies_directors_combined.csv')
-    movies_metadata_success = pd.merge(movies_metadata_success, movies_metadata_and_directors, how='inner', on=['wikipedia_movie_id'])
-    movies_metadata_success = movies_metadata_success[['wikipedia_movie_id', 'movie_name_x', 'movie_release_date', 'revenue', 'budget', 'average_rating', 'num_votes', 'movie_genres', 'movie_countries', 'director_gender']]
-    movies_metadata_success.rename(columns={'movie_name_x': 'movie_name', 'revenue': 'box_office_revenue', 'budget': 'movie_budget'}, inplace=True)
-    # we can finally export our csv
-    movies_metadata_success.to_csv('data/processed/movies_metadata_success.csv', index=False)
+    movies_success_df = movies_success_df[['wikipedia_movie_id', 'revenue', 'budget', 'average_rating', 'num_votes']]
+    movies_success_df.rename(columns={'revenue': 'box_office_revenue', 'budget': 'movie_budget'}, inplace=True)
+    
+    movies_success_df.to_csv(TRANSITIONARY_DATA_FOLDER_PATH + "movies_success.csv")
+    return movies_success_df
+
+
+# PREPROCESSING PLOT EMOTIONS
+# Function for analyzing the emotion of a text
+def emotion_analysis(text):
+    # Load the pipeline with a specific emotion model
+    emotion_pipeline = pipeline("text-classification", model="j-hartmann/emotion-english-distilroberta-base", return_all_scores=True)
+
+    chunks = [text[i:i+512] for i in range(0, len(text), 512)]
+    results = [emotion_pipeline(chunk) for chunk in chunks]
+
+    # Initialize a dictionary to accumulate scores for each emotion
+    emotion_scores = defaultdict(list)
+
+    #Process each chunk and accumulate scores
+    for chunk_result in results:
+        for emotion in chunk_result:
+            for i in range(len(emotion)):
+                emotion_scores[emotion[i]['label']].append(emotion[i]['score'])
+            #print(emotion_scores[emotion['label']])
+            #emotion_scores[emotion['label']].append(emotion['score'])
+
+    # Calculate the average score for each emotion
+    average_scores = {emotion: sum(scores) / len(scores) for emotion, scores in emotion_scores.items()}
+
+    return average_scores
+
+
+def preprocess_plot_emotions():
+    # Function for processing all film summaries 
+    plot_summaries_df = load_csv(RAW_DATA_FOLDER_PATH + 'plot_summaries.txt', is_tsv=True)
+    output_file_path = TRANSITIONARY_DATA_FOLDER_PATH + 'plot_emotions.csv'
+    batch_size = 100
+    for i in range(0, plot_summaries_df.shape[0], batch_size):
+        batch = plot_summaries_df.iloc[i:i + batch_size]
+
+        batch['emotion_scores'] = batch['plot'].apply(emotion_analysis)
+        batch['dominant_emotion'] = batch['emotion_scores'].apply(lambda x: max(x, key=x.get))
+
+        batch.to_csv(output_file_path, mode='a', index=False, header=not os.path.exists(output_file_path))
+        
+    return output_file_path # returns the path to the output file
+
+
+# PREPROCESSING BECHDEL TEST
+def preprocess_bechdel_ratings():
+    bechdel_ratings_df = 0
+    bechdel_ratings_df.to_csv(TRANSITIONARY_DATA_FOLDER_PATH + "bechdel_ratings.csv")  
+    return 0
+
+
+# PREPROCESSING MOVIES COMPLETE
+def preprocess_movies_complete(from_files=False):
+
+    if from_files:
+        movies_metadata_df = pd.read_csv(TRANSITIONARY_DATA_FOLDER_PATH + "movies_metadata.csv")
+        char_metadata_df = pd.read_csv(TRANSITIONARY_DATA_FOLDER_PATH + "characters_metadata.csv") 
+        movies_director_df = pd.read_csv(TRANSITIONARY_DATA_FOLDER_PATH + "movies_director.csv")
+        movie_success_df = pd.read_csv(TRANSITIONARY_DATA_FOLDER_PATH + "movies_success.csv")
+        plot_emotions_df = pd.read_csv(TRANSITIONARY_DATA_FOLDER_PATH + "plot_emotions.csv")
+        bechdel_ratings_df = pd.read_csv(TRANSITIONARY_DATA_FOLDER_PATH + "bechdel_ratings.csv")  
+
+    else:
+        movies_metadata_df = preprocess_movie_metadata()
+        char_metadata_df = preprocess_char_metadata()
+    
+    # intersection on the first 2 to obtain the same wikipedia_movie_id
+    movies_metadata_df = movies_metadata_df[movies_metadata_df['wikipedia_movie_id'].isin(char_metadata_df['wikipedia_movie_id'])]
+    char_metadata_df = char_metadata_df[char_metadata_df['wikipedia_movie_id'].isin(movies_metadata_df['wikipedia_movie_id'])]
+    
+    if from_files == False:
+        movies_director_df = preprocess_movies_director(movies_metadata_df['wikipedia_movie_id'].unique())
+        movie_success_df = preprocess_movies_success()
+        
+        plot_emotions_df = load_csv(preprocess_plot_emotions())
+        bechdel_ratings_df = preprocess_bechdel_ratings()
+    
+    # create complete df
+    movies_complete_df = movies_metadata_df.copy(deep=True)
+    # keep only interesting columns
+    movies_complete_df = movies_complete_df[["wikipedia_movie_id", "movie_name", "movie_release_date", "movie_genres", "movie_countries"]]
+    movies_complete_df = movies_complete_df.merge(movies_director_df, on="wikipedia_movie_id", how="left")
+    # process columns
+    movies_complete_df['movie_genres'] = movies_complete_df['movie_genres'].apply(lambda x: ast.literal_eval(x) if isinstance(x, str) else x)
+    movies_complete_df['movie_countries'] = movies_complete_df['movie_countries'].apply(lambda x: ast.literal_eval(x) if isinstance(x, str) else x)
+
+    # merging with list of actor genders
+    genders_grouped = (
+        char_metadata_df.groupby("wikipedia_movie_id")["actor_gender"]
+        .apply(list)  # Collect genders into lists
+        .reset_index()  # Reset index to make it a DataFrame
+        .rename(columns={"actor_gender": "actor_genders"})  # Rename the column
+    )
+    # merging with list of actor ages
+    age_grouped = (
+        char_metadata_df.groupby("wikipedia_movie_id")["actor_age"]
+        .apply(list)  # Collect genders into lists
+        .reset_index()  # Reset index to make it a DataFrame
+    )
+
+    movies_complete_df = movies_complete_df.merge(genders_grouped, on="wikipedia_movie_id", how="left")
+    movies_complete_df = movies_complete_df.merge(age_grouped, on="wikipedia_movie_id", how="left")
+
+    # merging with bechdel if value exists, else nan
+    movies_complete_df = movies_complete_df.merge(bechdel_ratings_df[["wikipedia_movie_id", "bechdel_rating"]], on="wikipedia_movie_id", how="left")
+    # merging with success if value exists, else nan
+    movies_complete_df = movies_complete_df.merge(movie_success_df[["wikipedia_movie_id", "box_office_revenue", "movie_budget", "average_rating", "num_votes"]], on="wikipedia_movie_id", how="left")
+    # merging with plot summaries if value exists, else nan
+    movies_complete_df = movies_complete_df.merge(plot_emotions_df[["wikipedia_movie_id", "emotion_scores", "dominant_emotion"]], on="wikipedia_movie_id", how="left")
+    # Create new columns for Male and Female character counts
+    movies_complete_df["char_M"] = movies_complete_df["actor_genders"].apply(lambda genders: genders.count("M"))
+    movies_complete_df["char_F"] = movies_complete_df["actor_genders"].apply(lambda genders: genders.count("F"))
+    movies_complete_df["char_tot"] = movies_complete_df["char_M"] + movies_complete_df["char_F"]
+
+    movies_complete_df.to_csv('data/processed/movies_complete.csv', index=False)
+    
+    
+    
+    # PREPROCESSING TV TROPES
+def transform_title(title):
+    # Remove non-alphanumeric characters except spaces
+    title = ''.join(char if char.isalnum() or char.isspace() else '' for char in title)
+    # Convert to PascalCase
+    return ''.join(word.capitalize() for word in title.split())
+    
+def preprocess_tvtropes(movies_df):
+    # Normalize character types
+    tvtropes_df = load_csv(RAW_DATA_FOLDER_PATH + 'tvtropes.clusters.txt', has_column_names=False, is_tsv=True, column_names=['character_type', 'metadata'])
+    film_tropes_df = load_csv(EXTERNAL_DATA_FOLDER_PATH + "film_tropes.csv")
+    genderedness_df = load_csv(EXTERNAL_DATA_FOLDER_PATH + "genderedness_filtered.csv")
+
+    char_types = [''.join(word.capitalize() for word in trope.split('_')) for trope in tvtropes_df['character_type'].unique()]
+
+    # Filter film tropes based on character types and transformed movie titles
+    valid_titles = [transform_title(name) for name in movies_df['movie_name'].unique()]
+    filtered_tropes = film_tropes_df[
+        film_tropes_df['Trope'].isin(char_types) & film_tropes_df['Title'].isin(valid_titles)
+    ].drop(['title_id', 'Unnamed: 0'], axis=1)
+
+    # Merge with transformed movie names
+    movies_data = movies_df.copy()
+    movies_data['movie_name'] = movies_data['movie_name'].apply(transform_title)
+    filtered_tropes = filtered_tropes.join(
+        movies_data.set_index('movie_name'), on='Title'
+    ).drop(
+        ['movie_release_date', 'movie_countries', 'movie_genres'], 
+        axis=1
+    ).dropna()
+
+    # Filter genderedness stats for tropes and female-dominant ones
+    gendered_tropes = genderedness_df[genderedness_df['Trope'].isin(filtered_tropes['Trope'].unique())]
+    female_dominant_tropes = gendered_tropes[gendered_tropes['FemaleTokens'] > gendered_tropes['MaleTokens']]
+
+    # Aggregate data for female-dominant tropes
+    female_trope_list = female_dominant_tropes['Trope'].tolist()
+    female_filtered_tropes = filtered_tropes[filtered_tropes['Trope'].isin(female_trope_list)]
+    aggregated_data = female_filtered_tropes.groupby('Trope').agg({
+        'director_gender': list,
+        'Title': list,
+        'wikipedia_movie_id': list
+    })
+    final_tropes = female_dominant_tropes.merge(aggregated_data, on='Trope', how='left')
+
+    # Add columns for director counts and percentages
+    final_tropes = final_tropes.assign(dir_M=0, dir_F=0, dir_M_perc=0, dir_F_perc=0)
+
+    # Count male and female directors
+    final_tropes[['dir_M', 'dir_F']] = final_tropes['director_gender'].apply(
+        lambda genders: pd.Series([genders.count('M'), genders.count('F')])
+    )
+
+    # Total male and female directors
+    total_male = filtered_tropes['director_gender'].value_counts().get('M', 0)
+    total_female = filtered_tropes['director_gender'].value_counts().get('F', 0)
+
+    # Calculate percentages
+    final_tropes['dir_M_perc'] = final_tropes['dir_M'] / total_male * 100 if total_male > 0 else 0
+    final_tropes['dir_F_perc'] = final_tropes['dir_F'] / total_female * 100 if total_female > 0 else 0
+
+    return filtered_tropes, final_tropes
+

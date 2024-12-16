@@ -163,5 +163,5 @@ cython_debug/
 #.idea/
 
 ## ignore title.basics.tsv and title.ratings.tsv because they are too large
-/data/external
+src/data/external_data
 /.DS_Store

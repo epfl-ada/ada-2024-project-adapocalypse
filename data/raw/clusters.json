@@ -657,7 +657,6 @@
     "Genres": {
         "Drama": [
             "Drama",
-            "Romantic drama",
             "Family Drama",
             "Marriage Drama",
             "Childhood Drama",
@@ -687,8 +686,7 @@
             "Tragicomedy",
             "Natural disaster",
             "Prison",
-            "Film à clef",
-            "Women in prison films"
+            "Film à clef"
         ],
         "Holiday Movie": [
             "Christmas movie",
@@ -702,7 +700,6 @@
             "Political satire",
             "Comedy",
             "Black comedy",
-            "Romantic comedy",
             "Screwball comedy",
             "Comedy of manners",
             "Comedy-drama",
@@ -731,7 +728,6 @@
             "Comedy of Errors",
             "Stoner film",
             "Media Satire",
-            "Romantic comedy",
             "Mumblecore",
             "Comdedy",
             "Ealing Comedies",
@@ -789,7 +785,6 @@
             "Thriller",
             "Psychological thriller",
             "Crime Thriller",
-            "Erotic thriller",
             "Conspiracy fiction",
             "Political thriller"
         ],
@@ -1004,7 +999,8 @@
             "Anthology"
         ],
         "Feminist" : [
-            "Feminist Film"
+            "Feminist Film",
+            "Women in prison films"
         ],
         "Silent film":[
             "Silent film",
@@ -1040,6 +1036,7 @@
         "Erotic and Adult Films": [
             "Erotic Drama",
             "Erotic thriller",
+            "Erotic Thriller",
             "Erotica",
             "Softcore Porn",
             "Pornography",
@@ -1050,13 +1047,19 @@
             "Adult",
             "Pornographic movie"
         ],
-        "World Cinema":[
+        "Asian Cinema":[
             "Japanese Movies",
-            "Tamil cinema",
             "Filipino Movies", 
             "Chinese Movies", 
             "Bengali Cinema", 
             "Malayalam Cinema", 
+            "Filipino"         
+        ],
+        "Bollywood":[
+            "Bollywood", 
+            "Tamil cinema"     
+        ],
+        "World Cinema":[
             "Czechoslovak New Wave", 
             "New Hollywood", 
             "World cinema",
@@ -1065,9 +1068,7 @@
             "British New Wave",
             "Latino",
             "Early Black Cinema",
-            "Bollywood",
-            "Indie",
-            "Filipino"         
+            "Indie"
         ],
         "Reboot": [
             "Reboot",
@@ -1081,11 +1082,6 @@
             "Roadshow theatrical release",
             "Feature film",
             "Filmed Play"
-        ],
-        "Other Genres": [
-            "C-Movie",
-            "Z movie",
-            "B-movie"
         ]
     }
 }
