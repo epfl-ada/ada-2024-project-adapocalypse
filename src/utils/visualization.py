@@ -674,3 +674,34 @@ def nb_votes_per_gender(df):
                        title="Total number of votes depending on the gender of the movie director")
     fig.update_layout(legend_title="Director Gender", showlegend=True)
     fig.show()
+    
+def avg_rating(df, labels):
+    fig = px.histogram(df, x="average_rating", color="director_gender", 
+                 title="Proportional Average Rating of Movies by Director Gender", histnorm='percent',
+                 barmode='group', nbins=40,
+                 labels=labels)
+    fig.update_yaxes(title_text='Proportion of movies')
+    fig.show()
+    
+def avg_box_office(df, labels):
+    fig = px.scatter(df, y='revenue', x="average_rating", color="director_gender", 
+                 title="Average Box Office Revenue in function of Average Rating by Director Gender", labels=labels)
+    fig.show()
+    
+def avg_rating_groups(df, labels):
+    fig = px.histogram(df, x="average_rating", color="director_gender", 
+                 title="Average Rating by Director Gender amongst the Optimal group", histnorm='percent',
+                 barmode='group', nbins=10,
+                 labels=labels)
+    fig.show()
+    
+def budget_through_years(df, labels):
+    fig = px.scatter(df.sort_values(by='release_date'), x="release_date", y="budget",
+            color="director_gender", hover_name="movie_name",  title="Evolution of budget depending on movie directors through years", labels=labels)
+    fig.show()
+    
+def rendement_groups(df, GROUP, labels):
+    df = df[df['movie_rendement'] < 100]
+    fig = px.box(df, x="director_gender", y="movie_rendement", color="director_gender", 
+             hover_name="movie_name", title=f"Movie Rendement of " + GROUP + " movies by Director Gender",labels=labels)
+    fig.show()

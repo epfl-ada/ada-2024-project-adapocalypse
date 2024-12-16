@@ -61,3 +61,15 @@ def actor_age_according_to_dir_gender(df, gender):
     age_male_percentage = age_male_actors.value_counts(normalize=True).sort_index() * 100
 
     return age_female_percentage, age_male_percentage
+
+def group_formation(df, opti):
+    actor_gender_movie_data = df.groupby('wikipedia_movie_id')['actor_gender'].value_counts()
+    prop_female_actors = actor_gender_movie_data[:, 'F'] / actor_gender_movie_data.groupby(level=0).sum()
+    if (opti):
+        bechdel_wiki_movie_id = df[df['bechdel_rating'] == 3]['wikipedia_movie_id']
+        fem_rep_wiki_movie_id = prop_female_actors[prop_female_actors > 0.35].index
+    else:
+        bechdel_wiki_movie_id = df[df['bechdel_rating'] <= 2]['wikipedia_movie_id']
+        fem_rep_wiki_movie_id = prop_female_actors[prop_female_actors <= 0.35].index
+    optimal_df = df.loc[df['wikipedia_movie_id'].isin(set(bechdel_wiki_movie_id).intersection(set(fem_rep_wiki_movie_id)))]
+    return optimal_df
