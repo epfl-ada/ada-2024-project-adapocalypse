@@ -334,6 +334,7 @@ def preprocess_movies_complete(from_files=False):
     movies_complete_df["char_tot"] = movies_complete_df["char_M"] + movies_complete_df["char_F"]
 
     movies_complete_df.to_csv('data/processed/movies_complete.csv', index=False)
+    return movies_complete_df
     
     
     

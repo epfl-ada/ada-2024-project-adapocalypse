@@ -1,19 +1,8 @@
-from collections import defaultdict
+from collections import defaultdict, Counter
+import pandas as pd
+import numpy as np
 
-def process_bechdel_ratings(ratings):
-    """
-    Process the Bechdel ratings to a more readable format.
-    """
-    if ratings == 0:
-        return "No information"
-    elif ratings == 1:
-        return "Not passing"
-    elif ratings == 2:
-        return "Passing"
-    elif ratings == 3:
-        return "Passing with caveats"
-    else:
-        return "Invalid rating"
+# FUNCTIONS USED IN THE PREPROCESSING OF THE DATA
 
 # Function for analyzing the emotion of a text
 def emotion_analysis(df, text):
@@ -43,7 +32,10 @@ def n_first_emotions(n, init_df):
     df['dominant_emotion'] = df['emotion_scores'].apply(lambda x: max(x, key=x.get))
     return df
 
-def actor_age_according_to_dir_gender(df, gender):
+
+# FUNCTIONS USED TO PROCESS DATA TO ADAPT IT SPECIFICALLY TO GRAPHS
+# 2.B 2)
+def process_actor_age(df, gender):
     char_gender_directed = df[df['director_gender'] == gender]
 
     # Filter and clean data
@@ -62,8 +54,40 @@ def actor_age_according_to_dir_gender(df, gender):
 
     return age_female_percentage, age_male_percentage
 
+# 2.B 4)
+def process_movies_by_country(df):
+    all_countries = df['movie_countries'].copy(deep=True)
+    all_countries = [genre for sublist in df['movie_countries'] for genre in sublist]
+    countries_counts = Counter(all_countries)
+
+    country_df = pd.DataFrame(countries_counts.items(), columns=['country', 'number_of_movies'])
+    country_df = country_df.sort_values(by='number_of_movies', ascending=False)
+    country_df = country_df[country_df['number_of_movies'] > 500]
+    return country_df
+
+# 2.B 5)
+def process_movies_by_genre(df):
+    all_genres = df['movie_genres'].copy()
+    all_genres = [genre for sublist in df['movie_genres'] for genre in sublist]
+    genre_counts = Counter(all_genres)
+    genre_df = pd.DataFrame(genre_counts.items(), columns=['movie_genre', 'number_of_movies'])
+
+    genre_df = genre_df.sort_values(by='number_of_movies', ascending=False)
+    # keep only the genres with more than 500 movies
+    genre_df = genre_df[genre_df['number_of_movies'] > 500]
+    return genre_df
+
+# 2.B 6)
+def process_movies_per_year(df):
+    time_df = pd.DataFrame()
+    time_df["movie_release_date"] = df["movie_release_date"].unique()
+    time_df["number_of_movies"] = df.groupby("movie_release_date")['wikipedia_movie_id'].transform('count')
+    time_df.sort_values(by="movie_release_date", inplace=True)
+    return time_df
+
+
 def group_formation(df, opti):
-    actor_gender_movie_data = df.groupby('wikipedia_movie_id')['actor_gender'].value_counts()
+    actor_gender_movie_data = df.groupby('wikipedia_movie_id')['actor_genders'].value_counts()
     prop_female_actors = actor_gender_movie_data[:, 'F'] / actor_gender_movie_data.groupby(level=0).sum()
     if (opti):
         bechdel_wiki_movie_id = df[df['bechdel_rating'] == 3]['wikipedia_movie_id']
