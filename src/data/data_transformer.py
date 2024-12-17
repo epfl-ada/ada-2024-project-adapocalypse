@@ -338,14 +338,14 @@ def preprocess_movies_complete(from_files=False):
     
     
     
-    # PREPROCESSING TV TROPES
+# PREPROCESSING TV TROPES
 def transform_title(title):
     # Remove non-alphanumeric characters except spaces
     title = ''.join(char if char.isalnum() or char.isspace() else '' for char in title)
     # Convert to PascalCase
     return ''.join(word.capitalize() for word in title.split())
-    
-def preprocess_tvtropes(movies_df):
+
+def preprocess_tvtropes(df):
     # Normalize character types
     tvtropes_df = load_csv(RAW_DATA_FOLDER_PATH + 'tvtropes.clusters.txt', has_column_names=False, is_tsv=True, column_names=['character_type', 'metadata'])
     film_tropes_df = load_csv(EXTERNAL_DATA_FOLDER_PATH + "film_tropes.csv")
@@ -354,50 +354,17 @@ def preprocess_tvtropes(movies_df):
     char_types = [''.join(word.capitalize() for word in trope.split('_')) for trope in tvtropes_df['character_type'].unique()]
 
     # Filter film tropes based on character types and transformed movie titles
-    valid_titles = [transform_title(name) for name in movies_df['movie_name'].unique()]
+    valid_titles = [transform_title(name) for name in df['movie_name'].unique()]
     filtered_tropes = film_tropes_df[
         film_tropes_df['Trope'].isin(char_types) & film_tropes_df['Title'].isin(valid_titles)
     ].drop(['title_id', 'Unnamed: 0'], axis=1)
 
     # Merge with transformed movie names
-    movies_data = movies_df.copy()
+    movies_data = df.copy()
     movies_data['movie_name'] = movies_data['movie_name'].apply(transform_title)
     filtered_tropes = filtered_tropes.join(
         movies_data.set_index('movie_name'), on='Title'
-    ).drop(
-        ['movie_release_date', 'movie_countries', 'movie_genres'], 
-        axis=1
     ).dropna()
 
-    # Filter genderedness stats for tropes and female-dominant ones
-    gendered_tropes = genderedness_df[genderedness_df['Trope'].isin(filtered_tropes['Trope'].unique())]
-    female_dominant_tropes = gendered_tropes[gendered_tropes['FemaleTokens'] > gendered_tropes['MaleTokens']]
-
-    # Aggregate data for female-dominant tropes
-    female_trope_list = female_dominant_tropes['Trope'].tolist()
-    female_filtered_tropes = filtered_tropes[filtered_tropes['Trope'].isin(female_trope_list)]
-    aggregated_data = female_filtered_tropes.groupby('Trope').agg({
-        'director_gender': list,
-        'Title': list,
-        'wikipedia_movie_id': list
-    })
-    final_tropes = female_dominant_tropes.merge(aggregated_data, on='Trope', how='left')
-
-    # Add columns for director counts and percentages
-    final_tropes = final_tropes.assign(dir_M=0, dir_F=0, dir_M_perc=0, dir_F_perc=0)
-
-    # Count male and female directors
-    final_tropes[['dir_M', 'dir_F']] = final_tropes['director_gender'].apply(
-        lambda genders: pd.Series([genders.count('M'), genders.count('F')])
-    )
-
-    # Total male and female directors
-    total_male = filtered_tropes['director_gender'].value_counts().get('M', 0)
-    total_female = filtered_tropes['director_gender'].value_counts().get('F', 0)
-
-    # Calculate percentages
-    final_tropes['dir_M_perc'] = final_tropes['dir_M'] / total_male * 100 if total_male > 0 else 0
-    final_tropes['dir_F_perc'] = final_tropes['dir_F'] / total_female * 100 if total_female > 0 else 0
-
-    return filtered_tropes, final_tropes
+    return filtered_tropes, genderedness_df
 

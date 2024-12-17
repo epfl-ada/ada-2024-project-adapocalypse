@@ -1,13 +1,16 @@
 import plotly.express as px
 import plotly.graph_objects as go
 import matplotlib.pyplot as plt
-import numpy as np
+#import numpy as np
 import folium
-import geopandas as gpd
-from folium import Choropleth, CircleMarker, Popup
+#import geopandas as gpd
+#from folium import Choropleth, CircleMarker, Popup
 import pandas as pd
 from plotly.subplots import make_subplots
 import ast
+#from sklearn.metrics import confusion_matrix
+import seaborn as sns
+from scipy.stats import pearsonr, spearmanr
 
 # CONSTANT DEFINITIONS
 COLOR_MALE = '#636EFA'
@@ -34,9 +37,57 @@ LABELS = {"M":"Male",
           "movie_rendement":"Movie Rendement"}
 
 # PLOTTING FUNCTIONS
+# 2
+def movies_by_country(df):
+    """
+    Plot the distribution of movies by country of production
 
-# 2.A & 2.B 1)
+    Args:
+        df (DataFrame): Processed datafram on which we extract the data from
+    """
+    fig = px.bar(df, x="country", y="number_of_movies", color_discrete_sequence=['#A8E6CF'],
+                 title='Distribution of Movies by Country', labels=LABELS)
+    fig.update_traces(textfont_size=10, cliponaxis=False)
+    fig.show()
+    
+# 2
+def movies_by_genre(df):
+    """
+    Plot the distribution of movies by genre
+
+    Args:
+        df (DataFrame): Processed datafram on which we extract the data from
+    """
+    fig = px.bar(df, x='movie_genre', y='number_of_movies', color_discrete_sequence=['#A8E6CF'], 
+                 title='Distribution of Movies by Genre', labels=LABELS)
+    fig.update_traces(textfont_size=10, cliponaxis=False)
+    fig.show()
+    
+# 2
+def movies_per_year(df):
+    """
+    Plot the distribution of movies by release year
+
+    Args:
+        df (DataFrame): Processed datafram on which we extract the data from
+    """
+    plt.figure(figsize=(12, 6))
+    plt.hist(df['movie_release_date'], bins=range(df['movie_release_date'].min(), df['movie_release_date'].max() + 1), 
+             color_discrete_sequence='#A8E6CF')
+    plt.xlabel('Release Year')
+    plt.ylabel('Number of Movies')
+    plt.title('Number of Movies Released by Year')
+    plt.show()  
+    
+# 3.A & 3.B 1)
 def plot_gender_distribution(df, gender_column):
+    """
+    Plot the gender distribution of movie directors / characters (depending on the "gender_column" parameter)
+
+    Args:
+        df (DataFrame): Processed dataframe on which we extract the data from
+        gender_column (str): column which data is to be extracted from
+    """
     # Exploding the gender column and calculating the counts
     gender_counts = df[gender_column].explode().value_counts()
 
@@ -48,8 +99,8 @@ def plot_gender_distribution(df, gender_column):
     fig = px.bar(
         x=gender_counts.index,  # Gender categories
         y=gender_counts.values,  # Counts
-        labels={'x': LABELS.get(gender_column), 'y': 'Number'},
-        title=f"Distribution of Movie " + LABELS.get(gender_column),
+        labels={'x': 'Character Genders', 'y': 'Number'},
+        title=f"Gender Distribution of Movie Characters",
         color=gender_counts.index,  # Color by gender
         color_discrete_map=COLOR_PALETTE 
     )
@@ -69,8 +120,18 @@ def plot_gender_distribution(df, gender_column):
     # Show the plot
     fig.show()
     
-# 2.B 2)
+# 3.B 2)
 def age_actors_by_dir(fig, data, title, color, dash):
+    """
+    Plot the average age of actors in movies directed by a movie director of a specific gender
+
+    Args:
+        fig (Figure): Graph Object Figure 
+        data (DataFrame): Processed dataframe on which we extract the data from
+        title (str): title of the plot
+        color (str): color of the plot
+        dash (str): indicated whether the line is dashed or not
+    """
     fig.add_trace(go.Scatter(
         x=data.index,
         y=data.values,
@@ -78,19 +139,32 @@ def age_actors_by_dir(fig, data, title, color, dash):
         name=title,
         line=dict(color=color, dash=dash)
     ))
+
+# 2.B 2)  
+def age_actors_layout(fig):
+    """
+    Update the layout of the age actors distribution plot
+
+    Args:
+        fig (Figure): Graph Object Figure 
+    """
+    fig.update_layout(
+        title="Age Distribution of Actors by Director Gender (Percentage)",
+        xaxis_title="Age",
+        yaxis_title='Percentage (%)',
+        legend_title="Actor Gender & Director Gender",
+        template="plotly_white"
+    )
+    fig.show()
     
-# 2.B 3)    
+# 3.B 3)    
 def fem_representation_by_dir(df):   
     """
-    Plots the percentage of female characters in movies directed by male and female directors over time,
+    Plot the percentage of female characters in movies directed by male and female directors over time,
     including the number of movies, characters, and directors.
 
     Args:
-    df (pd.DataFrame): DataFrame containing movie data with columns:
-                       'movie_release_date', 'director_gender', 'char_F', 'char_tot', 'wikipedia_movie_id'
-
-    Returns:
-    None: Displays the plot.
+    df (pd.DataFrame): Processed dataframe on which we extract the data from
     """
     # Filter movies from 1930 onwards
     df = df[df["movie_release_date"] >= 1930]
@@ -173,15 +247,8 @@ def fem_representation_by_dir(df):
 
     # Show the plot
     fig.show()
-    
-# 2.B 4)
-def movies_by_country(df):
-    fig = px.bar(df, x="country", y="number_of_movies", 
-                 title='Distribution of Movies by Country', labels=LABELS)
-    fig.update_traces(textfont_size=10, cliponaxis=False)
-    fig.show()
   
-# 2.B 4)  
+# 3.B 4)  
 def map_fem_char(df, director_gender):
     """
     Generates a choropleth map of average female character percentages, 
@@ -297,18 +364,16 @@ def map_fem_char(df, director_gender):
                 )
             ).add_to(m)
             
-    return m
-  
-# 2.B 5)
-def movies_by_genre(df):
-    fig = px.bar(df, x='movie_genre', y='number_of_movies', 
-                 title='Distribution of Movies by Genre', 
-                 color_discrete_sequence=COLOR_PALETTE, labels=LABELS)
-    fig.update_traces(textfont_size=10, cliponaxis=False)
-    fig.show()
+    return 
 
-# 2.B 5)
+# 3.B 5)
 def plot_top10_genres(df, gender_real):
+    """Plot the gender representaiton across the 10 Movie Genres most represented
+
+    Args:
+        df (DataFrame): Processed dataframe on which we extract the data from
+        gender_real (_type_): Gender of the movie director
+    """
     genre_gender_counts = df.explode("actor_genders").explode("movie_genres")
     gender_genre_counts = genre_gender_counts.groupby(['movie_genres', 'actor_genders']).size().unstack(fill_value=0)
     gender_genre_percentages = gender_genre_counts.div(gender_genre_counts.sum(axis=1), axis=0) * 100
@@ -347,7 +412,7 @@ def plot_top10_genres(df, gender_real):
     )
     fig.show()
     
-# 2.B 5)
+# 3.B 5)
 def genres_most_fem_char(df, director_gender, sort, title):
     # filter movies within two dates
     movies_df = df[(df["movie_release_date"] >= 1990) & (df["movie_release_date"] <= 2010)]
@@ -405,120 +470,15 @@ def genres_most_fem_char(df, director_gender, sort, title):
     )
     
     fig.show()
-
-# 2.B 6)
-def movies_per_year(df):
-    fig = px.line(df, x='movie_release_date', y='number_of_movies', 
-                  title='Number of Movies Released by Year', labels=LABELS)
-    fig.show()
     
-def nb_char_per_movie(df, xvalues, ylabel, title, nbins, labels):
-    fig = px.histogram(df, x=xvalues, title=title, nbins=nbins, labels=labels)
-    fig.update_layout(
-        yaxis_title=ylabel
-    )
-    fig.show()
-    
-def char_by_dir_gender(df, xvalues, ylabel, title, color, labels):
-    fig = px.bar(df, x=xvalues, title=title, labels=labels, color=color)
-    fig.update_layout(
-        yaxis_title=ylabel
-    )
-    fig.show()
-    
-    
-def nb_char_through_years(df, xvalues, title, labels):
-    fig, ax = plt.subplots(figsize=(15,6))
-    width = 0.4
-    x = df.index  # Years
-    x_male = x - width / 2
-    x_female = x + width / 2
-
-    # Plot bars side by side
-    ax.bar(x_male, df[0], width, label="Male", color="gold")
-    ax.bar(x_female, df[1], width, label="Female", color="royalblue")
-    ax.set_title("Evolution of number of characters")
-    ax.legend()
-    ax.set_ylabel("Number of characters")
-    ax.set_xlabel("Years")
-    ax.set_xticks(x[::10])  # Adjust to show ticks every 30 years
-    ax.set_xticklabels(df[xvalues][::10]);
-    
-def evolution_fem_char(df, xvalues, yvalues, yerr, title):
-    y_err = df[yerr]
-
-    fig, ax = plt.subplots(figsize=(10,6))
-    ax.plot(df[xvalues], df[yvalues], "-o", label='Count', color="royalblue", markersize=4)
-    ax.fill_between(df[xvalues], df[yvalues] - y_err, df[yvalues] + y_err, alpha=0.2, label='±1 Std. Dev.')
-    ax.set_title(title)
-    ax.set_xlabel("Years")
-    ax.set_ylabel("Number of characters")
-    ax.legend()
-    
-def distribution_actor_age(df, xvalues, male_label, women_label, male_avg, female_avg, title):
-    fig, ax = plt.subplots()
-
-    ax.bar(df[xvalues], df[0], label=male_label, color="gold")
-    ax.bar(df[xvalues], df[1], label=women_label, color="royalblue")
-
-    ax.axvline(male_avg, color="red", linestyle="--", linewidth=2, label=f"Avg Male Age: {male_avg:.0f}")
-    ax.axvline(female_avg, color="red", linestyle="-", linewidth=2, label=f"Avg Female Age: {female_avg:.0f}")
-
-    #get handles and labels
-    handles, labels = ax.get_legend_handles_labels()
-
-    # #specify order of items in legend
-    order = [2, 3, 0, 1]
-
-    #add legend to plot
-    ax.legend([handles[idx] for idx in order],[labels[idx] for idx in order])
-    ax.set_title(title)
-    ax.set_xlabel("Age")
-    ax.set_ylabel("Number of actors");
-    
-def gender_char_types(df, ylabel, title):
-    # Set up the number of subplots
-    categories_per_subplot = 12
-    num_subplots = (len(df) + categories_per_subplot - 1) // categories_per_subplot
-
-    fig, axes = plt.subplots(num_subplots, 1, figsize=(10, 4 * num_subplots))
-
-    # Plot each subset in a separate subplot
-    for i in range(num_subplots):
-        start = i * categories_per_subplot
-        end = start + categories_per_subplot
-        subset = df.iloc[start:end]
-
-        subset.plot(kind='bar', stacked=True, ax=axes[i], color=['royalblue', 'gold'])
-        axes[i].set_title(title)
-        axes[i].set_ylabel(ylabel)
-        axes[i].legend(title="Gender")
-        axes[i].set_xticklabels(axes[i].get_xticklabels(), rotation=45, ha='right')
-
-    plt.tight_layout()
-    plt.show()
-    
-def dominant_emo(values, xlabel, ylabel, title):
-    values.value_counts().plot(kind='bar', color='skyblue')
-    plt.title(title)
-    plt.xlabel(xlabel)
-    plt.ylabel(ylabel)
-    plt.xticks(rotation=45, ha='right')
-    plt.show()
-    
-
-def age_actors_layout(fig, xlabel, ylabel, title, legend):
-    fig.update_layout(
-        title=title,
-        xaxis_title=xlabel,
-        yaxis_title=ylabel,
-        legend_title=legend,
-        template="plotly_white"
-    )
-    fig.show()
-
-# Function to plot the Bechdel Test Ratings by director gender 
+# 3.C 1)
 def bechdel_test_ratings_by_gender(df):
+    """
+    Plot the results of the bechdel test ratings regarding the gender of the director
+
+    Args:
+        df (DataFrame): Processed dataframe on which we extract the data from
+    """
     # Calculate histograms for male and female directors
     male_director_hist = (
         df[df['director_gender'] == 0]['bechdel_rating']
@@ -556,9 +516,18 @@ def bechdel_test_ratings_by_gender(df):
     fig = go.Figure(data=[trace_male, trace_female], layout=layout)
     fig.show()
 
-def corr_bechdel(df):
-    # Correlation values
+# 3.C 1)
+def plot_correlation(df):
+    """
+    
+    Plot the correlation between the Bechdel Test Result and the number of feminin/masculin characters as well as the gender of the director
+
+    Args:
+        df (DataFrame): Processed dataframe on which we extract the data from
+    """
     correlations = df[['bechdel_rating', 'char_F', 'char_M', "director_gender"]].corr()
+    # Correlation matrix
+    # Correlation values
     bechdel_corr = correlations['bechdel_rating'].drop('bechdel_rating')
 
     # Plotting
@@ -571,28 +540,36 @@ def corr_bechdel(df):
     plt.tight_layout()
     plt.show()
     
-# Calculation of the average emotions for each DataFrame
-def compute_mean_emotions(df):
-    emotions = ["neutral", "sadness", "anger", "fear", "disgust", "surprise", "joy"]
-    return df[emotions].mean()
+# 3.C 2)
+def graph_emotions_bechdel_combined(df_bechdel):
+    """
+    Plot the emotions distribution regarding the results of the bechdel test
 
-def graph_emotions_bechdel_combined(df):
+    Args:
+        df_bechdel (DataFrame): Processed dataframe on which we extract the data from
+        
+    """
+    # Calculation of the average emotions for each DataFrame
+    def compute_mean_emotions(df):
+        emotions = ["neutral", "sadness", "anger", "fear", "disgust", "surprise", "joy"]
+        return df[emotions].mean()
+
     # creation of datasets that pass or fail the bechdel test
-    bechdel_complete_grade3 = df[df["bechdel_rating"]==3]
-    bechdel_complete_grade012 = df[df["bechdel_rating"]!=3]
+    bechdel_grade3 = df_bechdel[df_bechdel["bechdel_rating"]==1]
+    bechdel_grade012 = df_bechdel[df_bechdel["bechdel_rating"]!=1]
 
     # Creation of datasets by director gender
-    bechdel_complete_grade3_men = bechdel_complete_grade3[bechdel_complete_grade3["director_gender"]==0]
-    bechdel_complete_grade3_women = bechdel_complete_grade3[bechdel_complete_grade3["director_gender"]==1]
-    bechdel_complete_grade012_men = bechdel_complete_grade012[bechdel_complete_grade012["director_gender"]==0]
-    bechdel_complete_grade012_women = bechdel_complete_grade012[bechdel_complete_grade012["director_gender"]==1]
+    bechdel_grade3_men = bechdel_grade3[bechdel_grade3["Gender"]==0]
+    bechdel_grade3_women = bechdel_grade3[bechdel_grade3["Gender"]==1]
+    bechdel_grade012_men = bechdel_grade012[bechdel_grade012["Gender"]==0]
+    bechdel_grade012_women = bechdel_grade012[bechdel_grade012["Gender"]==1]
 
     # Data for the graph
-    data_women_grade3 = compute_mean_emotions(bechdel_complete_grade3_women)
-    data_men_grade3 = compute_mean_emotions(bechdel_complete_grade3_men)
+    data_women_grade3 = compute_mean_emotions(bechdel_grade3_women)
+    data_men_grade3 = compute_mean_emotions(bechdel_grade3_men)
 
-    data_women_grade012 = compute_mean_emotions(bechdel_complete_grade012_women)
-    data_men_grade012 = compute_mean_emotions(bechdel_complete_grade012_men)
+    data_women_grade012 = compute_mean_emotions(bechdel_grade012_women)
+    data_men_grade012 = compute_mean_emotions(bechdel_grade012_men)
 
     # Creation of a graph with two subplots side by side
     fig = make_subplots(
@@ -645,107 +622,112 @@ def graph_emotions_bechdel_combined(df):
 
     fig.show()
     
-# Funtion to plot the distribution of emotions, in proportion to the scores obtained in the plot summaries
-def graph_emotions(df):
-    emotion_totals = {
-    'anger': 0,
-    'disgust': 0,
-    'fear': 0,
-    'joy': 0,
-    'neutral': 0,
-    'sadness': 0,
-    'surprise': 0
-    }
-    for emotion_score in df['emotion_scores']:
-        scores = ast.literal_eval(emotion_score)
-        for emotion, score in scores.items():
-            emotion_totals[emotion] += score
+# 3.C 3)
+def plot_confusion_matrix(y_test, y_pred_test):
+    """
+    Plot the confusion matrix of the Random Forest model
 
-    fig = px.pie(
-        values=list(emotion_totals.values()),
-        names=list(emotion_totals.keys()),
-        title='Emotions in Plot Summaries',
-        color_discrete_sequence=px.colors.qualitative.Set2
+    Args:
+        y_test : values of test set
+        y_pred_test : values of predicted test set
+    """
+    # Generate the confusion matrix
+    cm = confusion_matrix(y_test, y_pred_test)
+
+    # Normalize the confusion matrix to get proportions
+    cm_normalized = cm.astype('float') / cm.sum(axis=1)[:, np.newaxis]
+
+    # Plotting the normalized confusion matrix
+    plt.figure(figsize=(8,6))
+    sns.heatmap(cm_normalized, annot=True, fmt=".2f", cmap="Blues", xticklabels=['Class 0', 'Class 1'], yticklabels=['Class 0', 'Class 1'])
+    plt.title('Normalized Random Forest Confusion Matrix')
+    plt.xlabel('Predicted')
+    plt.ylabel('Actual')
+    plt.show()
+
+# 3.C 3)
+def feature_importance(log_reg_model, X_train):
+    """
+    
+    Defines the feature importance of the logistic regression model
+
+    Args:
+        log_reg_model : logistic regression model
+        X_train (Series): data we want to train
+
+    Returns:
+        DataFrame: feature, ranked by descending order
+    """
+    # Get the feature importance
+    selected_features = X_train.columns
+
+    # Get the coefficients from the logistic regression model
+    coefficients = log_reg_model.coef_[0]  # For binary classification
+
+    # Create a DataFrame for feature importance
+    feature_importance_df = pd.DataFrame({
+        'Feature': selected_features,
+        'Coefficient': coefficients,
+        'Importance': abs(coefficients)
+    }).sort_values(by='Importance', ascending=False)
+
+    # Display the top 20 features
+    return feature_importance_df
+
+# 3.D
+def plot_director_trope_pie_charts(male_director_data, female_director_data):
+    """
+    Plot the gender distribution of TV Tropes representation by director gender
+
+    Args:
+        male_director_data (DataFrame): Processed dataframe on which we extract the data from, specifically male director data
+        female_director_data (DataFrame): Processed dataframe on which we extract the data from, specifically female director data
+    """
+    fig = go.Figure()
+    # Male Tropes Pie Chart
+    fig.add_trace(go.Pie(
+        labels=male_director_data.index,
+        values=male_director_data.values,
+        hole=0.5,  # Adds a donut hole for aesthetics
+        domain=dict(x=[0, 0.5]),  # Place pie chart on the left
+        textinfo='none',
+        name="Male directors",
+        hovertemplate='%{label}: %{value:.2f}%'  # Customize hovertemplate (show label and percentage with 2 decimals)
+    ))
+
+    # Female Tropes Pie Chart
+    fig.add_trace(go.Pie(
+        labels=female_director_data.index,  # 'Male' and 'Female' tropes
+        values=female_director_data.values,
+        hole=0.5,
+        domain=dict(x=[0.5, 1]),  # Place pie chart on the right
+        textinfo='none',
+        name="Female directors",
+        hovertemplate='%{label}: %{value:.2f}%'  # Customize hovertemplate (show label and percentage with 2 decimals)
+    ))
+
+    # Update layout for displaying both charts side by side and proper annotations
+    fig.update_layout(
+        title="Representation of Male/Female Tropes by Director Gender",
+        grid=dict(rows=1, columns=2),
+        annotations=[
+            dict(text='Male Directors', x=0.205, y=0.5, font_size=12, showarrow=False),
+            dict(text='Female Directors', x=0.805, y=0.5, font_size=12, showarrow=False)
+        ],
+        showlegend=True,
+        legend=dict(orientation="h", x=0.5, xanchor="center", y=-0.2)
     )
+
     fig.show()
     
-def ratio_emotion_by_director_gender(df_plot_emotions):
-    df_plot_emotions_women = df_plot_emotions[df_plot_emotions['director_gender'] == 'F']
-    df_plot_emotions_men = df_plot_emotions[df_plot_emotions['director_gender'] == 'M']
-
-    emotion_totals_women = {
-        'anger': 0,
-        'disgust': 0,
-        'fear': 0,
-        'joy': 0,
-        'neutral': 0,
-        'sadness': 0,
-        'surprise': 0
-    }
-    emotion_totals_men = {
-        'anger': 0,
-        'disgust': 0,
-        'fear': 0,
-        'joy': 0,
-        'neutral': 0,
-        'sadness': 0,
-        'surprise': 0
-    }
-
-    for emotion_score in df_plot_emotions_women['emotion_scores']:
-        scores = ast.literal_eval(emotion_score)
-        for emotion, score in scores.items():
-            emotion_totals_women[emotion] += score
-
-    for emotion_score in df_plot_emotions_men['emotion_scores']:
-        scores = ast.literal_eval(emotion_score)
-        for emotion, score in scores.items():
-            emotion_totals_men[emotion] += score
-
-
-    # Calculating ratios
-    total_women = sum(emotion_totals_women.values())
-    total_men = sum(emotion_totals_men.values())
-
-    ratios_women = {emotion: value / total_women * 100 for emotion, value in emotion_totals_women.items()}
-    ratios_men = {emotion: value / total_men * 100 for emotion, value in emotion_totals_men.items()}
-
-    return ratios_women, ratios_men
-
-def graph_ratio_emotion_by_director_gender(ratios_women, ratios_men):
-    # Transformation into a DataFrame for Plotly
-    df = pd.DataFrame({
-        'Emotion': list(ratios_women.keys()),
-        'Women': list(ratios_women.values()),
-        'Men': list(ratios_men.values())
-    })
-
-    fig = px.bar(
-        df,
-        x='Emotion',
-        y=['Women', 'Men'],
-        title='Ratio of Emotions by Gender',
-        labels={'value': 'Ratio (%)', 'Emotion': 'Emotion'},
-        barmode='group',
-        color_discrete_map={
-            "Women": "royalblue",
-            "Men": "gold"
-        }
-    )
-
-    # 
-    fig.update_traces(marker=dict(opacity=0.8))
-    fig.update_layout(
-        xaxis_title="Emotion",
-        yaxis_title="Ratio (%)",
-        legend_title="Director Gender",
-        template="plotly_white"
-    )
-
-    fig.show()
-     
-# 2.E 1)  
+# 3.E 1)  
 def avg_rating(df):
+    """
+    Plot the average rating of movies by gender of the movie director
+
+    Args:
+        df (DataFrame): Processed dataframe on which we extract the data from
+    """
     fig = px.histogram(df, x="average_rating", color="director_gender", 
                  title="Proportional Average Rating of Movies by Director Gender", histnorm='percent',
                  barmode='group', nbins=40, color_discrete_map=COLOR_PALETTE,
@@ -755,31 +737,60 @@ def avg_rating(df):
  
  # 2.E 1)  
  
-# 2.E 1)    
+# 3.E 1)    
 def avg_rating_groups(df):
+    """
+    Plot the average rating of movies categorized as Optimal/Worst by gender of the movie director
+
+    Args:
+        df (DataFrame): Processed dataframe on which we extract the data from
+    """
     fig = px.histogram(df, x="average_rating", color="director_gender", 
                  title="Average Rating by Director Gender amongst the Optimal group", histnorm='percent',
                  barmode='group', nbins=10, color_discrete_map=COLOR_PALETTE,
                  labels=LABELS)
     fig.show()
     
-# 2.E 2)
+# 3.E 2)
 def avg_box_office(df):
-    fig = px.scatter(df, x="average_rating", y='box_office_revenue', color="director_gender", color_discrete_map=COLOR_PALETTE,
-                 title="Box Office Revenue in function of Average Rating by Director Gender", 
-                 hover_name="movie_name", labels=LABELS)
+    """
+    Plot the box office revenue in function of the average rating by director gender
+
+    Args:
+        df (DataFrame): Processed dataframe on which we extract the data from
+    """
+    fig = px.scatter(df, x="average_rating", y="box_office_revenue", color="director_gender", color_discrete_map=COLOR_PALETTE,
+                     title="Box Office Revenue in function of Average Rating by Director Gender", 
+                     hover_name="movie_name", labels=LABELS)
     fig.show()
     
-# 2.E 3)
+# 3.E 3)
 def budget_through_years(df):
-    fig = px.scatter(df.sort_values(by='movie_release_date'), x="movie_release_date", y="movie_budget",
-            color="director_gender", hover_name="movie_name", color_discrete_map=COLOR_PALETTE,
-            title="Evolution of budget depending on movie directors through years", labels=LABELS)
+    """
+    Plot the budget evolution accros time by movie director gender
+
+    Args:
+        df (DataFrame): Processed dataframe on which we extract the data from
+    """
+    
+    # Plot the scatter chart
+    fig = px.scatter(df.sort_values(by='movie_release_date'), x="movie_release_date", y="movie_budget", color="director_gender", color_discrete_map=COLOR_PALETTE,
+                     title="Evolution of budget depending on movie directors through years", 
+                     hover_name="movie_name", labels=LABELS)
     fig.show()
     
-# 2.E 3)
+ 
+    
+# 3.E 3)
 def rendement_groups(df, GROUP):
+    """
+    Plot the movie rendement by director gender
+
+    Args:
+        df (DataFrame): Processed dataframe on which we extract the data from
+        GROUP (str): "Optimal" or "Worst" group
+    """
     df = df[df['movie_rendement'] < 20]
-    fig = px.box(df, x="director_gender", y="movie_rendement", color="director_gender", color_discrete_map=COLOR_PALETTE,
+    fig = px.violin(df, x="director_gender", y="movie_rendement", color="director_gender", color_discrete_map=COLOR_PALETTE,
              hover_name="movie_name", title=f"Movie Rendement of " + GROUP + " movies by Director Gender",labels=LABELS)
     fig.show()
