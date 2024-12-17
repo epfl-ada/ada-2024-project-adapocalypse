@@ -12,7 +12,7 @@ import ast
 # CONSTANT DEFINITIONS
 COLOR_MALE = '#636EFA'
 COLOR_FEMALE = '#EF553B'
-COLOR_PALETTE = [COLOR_MALE, COLOR_FEMALE]
+COLOR_PALETTE = {'M': COLOR_MALE, 'F': COLOR_FEMALE}
 
 LABELS = {"M":"Male",
           "F":"Female",
@@ -30,6 +30,7 @@ LABELS = {"M":"Male",
           "average_rating":"Average Rating", 
           "director_gender":"Director Gender", 
           "box_office_revenue":"Movie Box Office Revenue", 
+          "movie_budget":"Movie Budget",
           "movie_rendement":"Movie Rendement"}
 
 # PLOTTING FUNCTIONS
@@ -50,7 +51,7 @@ def plot_gender_distribution(df, gender_column):
         labels={'x': LABELS.get(gender_column), 'y': 'Number'},
         title=f"Distribution of Movie " + LABELS.get(gender_column),
         color=gender_counts.index,  # Color by gender
-        color_discrete_sequence=COLOR_PALETTE 
+        color_discrete_map=COLOR_PALETTE 
     )
 
     # Add percentage text on top of bars
@@ -371,7 +372,7 @@ def genres_most_fem_char(df, director_gender, sort, title):
         x=female_percentage_top.index,
         y=female_percentage_top,
         name="Female",
-        marker_color="#EF553B",
+        marker_color=COLOR_PALETTE.get(director_gender[0]), # grab first letter that defines gender
         textposition='auto'  # Display the text directly on the bars
     ))
     
@@ -742,37 +743,43 @@ def graph_ratio_emotion_by_director_gender(ratios_women, ratios_men):
     )
 
     fig.show()
-    
-    
+     
 # 2.E 1)  
 def avg_rating(df):
     fig = px.histogram(df, x="average_rating", color="director_gender", 
                  title="Proportional Average Rating of Movies by Director Gender", histnorm='percent',
-                 barmode='group', nbins=40,
+                 barmode='group', nbins=40, color_discrete_map=COLOR_PALETTE,
                  labels=LABELS)
     fig.update_yaxes(title_text='Proportion of movies')
+    fig.show()
+ 
+ # 2.E 1)  
+ 
+# 2.E 1)    
+def avg_rating_groups(df):
+    fig = px.histogram(df, x="average_rating", color="director_gender", 
+                 title="Average Rating by Director Gender amongst the Optimal group", histnorm='percent',
+                 barmode='group', nbins=10, color_discrete_map=COLOR_PALETTE,
+                 labels=LABELS)
     fig.show()
     
 # 2.E 2)
 def avg_box_office(df):
-    fig = px.scatter(df, y='revenue', x="average_rating", color="director_gender", 
-                 title="Average Box Office Revenue in function of Average Rating by Director Gender", labels=LABELS)
+    fig = px.scatter(df, x="average_rating", y='box_office_revenue', color="director_gender", color_discrete_map=COLOR_PALETTE,
+                 title="Box Office Revenue in function of Average Rating by Director Gender", 
+                 hover_name="movie_name", labels=LABELS)
     fig.show()
     
-def avg_rating_groups(df, labels):
-    fig = px.histogram(df, x="average_rating", color="director_gender", 
-                 title="Average Rating by Director Gender amongst the Optimal group", histnorm='percent',
-                 barmode='group', nbins=10,
-                 labels=labels)
+# 2.E 3)
+def budget_through_years(df):
+    fig = px.scatter(df.sort_values(by='movie_release_date'), x="movie_release_date", y="movie_budget",
+            color="director_gender", hover_name="movie_name", color_discrete_map=COLOR_PALETTE,
+            title="Evolution of budget depending on movie directors through years", labels=LABELS)
     fig.show()
     
-def budget_through_years(df, labels):
-    fig = px.scatter(df.sort_values(by='release_date'), x="release_date", y="budget",
-            color="director_gender", hover_name="movie_name",  title="Evolution of budget depending on movie directors through years", labels=labels)
-    fig.show()
-    
-def rendement_groups(df, GROUP, labels):
-    df = df[df['movie_rendement'] < 100]
-    fig = px.box(df, x="director_gender", y="movie_rendement", color="director_gender", 
-             hover_name="movie_name", title=f"Movie Rendement of " + GROUP + " movies by Director Gender",labels=labels)
+# 2.E 3)
+def rendement_groups(df, GROUP):
+    df = df[df['movie_rendement'] < 20]
+    fig = px.box(df, x="director_gender", y="movie_rendement", color="director_gender", color_discrete_map=COLOR_PALETTE,
+             hover_name="movie_name", title=f"Movie Rendement of " + GROUP + " movies by Director Gender",labels=LABELS)
     fig.show()

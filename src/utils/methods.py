@@ -85,10 +85,10 @@ def process_movies_per_year(df):
     time_df.sort_values(by="movie_release_date", inplace=True)
     return time_df
 
-
+# 2.E 1)
 def group_formation(df, opti):
-    actor_gender_movie_data = df.groupby('wikipedia_movie_id')['actor_genders'].value_counts()
-    prop_female_actors = actor_gender_movie_data[:, 'F'] / actor_gender_movie_data.groupby(level=0).sum()
+    prop_female_actors = df['char_F'] / df['char_tot']
+    prop_female_actors.index = df['wikipedia_movie_id'].copy(deep=True)
     if (opti):
         bechdel_wiki_movie_id = df[df['bechdel_rating'] == 3]['wikipedia_movie_id']
         fem_rep_wiki_movie_id = prop_female_actors[prop_female_actors > 0.35].index
