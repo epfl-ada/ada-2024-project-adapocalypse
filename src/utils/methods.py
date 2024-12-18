@@ -6,16 +6,16 @@ import json
 from src.data.data_loader import load_csv
 
 # IMPORTATIONS FOR THE ML MODEL
-# from sklearn.model_selection import train_test_split
-# from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
-# from sklearn.preprocessing import StandardScaler
-# from statsmodels import tools
-# from sklearn.linear_model import LogisticRegression
-# from sklearn.tree import DecisionTreeClassifier, plot_tree
-# from sklearn.metrics import mean_squared_error
-# from sklearn.metrics import mean_absolute_error
-# from sklearn.ensemble import RandomForestClassifier
-# from sklearn.metrics import confusion_matrix
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
+from sklearn.preprocessing import StandardScaler
+from statsmodels import tools
+from sklearn.linear_model import LogisticRegression
+from sklearn.tree import DecisionTreeClassifier, plot_tree
+from sklearn.metrics import mean_squared_error
+from sklearn.metrics import mean_absolute_error
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import confusion_matrix
 
 # CONSTANT DEFINITIONS
 RAW_DATA_FOLDER_PATH = 'data/raw/'
@@ -252,14 +252,14 @@ def logistic_regression_for_bechdel(df):
 
 
     # dropping old unformatted columns
-    df_bechdel = df_bechdel.drop(columns=["actor_genders", "movie_genres", "movie_countries", "actor_genders", "emotion_scores", "dominant_emotion", "wikipedia_movie_id", "movie_name", "Director", "actor_age"])
+    df_bechdel = df_bechdel.drop(columns=["actor_genders", "movie_genres", "movie_countries", "actor_genders", "emotion_scores", "dominant_emotion", "wikipedia_movie_id", "movie_name", "director_name", "actor_age"])
     df_bechdel.columns = df_bechdel.columns.astype(str)
 
     # simplifying the bechdel_rating column into 0 (fails test) and 1(passes test)
     df_bechdel["bechdel_rating"] = df_bechdel["bechdel_rating"].apply(lambda x: int(0) if (x==0 or x==1 or x==2) else int(1))
 
     # simplifying the bechdel_rating column into 0 (M) and 1(F)
-    df_bechdel["Gender"] = df_bechdel["Gender"].apply(lambda x: int(0) if (x=='M') else int(1))
+    df_bechdel["director_gender"] = df_bechdel["director_gender"].apply(lambda x: int(0) if (x=='M') else int(1))
     
 
     # preparing data for model

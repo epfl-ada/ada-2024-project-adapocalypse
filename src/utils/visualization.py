@@ -8,9 +8,9 @@ import numpy as np
 import pandas as pd
 from plotly.subplots import make_subplots
 import ast
-#from sklearn.metrics import confusion_matrix
-#import seaborn as sns
-#from scipy.stats import pearsonr, spearmanr
+from sklearn.metrics import confusion_matrix
+import seaborn as sns
+from scipy.stats import pearsonr, spearmanr
 
 # CONSTANT DEFINITIONS
 COLOR_MALE = '#2D9884'
@@ -535,17 +535,9 @@ def bechdel_test_ratings_by_gender(df):
     fig.show()
 
 # 3.C 1)
-def plot_correlation(df):
-    """
-    
-    Plot the correlation between the Bechdel Test Result and the number of feminin/masculin characters as well as the gender of the director
-
-    Args:
-        df (DataFrame): Processed dataframe on which we extract the data from
-    """
-    correlations = df[['bechdel_rating', 'char_F', 'char_M', "director_gender"]].corr()
-    # Correlation matrix
+def corr_bechdel(df):
     # Correlation values
+    correlations = df[['bechdel_rating', 'char_F', 'char_M', "director_gender"]].corr()
     bechdel_corr = correlations['bechdel_rating'].drop('bechdel_rating')
 
     # Plotting
@@ -639,6 +631,106 @@ def graph_emotions_bechdel_combined(df_bechdel):
     )
 
     fig.show()
+
+def graph_emotions(df):
+    emotion_totals = {
+    'anger': 0,
+    'disgust': 0,
+    'fear': 0,
+    'joy': 0,
+    'neutral': 0,
+    'sadness': 0,
+    'surprise': 0
+    }
+    for emotion_score in df['emotion_scores']:
+        scores = ast.literal_eval(emotion_score)
+        for emotion, score in scores.items():
+            emotion_totals[emotion] += score
+
+    fig = px.pie(
+        values=list(emotion_totals.values()),
+        names=list(emotion_totals.keys()),
+        title='Emotions in Plot Summaries',
+        color_discrete_sequence=px.colors.qualitative.Set2
+    )
+    fig.show()
+    
+
+def graph_ratio_emotion_by_director_gender(ratios_women, ratios_men):
+    # Transformation into a DataFrame for Plotly
+    df = pd.DataFrame({
+        'Emotion': list(ratios_women.keys()),
+        'Women': list(ratios_women.values()),
+        'Men': list(ratios_men.values())
+    })
+
+    fig = px.bar(
+        df,
+        x='Emotion',
+        y=['Women', 'Men'],
+        title='Ratio of Emotions by Gender',
+        labels={'value': 'Ratio (%)', 'Emotion': 'Emotion'},
+        barmode='group',
+        color_discrete_map={
+            "Women": "royalblue",
+            "Men": "gold"
+        }
+    )
+
+    # 
+    fig.update_traces(marker=dict(opacity=0.8))
+    fig.update_layout(
+        xaxis_title="Emotion",
+        yaxis_title="Ratio (%)",
+        legend_title="Director Gender",
+        template="plotly_white"
+    )
+
+    fig.show()
+
+
+def graph_ratio_emotion_radar_by_director_gender(ratios_women, ratios_men):
+    emotions = list(ratios_women.keys())
+    values_women = list(ratios_women.values())
+    values_men = list(ratios_men.values())
+    
+    # To close the radar, add the first dot at the end
+    emotions += [emotions[0]]
+    values_women += [values_women[0]]
+    values_men += [values_men[0]]
+    
+
+    fig = go.Figure()
+    # Female directors
+    fig.add_trace(go.Scatterpolar(
+        r=values_women,
+        theta=emotions,
+        fill='toself',
+        name='Female Directors',
+        line=dict(color='royalblue'),
+        marker=dict(size=6)
+    ))
+    # Male directors
+    fig.add_trace(go.Scatterpolar(
+        r=values_men,
+        theta=emotions,
+        fill='toself',
+        name='Male Directors',
+        line=dict(color='gold'),
+        marker=dict(size=6)
+    ))
+
+    fig.update_layout(
+        polar=dict(
+            radialaxis=dict(visible=True),
+        ),
+        title='Ratio of Emotion in Plot Summaries by Director Gender',
+        legend_title="Director Gender",
+        template="plotly_white"
+    )
+
+    fig.show()
+
     
 # 3.C 3)
 def plot_confusion_matrix(y_test, y_pred_test):
