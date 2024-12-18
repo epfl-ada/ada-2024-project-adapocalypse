@@ -15,6 +15,8 @@ import ast
 # CONSTANT DEFINITIONS
 COLOR_MALE = '#2D9884'
 COLOR_FEMALE = '#6E17C6'
+COLOR_MALE_LIGHT = '#17D07D'
+COLOR_FEMALE_LIGHT = '#B56BEA'
 COLOR_NEUTRAL = '#2D9884'
 COLOR_PALETTE = {'M': COLOR_MALE, 'F': COLOR_FEMALE}
 
@@ -492,38 +494,46 @@ def genres_most_fem_char(df, director_gender, sort, title):
 # 3.C 1)
 def bechdel_test_ratings_by_gender(df):
     """
-    Plot the results of the bechdel test ratings regarding the gender of the director
+    Plot the results of the Bechdel test ratings regarding the gender of the director,
+    using labels for 'Bechdel Failed' and 'Bechdel Passed'.
 
     Args:
         df (DataFrame): Processed dataframe on which we extract the data from
     """
+    # Mapping for Bechdel ratings
+    bechdel_mapping = {0: "Bechdel Failed", 1: "Bechdel Passed"}
+    
     # Calculate histograms for male and female directors
     male_director_hist = (
         df[df['director_gender'] == 0]['bechdel_rating']
+        .replace(bechdel_mapping)  # Replace values with labels
         .value_counts(normalize=True) * 100
     )
     female_director_hist = (
         df[df['director_gender'] == 1]['bechdel_rating']
+        .replace(bechdel_mapping)
         .value_counts(normalize=True) * 100
     )
-
-    # Get all Bechdel ratings as the x-axis
-    x = df['bechdel_rating'].unique()
+    
+    # Labels for x-axis
+    x = list(bechdel_mapping.values())
+    
     # Create bar traces for Male and Female Directors
     trace_male = go.Bar(
         x=x,
-        y=male_director_hist.values,
+        y=[male_director_hist.get(label, 0) for label in x],
         name='Male Directors',
         marker_color=COLOR_MALE,
         width=0.4
     )
     trace_female = go.Bar(
         x=x,
-        y=female_director_hist.values,
+        y=[female_director_hist.get(label, 0) for label in x],
         name='Female Directors',
         marker_color=COLOR_FEMALE,
         width=0.4
     )
+    
     # Create layout
     layout = go.Layout(
         title="Bechdel Test Ratings by Gender of Directors",
@@ -532,9 +542,11 @@ def bechdel_test_ratings_by_gender(df):
         barmode='group',  # Group the bars
         bargap=0.2  # Gap between bars
     )
+    
     # Create figure and show plot
     fig = go.Figure(data=[trace_male, trace_female], layout=layout)
     fig.show()
+
 
 # 3.C 1)
 def corr_bechdel(df):
@@ -746,10 +758,10 @@ def graph_emotions_bechdel_combined(df_bechdel):
     bechdel_grade012 = df_bechdel[df_bechdel["bechdel_rating"]!=1]
 
     # Creation of datasets by director gender
-    bechdel_grade3_men = bechdel_grade3[bechdel_grade3["Gender"]==0]
-    bechdel_grade3_women = bechdel_grade3[bechdel_grade3["Gender"]==1]
-    bechdel_grade012_men = bechdel_grade012[bechdel_grade012["Gender"]==0]
-    bechdel_grade012_women = bechdel_grade012[bechdel_grade012["Gender"]==1]
+    bechdel_grade3_men = bechdel_grade3[bechdel_grade3["director_gender"]==0]
+    bechdel_grade3_women = bechdel_grade3[bechdel_grade3["director_gender"]==1]
+    bechdel_grade012_men = bechdel_grade012[bechdel_grade012["director_gender"]==0]
+    bechdel_grade012_women = bechdel_grade012[bechdel_grade012["director_gender"]==1]
 
     # Data for the graph
     data_women_grade3 = compute_mean_emotions(bechdel_grade3_women)
@@ -770,7 +782,7 @@ def graph_emotions_bechdel_combined(df_bechdel):
         theta=data_men_grade3.index,
         fill='toself',
         name='Men - Bechdel passed',
-        marker_color='gold'
+        marker_color=COLOR_MALE
     ), row=1, col=1)
 
     fig.add_trace(go.Scatterpolar(
@@ -778,7 +790,7 @@ def graph_emotions_bechdel_combined(df_bechdel):
         theta=data_women_grade3.index,
         fill='toself',
         name='Women - Bechdel passed',
-        marker_color='royalblue'
+        marker_color=COLOR_FEMALE
     ), row=1, col=1)
 
     # Second graph: For films that do not pass the Bechdel test (Grades 0, 1, 2)
@@ -787,7 +799,7 @@ def graph_emotions_bechdel_combined(df_bechdel):
         theta=data_men_grade012.index,
         fill='toself',
         name='Men - Bechdel failed',
-        marker_color='orange'
+        marker_color=COLOR_MALE_LIGHT
     ), row=1, col=2)
 
     fig.add_trace(go.Scatterpolar(
@@ -795,7 +807,7 @@ def graph_emotions_bechdel_combined(df_bechdel):
         theta=data_women_grade012.index,
         fill='toself',
         name='Women - Bechdel failed',
-        marker_color='blue'
+        marker_color=COLOR_FEMALE_LIGHT
     ), row=1, col=2)
 
     fig.update_layout(
