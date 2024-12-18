@@ -8,9 +8,9 @@ import numpy as np
 import pandas as pd
 from plotly.subplots import make_subplots
 import ast
-from sklearn.metrics import confusion_matrix
-import seaborn as sns
-from scipy.stats import pearsonr, spearmanr
+#from sklearn.metrics import confusion_matrix
+#import seaborn as sns
+#from scipy.stats import pearsonr, spearmanr
 
 # CONSTANT DEFINITIONS
 COLOR_MALE = '#2D9884'
@@ -514,12 +514,14 @@ def bechdel_test_ratings_by_gender(df):
         x=x,
         y=male_director_hist.values,
         name='Male Directors',
+        marker_color=COLOR_MALE,
         width=0.4
     )
     trace_female = go.Bar(
         x=x,
         y=female_director_hist.values,
         name='Female Directors',
+        marker_color=COLOR_FEMALE,
         width=0.4
     )
     # Create layout
@@ -542,13 +544,37 @@ def corr_bechdel(df):
 
     # Plotting
     plt.figure(figsize=(8, 5))
-    bechdel_corr.sort_values(ascending=True).plot(kind='barh', color='skyblue')
+    bechdel_corr.sort_values(ascending=True).plot(kind='barh', color=[COLOR_NEUTRAL])
     plt.title('Correlation with Bechdel Rating')
     plt.xlabel('Correlation Coefficient')
     plt.ylabel('Variables')
-    plt.axvline(0, color='gray', linestyle='--', linewidth=1)  # Mark zero correlation
+    plt.axvline(0, color='grey', linestyle='--', linewidth=1)  # Mark zero correlation
     plt.tight_layout()
     plt.show()
+    
+# 3.C 2)
+def graph_emotions(df):
+    emotion_totals = {
+    'anger': 0,
+    'disgust': 0,
+    'fear': 0,
+    'joy': 0,
+    'neutral': 0,
+    'sadness': 0,
+    'surprise': 0
+    }
+    for emotion_score in df['emotion_scores']:
+        scores = ast.literal_eval(emotion_score)
+        for emotion, score in scores.items():
+            emotion_totals[emotion] += score
+
+    fig = px.pie(
+        values=list(emotion_totals.values()),
+        names=list(emotion_totals.keys()),
+        title='Emotions in Plot Summaries',
+        color_discrete_sequence=px.colors.qualitative.Set2
+    )
+    fig.show()
     
 # 3.C 2)
 def graph_emotions_bechdel_combined(df_bechdel):
@@ -631,31 +657,8 @@ def graph_emotions_bechdel_combined(df_bechdel):
     )
 
     fig.show()
-
-def graph_emotions(df):
-    emotion_totals = {
-    'anger': 0,
-    'disgust': 0,
-    'fear': 0,
-    'joy': 0,
-    'neutral': 0,
-    'sadness': 0,
-    'surprise': 0
-    }
-    for emotion_score in df['emotion_scores']:
-        scores = ast.literal_eval(emotion_score)
-        for emotion, score in scores.items():
-            emotion_totals[emotion] += score
-
-    fig = px.pie(
-        values=list(emotion_totals.values()),
-        names=list(emotion_totals.keys()),
-        title='Emotions in Plot Summaries',
-        color_discrete_sequence=px.colors.qualitative.Set2
-    )
-    fig.show()
     
-
+# 3.C 2)
 def graph_ratio_emotion_by_director_gender(ratios_women, ratios_men):
     # Transformation into a DataFrame for Plotly
     df = pd.DataFrame({
@@ -672,8 +675,8 @@ def graph_ratio_emotion_by_director_gender(ratios_women, ratios_men):
         labels={'value': 'Ratio (%)', 'Emotion': 'Emotion'},
         barmode='group',
         color_discrete_map={
-            "Women": "royalblue",
-            "Men": "gold"
+            "Women": COLOR_FEMALE,
+            "Men": COLOR_MALE
         }
     )
 
@@ -688,7 +691,7 @@ def graph_ratio_emotion_by_director_gender(ratios_women, ratios_men):
 
     fig.show()
 
-
+# 3.C 2)
 def graph_ratio_emotion_radar_by_director_gender(ratios_women, ratios_men):
     emotions = list(ratios_women.keys())
     values_women = list(ratios_women.values())
@@ -707,7 +710,7 @@ def graph_ratio_emotion_radar_by_director_gender(ratios_women, ratios_men):
         theta=emotions,
         fill='toself',
         name='Female Directors',
-        line=dict(color='royalblue'),
+        line=dict(color=COLOR_FEMALE),
         marker=dict(size=6)
     ))
     # Male directors
@@ -716,7 +719,7 @@ def graph_ratio_emotion_radar_by_director_gender(ratios_women, ratios_men):
         theta=emotions,
         fill='toself',
         name='Male Directors',
-        line=dict(color='gold'),
+        line=dict(color=COLOR_MALE),
         marker=dict(size=6)
     ))
 
@@ -730,7 +733,81 @@ def graph_ratio_emotion_radar_by_director_gender(ratios_women, ratios_men):
     )
 
     fig.show()
+    
+    
+def graph_emotions_bechdel_combined(df_bechdel):
+    # Calculation of the average emotions for each DataFrame
+    def compute_mean_emotions(df):
+        emotions = ["neutral", "sadness", "anger", "fear", "disgust", "surprise", "joy"]
+        return df[emotions].mean()
 
+    # creation of datasets that pass or fail the bechdel test
+    bechdel_grade3 = df_bechdel[df_bechdel["bechdel_rating"]==1]
+    bechdel_grade012 = df_bechdel[df_bechdel["bechdel_rating"]!=1]
+
+    # Creation of datasets by director gender
+    bechdel_grade3_men = bechdel_grade3[bechdel_grade3["Gender"]==0]
+    bechdel_grade3_women = bechdel_grade3[bechdel_grade3["Gender"]==1]
+    bechdel_grade012_men = bechdel_grade012[bechdel_grade012["Gender"]==0]
+    bechdel_grade012_women = bechdel_grade012[bechdel_grade012["Gender"]==1]
+
+    # Data for the graph
+    data_women_grade3 = compute_mean_emotions(bechdel_grade3_women)
+    data_men_grade3 = compute_mean_emotions(bechdel_grade3_men)
+
+    data_women_grade012 = compute_mean_emotions(bechdel_grade012_women)
+    data_men_grade012 = compute_mean_emotions(bechdel_grade012_men)
+
+    # Creation of a graph with two subplots side by side
+    fig = make_subplots(
+        rows=1, cols=2,
+        specs=[[{'type': 'polar'}, {'type': 'polar'}]],      
+    )
+
+    # First graph: For films that pass the Bechdel test (Grade 3)
+    fig.add_trace(go.Scatterpolar(
+        r=data_men_grade3,
+        theta=data_men_grade3.index,
+        fill='toself',
+        name='Men - Bechdel passed',
+        marker_color='gold'
+    ), row=1, col=1)
+
+    fig.add_trace(go.Scatterpolar(
+        r=data_women_grade3,
+        theta=data_women_grade3.index,
+        fill='toself',
+        name='Women - Bechdel passed',
+        marker_color='royalblue'
+    ), row=1, col=1)
+
+    # Second graph: For films that do not pass the Bechdel test (Grades 0, 1, 2)
+    fig.add_trace(go.Scatterpolar(
+        r=data_men_grade012,
+        theta=data_men_grade012.index,
+        fill='toself',
+        name='Men - Bechdel failed',
+        marker_color='orange'
+    ), row=1, col=2)
+
+    fig.add_trace(go.Scatterpolar(
+        r=data_women_grade012,
+        theta=data_women_grade012.index,
+        fill='toself',
+        name='Women - Bechdel failed',
+        marker_color='blue'
+    ), row=1, col=2)
+
+    fig.update_layout(
+        title_text="Emotion Distribution by Gender for Bechdel Test Results",
+        showlegend=True,
+        polar=dict(
+            radialaxis=dict(visible=True, range=[0, 0.25])
+        ),
+        template="plotly_white"
+    )
+
+    fig.show()
     
 # 3.C 3)
 def plot_confusion_matrix(y_test, y_pred_test):

@@ -157,19 +157,68 @@ def process_bechdel_corr(df):
             df_bechdel.at[index, country] = 1
         for emotion in emotion_list:
             df_bechdel.at[index, emotion] = emotions_dict[emotion]
-
-
+    
     # dropping old unformatted columns
-    df_bechdel = df_bechdel.drop(columns=["actor_genders", "movie_genres", "movie_countries", "emotion_scores", "dominant_emotion", "wikipedia_movie_id", "movie_name", "director_gender", "actor_age"])
+    df_bechdel = df_bechdel.drop(columns=["actor_genders", "movie_genres", "movie_countries", "actor_genders", "emotion_scores", "dominant_emotion", "wikipedia_movie_id", "movie_name", "director_name", "actor_age"])
     df_bechdel.columns = df_bechdel.columns.astype(str)
 
     # simplifying the bechdel_rating column into 0 (fails test) and 1(passes test)
     df_bechdel["bechdel_rating"] = df_bechdel["bechdel_rating"].apply(lambda x: int(0) if (x==0 or x==1 or x==2) else int(1))
 
     # simplifying the bechdel_rating column into 0 (M) and 1(F)
-    df_bechdel["Gender"] = df_bechdel["Gender"].apply(lambda x: int(0) if (x=='M') else int(1))
+    df_bechdel["director_gender"] = df_bechdel["director_gender"].apply(lambda x: int(0) if (x=='M') else int(1))
 
     return df_bechdel
+
+# 3.C 2)
+def process_emotions(df):
+    df_plot_emotions = df[['wikipedia_movie_id', 'director_name', 'director_gender', 'emotion_scores', 'dominant_emotion']]
+    df_plot_emotions = df_plot_emotions.dropna(subset=['emotion_scores'])
+    return df_plot_emotions
+
+# 3.C 2)
+def process_emotion_by_dir_gender(df):
+    df_plot_emotions_women = df[df['director_gender'] == 'F']
+    df_plot_emotions_men = df[df['director_gender'] == 'M']
+
+    emotion_totals_women = {
+        'anger': 0,
+        'disgust': 0,
+        'fear': 0,
+        'joy': 0,
+        'neutral': 0,
+        'sadness': 0,
+        'surprise': 0
+    }
+    emotion_totals_men = {
+        'anger': 0,
+        'disgust': 0,
+        'fear': 0,
+        'joy': 0,
+        'neutral': 0,
+        'sadness': 0,
+        'surprise': 0
+    }
+
+    for emotion_score in df_plot_emotions_women['emotion_scores']:
+        scores = ast.literal_eval(emotion_score)
+        for emotion, score in scores.items():
+            emotion_totals_women[emotion] += score
+
+    for emotion_score in df_plot_emotions_men['emotion_scores']:
+        scores = ast.literal_eval(emotion_score)
+        for emotion, score in scores.items():
+            emotion_totals_men[emotion] += score
+
+
+    # Calculating ratios
+    total_women = sum(emotion_totals_women.values())
+    total_men = sum(emotion_totals_men.values())
+
+    ratios_women = {emotion: value / total_women * 100 for emotion, value in emotion_totals_women.items()}
+    ratios_men = {emotion: value / total_men * 100 for emotion, value in emotion_totals_men.items()}
+
+    return ratios_women, ratios_men
 
 # 3.C 2)
 def process_bechdel_radar(df):
@@ -202,16 +251,18 @@ def process_bechdel_radar(df):
 
 
     # dropping old unformatted columns
-    df_bechdel = df_bechdel.drop(columns=["actor_genders", "movie_genres", "movie_countries", "actor_genders", "emotion_scores", "dominant_emotion", "wikipedia_movie_id", "movie_name", "Director", "actor_age"])
+    df_bechdel = df_bechdel.drop(columns=["actor_genders", "movie_genres", "movie_countries", "actor_genders", "emotion_scores", "dominant_emotion", "wikipedia_movie_id", "movie_name", "director_name", "actor_age"])
     df_bechdel.columns = df_bechdel.columns.astype(str)
 
     # simplifying the bechdel_rating column into 0 (fails test) and 1(passes test)
-    df_bechdel["bechdel_rating"] = df_bechdel["bechdel_rating"].apply(lambda x: int(0) if (x==0 or x==1 or x==2) else int(1))
+    df_bechdel["bechdel_rating"] = df_bechdel["bechdel_rating"].apply(lambda x: int(0) if (x==0) else int(3))
 
     # simplifying the bechdel_rating column into 0 (M) and 1(F)
-    df_bechdel["Gender"] = df_bechdel["Gender"].apply(lambda x: int(0) if (x=='M') else int(1))
+    df_bechdel["director_gender"] = df_bechdel["director_gender"].apply(lambda x: int(0) if (x=='M') else int(1))
         
     return df_bechdel
+
+
 
 # 3.C 3)
 def logistic_regression_for_bechdel(df):
