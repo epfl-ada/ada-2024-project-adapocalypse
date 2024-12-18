@@ -160,14 +160,14 @@ def process_bechdel_corr(df):
 
 
     # dropping old unformatted columns
-    df_bechdel = df_bechdel.drop(columns=["actor_genders", "movie_genres", "movie_countries", "actor_genders", "emotion_scores", "dominant_emotion", "wikipedia_movie_id", "movie_name", "Director", "actor_age"])
+    df_bechdel = df_bechdel.drop(columns=["actor_genders", "movie_genres", "movie_countries", "emotion_scores", "dominant_emotion", "wikipedia_movie_id", "movie_name", "director_gender", "actor_age"])
     df_bechdel.columns = df_bechdel.columns.astype(str)
 
     # simplifying the bechdel_rating column into 0 (fails test) and 1(passes test)
     df_bechdel["bechdel_rating"] = df_bechdel["bechdel_rating"].apply(lambda x: int(0) if (x==0 or x==1 or x==2) else int(1))
 
     # simplifying the bechdel_rating column into 0 (M) and 1(F)
-    df_bechdel["director_gender"] = df_bechdel["director_gender"].apply(lambda x: int(0) if (x=='M') else int(1))
+    df_bechdel["Gender"] = df_bechdel["Gender"].apply(lambda x: int(0) if (x=='M') else int(1))
 
     return df_bechdel
 

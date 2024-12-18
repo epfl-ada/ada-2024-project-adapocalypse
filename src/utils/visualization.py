@@ -1,20 +1,21 @@
 import plotly.express as px
 import plotly.graph_objects as go
 import matplotlib.pyplot as plt
-#import numpy as np
-import folium
+import numpy as np
+#import folium
 #import geopandas as gpd
 #from folium import Choropleth, CircleMarker, Popup
 import pandas as pd
 from plotly.subplots import make_subplots
 import ast
 #from sklearn.metrics import confusion_matrix
-import seaborn as sns
-from scipy.stats import pearsonr, spearmanr
+#import seaborn as sns
+#from scipy.stats import pearsonr, spearmanr
 
 # CONSTANT DEFINITIONS
-COLOR_MALE = '#636EFA'
-COLOR_FEMALE = '#EF553B'
+COLOR_MALE = '#2D9884'
+COLOR_FEMALE = '#6E17C6'
+COLOR_NEUTRAL = '#2D9884'
 COLOR_PALETTE = {'M': COLOR_MALE, 'F': COLOR_FEMALE}
 
 LABELS = {"M":"Male",
@@ -36,6 +37,19 @@ LABELS = {"M":"Male",
           "movie_budget":"Movie Budget",
           "movie_rendement":"Movie Rendement"}
 
+GENRE = "movie_genre"
+NB_MOVIES = "number_of_movies"
+COUNTRY = "country"
+RELEASE_DATE = "movie_release_date"
+DIR_GENDER = "director_gender"
+ACT_GENDERS = "actor_genders"
+
+MALE = "M"
+FEMALE = "F"
+
+ONE = 1
+
+
 # PLOTTING FUNCTIONS
 # 2
 def movies_by_country(df):
@@ -45,7 +59,7 @@ def movies_by_country(df):
     Args:
         df (DataFrame): Processed datafram on which we extract the data from
     """
-    fig = px.bar(df, x="country", y="number_of_movies", color_discrete_sequence=['#A8E6CF'],
+    fig = px.bar(df, x=COUNTRY, y=NB_MOVIES, color_discrete_sequence=[COLOR_NEUTRAL],
                  title='Distribution of Movies by Country', labels=LABELS)
     fig.update_traces(textfont_size=10, cliponaxis=False)
     fig.show()
@@ -58,7 +72,7 @@ def movies_by_genre(df):
     Args:
         df (DataFrame): Processed datafram on which we extract the data from
     """
-    fig = px.bar(df, x='movie_genre', y='number_of_movies', color_discrete_sequence=['#A8E6CF'], 
+    fig = px.bar(df, x=GENRE, y=NB_MOVIES, color_discrete_sequence=[COLOR_NEUTRAL], 
                  title='Distribution of Movies by Genre', labels=LABELS)
     fig.update_traces(textfont_size=10, cliponaxis=False)
     fig.show()
@@ -72,8 +86,7 @@ def movies_per_year(df):
         df (DataFrame): Processed datafram on which we extract the data from
     """
     plt.figure(figsize=(12, 6))
-    plt.hist(df['movie_release_date'], bins=range(df['movie_release_date'].min(), df['movie_release_date'].max() + 1), 
-             color_discrete_sequence='#A8E6CF')
+    plt.hist(df[RELEASE_DATE], bins=range(df[RELEASE_DATE].min(), df[RELEASE_DATE].max() + ONE), color=COLOR_NEUTRAL) # add one to max to include it
     plt.xlabel('Release Year')
     plt.ylabel('Number of Movies')
     plt.title('Number of Movies Released by Year')
@@ -94,16 +107,20 @@ def plot_gender_distribution(df, gender_column):
     # Calculating percentages
     total_characters = gender_counts.sum()
     percentages = (gender_counts / total_characters) * 100
+    
+    label = "Movie Characters" if gender_column == ACT_GENDERS else LABELS.get(gender_column) 
 
     # Create the bar chart with Plotly
     fig = px.bar(
         x=gender_counts.index,  # Gender categories
         y=gender_counts.values,  # Counts
-        labels={'x': 'Character Genders', 'y': 'Number'},
-        title=f"Gender Distribution of Movie Characters",
+        labels={'x': label, 'y': 'Number'},
+        title=f"Gender Distribution of {label}",
         color=gender_counts.index,  # Color by gender
         color_discrete_map=COLOR_PALETTE 
     )
+    
+    fig.update_layout(legend_title_text="Gender")
 
     # Add percentage text on top of bars
     for index, (count, percentage) in enumerate(zip(gender_counts.values, percentages)):
@@ -167,11 +184,11 @@ def fem_representation_by_dir(df):
     df (pd.DataFrame): Processed dataframe on which we extract the data from
     """
     # Filter movies from 1930 onwards
-    df = df[df["movie_release_date"] >= 1930]
+    df = df[df[RELEASE_DATE] >= 1930]
 
     # Split the DataFrame by director gender
-    male_directors = df[df["director_gender"] == "M"]
-    female_directors = df[df["director_gender"] == "F"]
+    male_directors = df[df[DIR_GENDER] == MALE]
+    female_directors = df[df[DIR_GENDER] == FEMALE]
 
     # Compute percentage of female characters per year
     char_female_male = (male_directors.groupby("movie_release_date")["char_F"].sum().values / 
@@ -199,6 +216,7 @@ def fem_representation_by_dir(df):
         y=char_female_male,
         name="Male Directors",
         mode="lines",
+        marker=dict(color=COLOR_MALE),
         customdata=np.stack((male_directors.groupby("movie_release_date")["char_tot"].sum().values, 
                              movies_count_male, directors_count_male), axis=-1),
         hovertemplate=(
@@ -216,6 +234,7 @@ def fem_representation_by_dir(df):
         y=char_female_female,
         name="Female Directors",
         mode="lines",
+        marker_color=COLOR_FEMALE,
         customdata=np.stack((female_directors.groupby("movie_release_date")["char_tot"].sum().values, 
                              movies_count_female, directors_count_female), axis=-1),
         hovertemplate=(
@@ -368,7 +387,7 @@ def map_fem_char(df, director_gender):
 
 # 3.B 5)
 def plot_top10_genres(df, gender_real):
-    """Plot the gender representaiton across the 10 Movie Genres most represented
+    """Plot the gender representation across the 10 Movie Genres most represented
 
     Args:
         df (DataFrame): Processed dataframe on which we extract the data from
@@ -378,21 +397,20 @@ def plot_top10_genres(df, gender_real):
     gender_genre_counts = genre_gender_counts.groupby(['movie_genres', 'actor_genders']).size().unstack(fill_value=0)
     gender_genre_percentages = gender_genre_counts.div(gender_genre_counts.sum(axis=1), axis=0) * 100
     genre_counts = genre_gender_counts.groupby('movie_genres').size().sort_values(ascending=False).head(10)
-    gender_genre_counts_top10 = gender_genre_counts.loc[genre_counts.index]
     gender_genre_percentages_top10 = gender_genre_percentages.loc[genre_counts.index]
 
     fig = go.Figure()
     fig.add_trace(go.Bar(
         x=gender_genre_percentages_top10.index,
-        y=gender_genre_percentages_top10['F'],
-        name="Female",
-        marker_color="#EF553B",
+        y=gender_genre_percentages_top10[FEMALE],
+        name=FEMALE,
+        marker_color=COLOR_FEMALE,
     ))
     fig.add_trace(go.Bar(
         x=gender_genre_percentages_top10.index,
-        y=gender_genre_percentages_top10['M'],
-        name="Male",
-        marker_color="#636EFA"
+        y=gender_genre_percentages_top10[MALE],
+        name=MALE,
+        marker_color=COLOR_MALE
     ))
 
     fig.update_layout(
@@ -691,6 +709,7 @@ def plot_director_trope_pie_charts(male_director_data, female_director_data):
         hole=0.5,  # Adds a donut hole for aesthetics
         domain=dict(x=[0, 0.5]),  # Place pie chart on the left
         textinfo='none',
+        marker=dict(colors=[COLOR_MALE]),
         name="Male directors",
         hovertemplate='%{label}: %{value:.2f}%'  # Customize hovertemplate (show label and percentage with 2 decimals)
     ))
@@ -702,6 +721,7 @@ def plot_director_trope_pie_charts(male_director_data, female_director_data):
         hole=0.5,
         domain=dict(x=[0.5, 1]),  # Place pie chart on the right
         textinfo='none',
+        marker=dict(colors=[COLOR_FEMALE]),
         name="Female directors",
         hovertemplate='%{label}: %{value:.2f}%'  # Customize hovertemplate (show label and percentage with 2 decimals)
     ))
@@ -790,7 +810,7 @@ def rendement_groups(df, GROUP):
         df (DataFrame): Processed dataframe on which we extract the data from
         GROUP (str): "Optimal" or "Worst" group
     """
-    df = df[df['movie_rendement'] < 20]
+    df = df[df['movie_rendement'] < 40]
     fig = px.violin(df, x="director_gender", y="movie_rendement", color="director_gender", color_discrete_map=COLOR_PALETTE,
              hover_name="movie_name", title=f"Movie Rendement of " + GROUP + " movies by Director Gender",labels=LABELS)
     fig.show()
