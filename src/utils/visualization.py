@@ -550,6 +550,12 @@ def bechdel_test_ratings_by_gender(df):
 
 # 3.C 1)
 def corr_bechdel(df):
+    """
+    Plot the correlation of the Bechdel ratings with the number of men and women characters and the gender director.
+    
+    Args: 
+        df (DataFrame): Processed dataframe on which we extract the data from
+    """
     # Correlation values
     correlations = df[['bechdel_rating', 'char_F', 'char_M', "director_gender"]].corr()
     bechdel_corr = correlations['bechdel_rating'].drop('bechdel_rating')
@@ -566,6 +572,13 @@ def corr_bechdel(df):
     
 # 3.C 2)
 def graph_emotions(df):
+    """
+    Plot the emotions distribution in the plot summaries.
+
+    args: df (DataFrame): Processed dataframe on which we extract the data from
+
+    """
+
     emotion_totals = {
     'anger': 0,
     'disgust': 0,
@@ -672,6 +685,13 @@ def graph_emotions_bechdel_combined(df_bechdel):
     
 # 3.C 2)
 def graph_ratio_emotion_by_director_gender(ratios_women, ratios_men):
+    """
+    Plot the emotions ratio regarding the director gender in a histogram
+
+    Args:
+        ratios_women (DataFrame): percentage of emotions among female directors
+        ratios_men (DataFrame): percentage of emotions among male directors
+    """
     # Transformation into a DataFrame for Plotly
     df = pd.DataFrame({
         'Emotion': list(ratios_women.keys()),
@@ -705,6 +725,13 @@ def graph_ratio_emotion_by_director_gender(ratios_women, ratios_men):
 
 # 3.C 2)
 def graph_ratio_emotion_radar_by_director_gender(ratios_women, ratios_men):
+    """
+    Plot the emotions ratio regarding the director gender in a radar graph 
+
+    Args:
+        ratios_women (DataFrame): percentage of emotions among female directors
+        ratios_men (DataFrame): percentage of emotions among male directors
+    """
     emotions = list(ratios_women.keys())
     values_women = list(ratios_women.values())
     values_men = list(ratios_men.values())
@@ -748,6 +775,13 @@ def graph_ratio_emotion_radar_by_director_gender(ratios_women, ratios_men):
     
     
 def graph_emotions_bechdel_combined(df_bechdel):
+    """
+    Plot radar chat on emotions regarding the bechdel rating
+
+    Args:
+        df_bechdel (DataFrame): Processed dataframe on which we extract the data from
+    """
+
     # Calculation of the average emotions for each DataFrame
     def compute_mean_emotions(df):
         emotions = ["neutral", "sadness", "anger", "fear", "disgust", "surprise", "joy"]

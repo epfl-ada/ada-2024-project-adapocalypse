@@ -173,12 +173,30 @@ def process_bechdel(df):
 
 # 3.C 2)
 def process_emotions(df):
+    """
+    Process dataframe to later on plot radar chat on emotions as well as the distribution of emotions.
+
+    Args: 
+        df (DataFrame): original dataframe that is to be modified to produce the desired data
+
+    Returns: 
+        DataFrame: desired dataframe to plot the graphs.
+    """
     df_plot_emotions = df[['wikipedia_movie_id', 'director_name', 'director_gender', 'emotion_scores', 'dominant_emotion']]
     df_plot_emotions = df_plot_emotions.dropna(subset=['emotion_scores'])
     return df_plot_emotions
 
 # 3.C 2)
 def process_emotion_by_dir_gender(df):
+    """
+    Process dataframe to later on plot the ratio of emotions by gender of the movie director.
+
+    Args: 
+        df (DataFrame): original dataframe that is to be modified to produce the desired data
+
+    Returns: 
+        DataFrame: desired dataframe to plot the graphs.
+    """
     df_plot_emotions_women = df[df['director_gender'] == 'F']
     df_plot_emotions_men = df[df['director_gender'] == 'M']
 
@@ -352,6 +370,16 @@ def logistic_regression_for_bechdel(df):
 
 
 def preprocessing_bechdel_for_radar_graph(movies_complete_df):
+    """
+    Process dataframe to later on plot radar chat on emotions regarding the bechdel rating
+
+    Args:
+        movies_complete_df (DataFrame): original dataframe that is to be modified to produce the desired data
+
+    Returns:
+        DataFrame: desired dataframe needed for plotting radar chat on emotions regarding the bechdel rating
+    
+    """
     df_bechdel = movies_complete_df.copy(deep = True)
 
     df_bechdel = df_bechdel.dropna(subset=['bechdel_rating', 'emotion_scores'])
