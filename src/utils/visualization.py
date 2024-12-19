@@ -2,22 +2,22 @@ import plotly.express as px
 import plotly.graph_objects as go
 import matplotlib.pyplot as plt
 import numpy as np
-#import folium
-#import geopandas as gpd
-#from folium import Choropleth, CircleMarker, Popup
+import folium
+import geopandas as gpd
+from folium import Choropleth, CircleMarker, Popup
 import pandas as pd
 from plotly.subplots import make_subplots
 import ast
-#from sklearn.metrics import confusion_matrix
-#import seaborn as sns
-#from scipy.stats import pearsonr, spearmanr
+from sklearn.metrics import confusion_matrix
+import seaborn as sns
+from scipy.stats import pearsonr, spearmanr
 
 # CONSTANT DEFINITIONS
 COLOR_MALE = '#2D9884'
 COLOR_FEMALE = '#6E17C6'
 COLOR_MALE_LIGHT = '#17D07D'
 COLOR_FEMALE_LIGHT = '#B56BEA'
-COLOR_NEUTRAL = '#2D9884'
+COLOR_NEUTRAL = '#FDE047'
 COLOR_PALETTE = {'M': COLOR_MALE, 'F': COLOR_FEMALE}
 
 LABELS = {"M":"Male",
@@ -77,6 +77,7 @@ def movies_by_genre(df):
     fig = px.bar(df, x=GENRE, y=NB_MOVIES, color_discrete_sequence=[COLOR_NEUTRAL], 
                  title='Distribution of Movies by Genre', labels=LABELS)
     fig.update_traces(textfont_size=10, cliponaxis=False)
+    fig.update_xaxes(tickangle=40)  # Set the angle of x-axis labels
     fig.show()
     
 # 2
@@ -252,6 +253,7 @@ def fem_representation_by_dir(df):
     fig.update_layout(
         title="Representation of Female Characters by Director Gender",
         yaxis_title="Percentage of Female Characters in Movies [%]",
+        xaxis_title="Year",
         xaxis=dict(
             tickmode='array',
             tickvals=years[::5],  # Display ticks every 5 years
@@ -273,38 +275,15 @@ def fem_representation_by_dir(df):
 def map_fem_char(df, director_gender):
     """
     Generates a choropleth map of average female character percentages, 
-    total characters, and movie counts in movies directed by directors of the specified gender, grouped by country.
+    total characters, and movie counts in movies directed by directors of the specified gender, grouped by country
 
     Parameters:
-    - df: DataFrame containing movie data.
-    - director_gender: Gender of the directors to filter ('M' or 'F').
+    - df: Processed dataframe on which we extract the data from
+    - director_gender: Gender of the directors to filter ('M' or 'F')
 
     Returns:
-    - Folium Map object.
+    - Folium Map object
     """
-    # Filter the data for the specified director gender
-    movies_df = df[df["director_gender"] == director_gender].copy()
-
-    # Flatten the "movie_countries" column to the first country
-    movies_df["movie_countries"] = movies_df["movie_countries"].str[0]
-
-    # Compute percentage of female characters for each movie
-    movies_df["female_percentage"] = (movies_df["char_F"] / movies_df["char_tot"]) * 100
-
-    # Group by country to calculate metrics
-    mean_female_percentage_per_country = movies_df.groupby("movie_countries")["female_percentage"].mean()
-    number_movies_per_country = movies_df.groupby("movie_countries")["wikipedia_movie_id"].nunique()
-    total_characters_per_country = movies_df.groupby("movie_countries")["char_tot"].sum()
-
-    # Create a DataFrame with the results
-    gender_percentages_per_country = pd.DataFrame({
-        "mean_female_percentage": mean_female_percentage_per_country,
-        "movies_count": number_movies_per_country,
-        "total_characters": total_characters_per_country
-    }).reset_index()
-
-    # Sort data for better readability (optional)
-    gender_percentages_per_country = gender_percentages_per_country.sort_values(by="mean_female_percentage", ascending=False)
 
     # Load the world map
     world = gpd.read_file(gpd.datasets.get_path("naturalearth_lowres"))
@@ -323,10 +302,10 @@ def map_fem_char(df, director_gender):
     }
 
     # Replace country names in gender_percentages_per_country
-    gender_percentages_per_country["movie_countries"] = gender_percentages_per_country["movie_countries"].replace(country_mapping)
+    df["movie_countries"] = df["movie_countries"].replace(country_mapping)
 
     # Merge gender data with GeoPandas world map
-    world = world.merge(gender_percentages_per_country, left_on="name", right_on="movie_countries", how="left")
+    world = world.merge(df, left_on="name", right_on="movie_countries", how="left")
 
     # Initialize the Folium map
     m = folium.Map(
@@ -340,7 +319,7 @@ def map_fem_char(df, director_gender):
     # Add a choropleth layer
     Choropleth(
         geo_data=world,
-        data=gender_percentages_per_country,
+        data=df,
         columns=["movie_countries", "mean_female_percentage"],
         key_on="feature.properties.name",
         fill_color="RdYlGn",
@@ -389,28 +368,24 @@ def map_fem_char(df, director_gender):
 
 # 3.B 5)
 def plot_top10_genres(df, gender_real):
-    """Plot the gender representation across the 10 Movie Genres most represented
+    """
+    Plot the gender representation across the 10 Movie Genres most represented
 
     Args:
         df (DataFrame): Processed dataframe on which we extract the data from
-        gender_real (_type_): Gender of the movie director
+        gender_real (str): Gender of the movie director
     """
-    genre_gender_counts = df.explode("actor_genders").explode("movie_genres")
-    gender_genre_counts = genre_gender_counts.groupby(['movie_genres', 'actor_genders']).size().unstack(fill_value=0)
-    gender_genre_percentages = gender_genre_counts.div(gender_genre_counts.sum(axis=1), axis=0) * 100
-    genre_counts = genre_gender_counts.groupby('movie_genres').size().sort_values(ascending=False).head(10)
-    gender_genre_percentages_top10 = gender_genre_percentages.loc[genre_counts.index]
 
     fig = go.Figure()
     fig.add_trace(go.Bar(
-        x=gender_genre_percentages_top10.index,
-        y=gender_genre_percentages_top10[FEMALE],
+        x=df.index,
+        y=df[FEMALE],
         name=FEMALE,
         marker_color=COLOR_FEMALE,
     ))
     fig.add_trace(go.Bar(
-        x=gender_genre_percentages_top10.index,
-        y=gender_genre_percentages_top10[MALE],
+        x=df.index,
+        y=df[MALE],
         name=MALE,
         marker_color=COLOR_MALE
     ))
@@ -422,8 +397,8 @@ def plot_top10_genres(df, gender_real):
         barmode='stack',
         xaxis=dict(
             tickmode='array',
-            tickvals=gender_genre_percentages_top10.index,
-            ticktext=gender_genre_percentages_top10.index,
+            tickvals=df.index,
+            ticktext=df.index,
             tickangle=45
         ),
         height=600,
@@ -434,6 +409,15 @@ def plot_top10_genres(df, gender_real):
     
 # 3.B 5)
 def genres_most_fem_char(df, director_gender, sort, title):
+    """
+    Plots the top 5 genres with the highest/lowest percentage of female characters depending on the gender of the movie director
+
+    Args:
+        df (DataFrame): Processed dataframe on which we extract the data from
+        director_gender (str): "Male" or "Female"
+        sort (bool): True for ascending, False for descending order (to sort percentage of feminine representation)
+        title (str): to adapt the title of the graph
+    """
     # filter movies within two dates
     movies_df = df[(df["movie_release_date"] >= 1990) & (df["movie_release_date"] <= 2010)]
     movies_df = movies_df.explode("movie_genres")
@@ -547,7 +531,6 @@ def bechdel_test_ratings_by_gender(df):
     fig = go.Figure(data=[trace_male, trace_female], layout=layout)
     fig.show()
 
-
 # 3.C 1)
 def corr_bechdel(df):
     """
@@ -562,7 +545,8 @@ def corr_bechdel(df):
 
     # Plotting
     plt.figure(figsize=(8, 5))
-    bechdel_corr.sort_values(ascending=True).plot(kind='barh', color=[COLOR_NEUTRAL])
+    bechdel_corr.sort_values(ascending=True).plot(kind='barh', color=COLOR_NEUTRAL)
+    plt.plot(color=COLOR_NEUTRAL)
     plt.title('Correlation with Bechdel Rating')
     plt.xlabel('Correlation Coefficient')
     plt.ylabel('Variables')
@@ -571,27 +555,14 @@ def corr_bechdel(df):
     plt.show()
     
 # 3.C 2)
-def graph_emotions(df):
+def graph_emotions(emotion_totals):
     """
     Plot the emotions distribution in the plot summaries.
 
-    args: df (DataFrame): Processed dataframe on which we extract the data from
+    Args: 
+        emotion_totals (dict): Processed dictionary on which we extract the data from
 
     """
-
-    emotion_totals = {
-    'anger': 0,
-    'disgust': 0,
-    'fear': 0,
-    'joy': 0,
-    'neutral': 0,
-    'sadness': 0,
-    'surprise': 0
-    }
-    for emotion_score in df['emotion_scores']:
-        scores = ast.literal_eval(emotion_score)
-        for emotion, score in scores.items():
-            emotion_totals[emotion] += score
 
     fig = px.pie(
         values=list(emotion_totals.values()),
@@ -773,88 +744,6 @@ def graph_ratio_emotion_radar_by_director_gender(ratios_women, ratios_men):
 
     fig.show()
     
-    
-def graph_emotions_bechdel_combined(df_bechdel):
-    """
-    Plot radar chat on emotions regarding the bechdel rating
-
-    Args:
-        df_bechdel (DataFrame): Processed dataframe on which we extract the data from
-    """
-
-    # Calculation of the average emotions for each DataFrame
-    def compute_mean_emotions(df):
-        emotions = ["neutral", "sadness", "anger", "fear", "disgust", "surprise", "joy"]
-        return df[emotions].mean()
-
-    # creation of datasets that pass or fail the bechdel test
-    bechdel_grade3 = df_bechdel[df_bechdel["bechdel_rating"]==1]
-    bechdel_grade012 = df_bechdel[df_bechdel["bechdel_rating"]!=1]
-
-    # Creation of datasets by director gender
-    bechdel_grade3_men = bechdel_grade3[bechdel_grade3["director_gender"]==0]
-    bechdel_grade3_women = bechdel_grade3[bechdel_grade3["director_gender"]==1]
-    bechdel_grade012_men = bechdel_grade012[bechdel_grade012["director_gender"]==0]
-    bechdel_grade012_women = bechdel_grade012[bechdel_grade012["director_gender"]==1]
-
-    # Data for the graph
-    data_women_grade3 = compute_mean_emotions(bechdel_grade3_women)
-    data_men_grade3 = compute_mean_emotions(bechdel_grade3_men)
-
-    data_women_grade012 = compute_mean_emotions(bechdel_grade012_women)
-    data_men_grade012 = compute_mean_emotions(bechdel_grade012_men)
-
-    # Creation of a graph with two subplots side by side
-    fig = make_subplots(
-        rows=1, cols=2,
-        specs=[[{'type': 'polar'}, {'type': 'polar'}]],      
-    )
-
-    # First graph: For films that pass the Bechdel test (Grade 3)
-    fig.add_trace(go.Scatterpolar(
-        r=data_men_grade3,
-        theta=data_men_grade3.index,
-        fill='toself',
-        name='Men - Bechdel passed',
-        marker_color=COLOR_MALE
-    ), row=1, col=1)
-
-    fig.add_trace(go.Scatterpolar(
-        r=data_women_grade3,
-        theta=data_women_grade3.index,
-        fill='toself',
-        name='Women - Bechdel passed',
-        marker_color=COLOR_FEMALE
-    ), row=1, col=1)
-
-    # Second graph: For films that do not pass the Bechdel test (Grades 0, 1, 2)
-    fig.add_trace(go.Scatterpolar(
-        r=data_men_grade012,
-        theta=data_men_grade012.index,
-        fill='toself',
-        name='Men - Bechdel failed',
-        marker_color=COLOR_MALE_LIGHT
-    ), row=1, col=2)
-
-    fig.add_trace(go.Scatterpolar(
-        r=data_women_grade012,
-        theta=data_women_grade012.index,
-        fill='toself',
-        name='Women - Bechdel failed',
-        marker_color=COLOR_FEMALE_LIGHT
-    ), row=1, col=2)
-
-    fig.update_layout(
-        title_text="Emotion Distribution by Gender for Bechdel Test Results",
-        showlegend=True,
-        polar=dict(
-            radialaxis=dict(visible=True, range=[0, 0.25])
-        ),
-        template="plotly_white"
-    )
-
-    fig.show()
-    
 # 3.C 3)
 def plot_confusion_matrix(y_test, y_pred_test):
     """
@@ -878,35 +767,6 @@ def plot_confusion_matrix(y_test, y_pred_test):
     plt.ylabel('Actual')
     plt.show()
 
-# 3.C 3)
-def feature_importance(log_reg_model, X_train):
-    """
-    
-    Defines the feature importance of the logistic regression model
-
-    Args:
-        log_reg_model : logistic regression model
-        X_train (Series): data we want to train
-
-    Returns:
-        DataFrame: feature, ranked by descending order
-    """
-    # Get the feature importance
-    selected_features = X_train.columns
-
-    # Get the coefficients from the logistic regression model
-    coefficients = log_reg_model.coef_[0]  # For binary classification
-
-    # Create a DataFrame for feature importance
-    feature_importance_df = pd.DataFrame({
-        'Feature': selected_features,
-        'Coefficient': coefficients,
-        'Importance': abs(coefficients)
-    }).sort_values(by='Importance', ascending=False)
-
-    # Display the top 20 features
-    return feature_importance_df
-
 # 3.D
 def plot_director_trope_pie_charts(male_director_data, female_director_data):
     """
@@ -924,7 +784,7 @@ def plot_director_trope_pie_charts(male_director_data, female_director_data):
         hole=0.5,  # Adds a donut hole for aesthetics
         domain=dict(x=[0, 0.5]),  # Place pie chart on the left
         textinfo='none',
-        marker=dict(colors=[COLOR_MALE]),
+        marker=dict(colors=[COLOR_PALETTE]),
         name="Male directors",
         hovertemplate='%{label}: %{value:.2f}%'  # Customize hovertemplate (show label and percentage with 2 decimals)
     ))
@@ -936,7 +796,7 @@ def plot_director_trope_pie_charts(male_director_data, female_director_data):
         hole=0.5,
         domain=dict(x=[0.5, 1]),  # Place pie chart on the right
         textinfo='none',
-        marker=dict(colors=[COLOR_FEMALE]),
+        marker=dict(colors=[COLOR_PALETTE]),
         name="Female directors",
         hovertemplate='%{label}: %{value:.2f}%'  # Customize hovertemplate (show label and percentage with 2 decimals)
     ))
@@ -946,15 +806,45 @@ def plot_director_trope_pie_charts(male_director_data, female_director_data):
         title="Representation of Male/Female Tropes by Director Gender",
         grid=dict(rows=1, columns=2),
         annotations=[
-            dict(text='Male Directors', x=0.205, y=0.5, font_size=12, showarrow=False),
-            dict(text='Female Directors', x=0.805, y=0.5, font_size=12, showarrow=False)
+            dict(text='Male Directors', x=0.1, y=0.5, font_size=12, showarrow=False),
+            dict(text='Female Directors', x=0.6, y=0.5, font_size=12, showarrow=False)
         ],
         showlegend=True,
         legend=dict(orientation="h", x=0.5, xanchor="center", y=-0.2)
     )
 
     fig.show()
-    
+   
+# 3.D
+def gender_char_types(df):
+    """
+    Plot the gender distribution of actors of different tv tropes regarding director gender of the movie
+
+    Args:
+        df (DataFrame): Processed dataframe on which we extract the data from
+    """
+    # Set up the number of subplots
+    categories_per_subplot = 12
+    num_subplots = (len(df) + categories_per_subplot - 1) // categories_per_subplot
+
+    fig, axes = plt.subplots(num_subplots, 1, figsize=(10, 4 * num_subplots))
+
+    # Plot each subset in a separate subplot
+    for i in range(num_subplots):
+        start = i * categories_per_subplot
+        end = start + categories_per_subplot
+        subset = df.iloc[start:end]
+
+        subset.plot(kind='bar', stacked=True, ax=axes[i], color=[COLOR_PALETTE])
+        axes[i].set_title(f"Repartition of Genders for Character Types")
+        axes[i].set_xlabel("")  # Character type
+        axes[i].set_ylabel("Number of Actors")
+        axes[i].legend(title="Gender")
+        axes[i].set_xticklabels(axes[i].get_xticklabels(), rotation=45, ha='right')
+
+    plt.tight_layout()
+    plt.show()
+ 
 # 3.E 1)  
 def avg_rating(df):
     """
@@ -969,8 +859,6 @@ def avg_rating(df):
                  labels=LABELS)
     fig.update_yaxes(title_text='Proportion of movies')
     fig.show()
- 
- # 2.E 1)  
  
 # 3.E 1)    
 def avg_rating_groups(df):
@@ -1014,8 +902,6 @@ def budget_through_years(df):
                      hover_name="movie_name", labels=LABELS)
     fig.show()
     
- 
-    
 # 3.E 3)
 def rendement_groups(df, GROUP):
     """
@@ -1023,7 +909,7 @@ def rendement_groups(df, GROUP):
 
     Args:
         df (DataFrame): Processed dataframe on which we extract the data from
-        GROUP (str): "Optimal" or "Worst" group
+        GROUP (str): "passed" or "failed" group (output of bechdel test)
     """
     df = df[df['movie_rendement'] < 40]
     fig = px.violin(df, x="director_gender", y="movie_rendement", color="director_gender", color_discrete_map=COLOR_PALETTE,

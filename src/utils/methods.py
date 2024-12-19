@@ -24,7 +24,8 @@ EXTERNAL_DATA_FOLDER_PATH = 'src/data/external_data/'
 
 # FUNCTIONS USED IN THE PREPROCESSING OF THE DATA
 def emotion_analysis(df, text):
-    """ Calculate the average score of each emotion (anger, disgust, joy, fear, neutral, sadness, surprise) in a text
+    """ 
+    Calculate the average score of each emotion (anger, disgust, joy, fear, neutral, sadness, surprise) in a text
 
     Args:
         df (DataFrame): original dataframe on which we perform the analysis
@@ -52,11 +53,12 @@ def emotion_analysis(df, text):
 
     return average_scores
 
-# FUNCTIONS USED TO PROCESS DATA TO ADAPT IT SPECIFICALLY TO GRAPHS
 
+# FUNCTIONS USED TO PROCESS DATA TO ADAPT IT SPECIFICALLY TO GRAPHS
 # 2.
 def process_movies_by_country(df):
-    """Computes the number of movies produced by each country and filters out the countries with less than 500 movies
+    """
+    Computes the number of movies produced by each country and filters out the countries with less than 500 movies
 
     Args:
         df (DataFrame): original dataframe that is to be modified to produce the desired data
@@ -75,7 +77,8 @@ def process_movies_by_country(df):
 
 # 2.
 def process_movies_by_genre(df):
-    """Computes the number of movies produced in each movie genre and filters out the genres with less than 500 movies
+    """
+    Computes the number of movies produced in each movie genre and filters out the genres with less than 500 movies
 
     Args:
         df (DataFrame): original dataframe that is to be modified to produce the desired data
@@ -95,7 +98,8 @@ def process_movies_by_genre(df):
 
 # 3.B 2)
 def process_actor_age(df, gender):
-    """Computes the age distribution (in percentage) of the actors depending on the gender of their Movie Director
+    """
+    Computes the age distribution (in percentage) of the actors depending on the gender of their Movie Director
 
     Args:
         df (DataFrame): original dataframe that is to be modified to produce the desired data
@@ -121,6 +125,60 @@ def process_actor_age(df, gender):
     age_male_percentage = age_male_actors.value_counts(normalize=True).sort_index() * 100
 
     return age_female_percentage, age_male_percentage
+
+# 3.B 4)
+def process_map_fem_char(df, director_gender):
+    """
+
+
+    Args:
+        df (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
+    
+    # Filter the data for the specified director gender
+    movies_df = df[df["director_gender"] == director_gender].copy()
+
+    # Flatten the "movie_countries" column to the first country
+    movies_df["movie_countries"] = movies_df["movie_countries"].str[0]
+
+    # Compute percentage of female characters for each movie
+    movies_df["female_percentage"] = (movies_df["char_F"] / movies_df["char_tot"]) * 100
+
+    # Group by country to calculate metrics
+    mean_female_percentage_per_country = movies_df.groupby("movie_countries")["female_percentage"].mean()
+    number_movies_per_country = movies_df.groupby("movie_countries")["wikipedia_movie_id"].nunique()
+    total_characters_per_country = movies_df.groupby("movie_countries")["char_tot"].sum()
+
+    # Create a DataFrame with the results
+    gender_percentages_per_country = pd.DataFrame({
+        "mean_female_percentage": mean_female_percentage_per_country,
+        "movies_count": number_movies_per_country,
+        "total_characters": total_characters_per_country
+    }).reset_index()
+
+    # Sort data for better readability (optional)
+    gender_percentages_per_country = gender_percentages_per_country.sort_values(by="mean_female_percentage", ascending=False)
+    return gender_percentages_per_country
+
+# 3.B 5)
+def process_top10_genres(df):
+    """_summary_
+
+    Args:
+        df (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
+    genre_gender_counts = df.explode("actor_genders").explode("movie_genres")
+    gender_genre_counts = genre_gender_counts.groupby(['movie_genres', 'actor_genders']).size().unstack(fill_value=0)
+    gender_genre_percentages = gender_genre_counts.div(gender_genre_counts.sum(axis=1), axis=0) * 100
+    genre_counts = genre_gender_counts.groupby('movie_genres').size().sort_values(ascending=False).head(10)
+    gender_genre_percentages_top10 = gender_genre_percentages.loc[genre_counts.index]
+    return gender_genre_percentages_top10
 
 # 3.C 1)
 def process_bechdel(df):
@@ -172,7 +230,7 @@ def process_bechdel(df):
     return df_bechdel
 
 # 3.C 2)
-def process_emotions(df):
+def process_df_emotions(df):
     """
     Process dataframe to later on plot radar chat on emotions as well as the distribution of emotions.
 
@@ -184,7 +242,36 @@ def process_emotions(df):
     """
     df_plot_emotions = df[['wikipedia_movie_id', 'director_name', 'director_gender', 'emotion_scores', 'dominant_emotion']]
     df_plot_emotions = df_plot_emotions.dropna(subset=['emotion_scores'])
+            
     return df_plot_emotions
+
+# 3.C 2)
+def process_emotion_scores(df):
+    """
+    Process emotion scores to later on plot its distribution
+
+    Args:
+        df (DataFrame): original dataframe from which data will be extracted
+
+    Returns:
+        dict: dictionary containing the total score for each emotion
+    """
+    emotion_totals = {
+        'anger': 0,
+        'disgust': 0,
+        'fear': 0,
+        'joy': 0,
+        'neutral': 0,
+        'sadness': 0,
+        'surprise': 0
+    }
+    
+    for emotion_score in df['emotion_scores']:
+        scores = ast.literal_eval(emotion_score)
+        for emotion, score in scores.items():
+            emotion_totals[emotion] += score
+            
+    return emotion_totals
 
 # 3.C 2)
 def process_emotion_by_dir_gender(df):
@@ -281,8 +368,6 @@ def process_bechdel_radar(df):
         
     return df_bechdel
 
-
-
 # 3.C 3)
 def logistic_regression_for_bechdel(df):
     """
@@ -368,7 +453,35 @@ def logistic_regression_for_bechdel(df):
 
     return y_test, y_pred_test, log_reg_model, X_train
 
+# 3.C 3)
+def feature_importance(log_reg_model, X_train):
+    """
+    Defines the feature importance of the logistic regression model
 
+    Args:
+        log_reg_model : logistic regression model
+        X_train (Series): data we want to train
+
+    Returns:
+        DataFrame: feature, ranked by descending order
+    """
+    # Get the feature importance
+    selected_features = X_train.columns
+
+    # Get the coefficients from the logistic regression model
+    coefficients = log_reg_model.coef_[0]  # For binary classification
+
+    # Create a DataFrame for feature importance
+    feature_importance_df = pd.DataFrame({
+        'Feature': selected_features,
+        'Coefficient': coefficients,
+        'Importance': abs(coefficients)
+    }).sort_values(by='Importance', ascending=False)
+
+    # Display the top 20 features
+    return feature_importance_df
+
+# 3.C 3)
 def preprocessing_bechdel_for_radar_graph(movies_complete_df):
     """
     Process dataframe to later on plot radar chat on emotions regarding the bechdel rating
@@ -413,7 +526,8 @@ def preprocessing_bechdel_for_radar_graph(movies_complete_df):
 
 # 3.D
 def get_dominant_tropes(filtered_tropes, genderedness_df, dominant, non_dominant):
-    """Determines the distribution of gendered final tropes regarding the gender of the movie director
+    """
+    Determines the distribution of gendered final tropes regarding the gender of the movie director
 
     Args:
         filtered_tropes (DataFrame): contains the tropes filtered
@@ -454,7 +568,8 @@ def get_dominant_tropes(filtered_tropes, genderedness_df, dominant, non_dominant
 
 # 3.D
 def preprocessing_final_tropes(final_tropes_F, final_tropes_M):
-    """Processes data to plot the gendered proportion of tv tropes depending on the gender of the movie director
+    """
+    Processes data to plot the gendered proportion of tv tropes depending on the gender of the movie director
 
     Args:
         final_tropes_F (DataFrame): Final Tropes that describe female characters, sorted in descending order of female appearances
@@ -479,7 +594,8 @@ def preprocessing_final_tropes(final_tropes_F, final_tropes_M):
 
 # 3.E 1)
 def group_formation(df, opti):
-    """Proceeds to form the "Optimal" and "Worst" group based on the selection criterias listed in the notebook
+    """
+    Proceeds to form the "Optimal" and "Worst" group based on the selection criterias listed in the notebook
 
     Args:
         df (DataFrame): original dataframe that is to be modified to produce the desired data
