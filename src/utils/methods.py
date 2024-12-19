@@ -17,6 +17,8 @@ from sklearn.metrics import mean_absolute_error
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import confusion_matrix
 import ast
+import joblib
+
 
 # CONSTANT DEFINITIONS
 RAW_DATA_FOLDER_PATH = 'data/raw/'
@@ -448,10 +450,63 @@ def logistic_regression_for_bechdel(df):
     y_pred_test = log_reg_model.predict(X_test_standardized)
     y_pred_train = log_reg_model.predict(X_train_standardized)
 
+    # Save the model and the scaler
+    joblib.dump(log_reg_model, 'log_reg_model.pkl')
+    joblib.dump(scaler, 'scaler.pkl')
+
     print(f'The accuracy score for test set is: {accuracy_score(y_test, y_pred_test)}')
     print(f'The accuracy score for train set is: {accuracy_score(y_train, y_pred_train)}')
 
     return y_test, y_pred_test, log_reg_model, X_train
+
+def obtain_df_bechdel_used_in_ML(df):
+    """
+    First step of the ML model, we process the dataframe to later on apply the logistic regression model
+
+    Args:
+        df (DataFrame): Processed dataframe on which we extract the data from
+
+    Returns:
+        df (DataFrame): Processed dataframe to apply the logistic regression model
+    """
+    df_bechdel = df.copy(deep = True)
+
+    df_bechdel = df_bechdel.dropna(subset=['bechdel_rating', 'emotion_scores'])
+    df_bechdel["emotion_scores"] = df_bechdel["emotion_scores"].str.replace("'", '"')
+    # Parse the corrected strings into dictionaries
+    df_bechdel["emotion_scores"] = df_bechdel["emotion_scores"].apply(json.loads)
+
+    genres_list = df_bechdel.explode('movie_genres')['movie_genres'].unique().tolist()
+    countries_list = df_bechdel.explode("movie_countries")["movie_countries"].unique().tolist()
+    emotion_list = df_bechdel["dominant_emotion"].unique().tolist()
+    # add genre and countries columns
+    cols_df = pd.DataFrame(columns= genres_list + countries_list + emotion_list)
+    df_bechdel = pd.concat([df_bechdel, cols_df], axis=1).fillna(0).reset_index(drop=True)
+
+
+    for index, row in df_bechdel.iterrows():
+        genres = row["movie_genres"]
+        countries = row["movie_countries"]
+        emotions_dict = row["emotion_scores"]
+        for genre in genres:
+            df_bechdel.at[index, genre] = 1
+        for country in countries:
+            df_bechdel.at[index, country] = 1
+        for emotion in emotion_list:
+            df_bechdel.at[index, emotion] = emotions_dict[emotion]
+
+
+    # dropping old unformatted columns
+    df_bechdel = df_bechdel.drop(columns=["actor_genders", "movie_genres", "movie_countries", "actor_genders", "emotion_scores", "dominant_emotion", "wikipedia_movie_id", "movie_name", "director_name", "actor_age"])
+    df_bechdel.columns = df_bechdel.columns.astype(str)
+
+    # simplifying the bechdel_rating column into 0 (fails test) and 1(passes test)
+    df_bechdel["bechdel_rating"] = df_bechdel["bechdel_rating"].apply(lambda x: int(0) if (x==0 or x==1 or x==2) else int(1))
+
+    # simplifying the bechdel_rating column into 0 (M) and 1(F)
+    df_bechdel["director_gender"] = df_bechdel["director_gender"].apply(lambda x: int(0) if (x=='M') else int(1))
+
+    return df_bechdel
 
 # 3.C 3)
 def feature_importance(log_reg_model, X_train):
