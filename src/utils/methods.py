@@ -6,18 +6,18 @@ import json
 from src.data.data_loader import load_csv
 
 # IMPORTATIONS FOR THE ML MODEL
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
-from sklearn.preprocessing import StandardScaler
-from statsmodels import tools
-from sklearn.linear_model import LogisticRegression
-from sklearn.tree import DecisionTreeClassifier, plot_tree
-from sklearn.metrics import mean_squared_error
-from sklearn.metrics import mean_absolute_error
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import confusion_matrix
-from scipy.stats import chi2_contingency
-import scipy.stats as stats
+# from sklearn.model_selection import train_test_split
+# from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
+# from sklearn.preprocessing import StandardScaler
+# from statsmodels import tools
+# from sklearn.linear_model import LogisticRegression
+# from sklearn.tree import DecisionTreeClassifier, plot_tree
+# from sklearn.metrics import mean_squared_error
+# from sklearn.metrics import mean_absolute_error
+# from sklearn.ensemble import RandomForestClassifier
+# from sklearn.metrics import confusion_matrix
+# from scipy.stats import chi2_contingency
+# import scipy.stats as stats
 import ast
 import joblib
 
