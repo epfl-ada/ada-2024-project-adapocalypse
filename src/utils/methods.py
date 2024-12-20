@@ -5,19 +5,19 @@ import json
 
 from src.data.data_loader import load_csv
 
-# IMPORTATIONS FOR THE ML MODEL
-# from sklearn.model_selection import train_test_split
-# from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
-# from sklearn.preprocessing import StandardScaler
-# from statsmodels import tools
-# from sklearn.linear_model import LogisticRegression
-# from sklearn.tree import DecisionTreeClassifier, plot_tree
-# from sklearn.metrics import mean_squared_error
-# from sklearn.metrics import mean_absolute_error
-# from sklearn.ensemble import RandomForestClassifier
-# from sklearn.metrics import confusion_matrix
-# from scipy.stats import chi2_contingency
-# import scipy.stats as stats
+# IMPORTATIONS FOR THE ML MODEL AND THE STATISTICAL TESTS
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
+from sklearn.preprocessing import StandardScaler
+from statsmodels import tools
+from sklearn.linear_model import LogisticRegression
+from sklearn.tree import DecisionTreeClassifier, plot_tree
+from sklearn.metrics import mean_squared_error
+from sklearn.metrics import mean_absolute_error
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import confusion_matrix
+from scipy.stats import chi2_contingency
+import scipy.stats as stats
 import ast
 import joblib
 
@@ -270,6 +270,17 @@ def preprocessing_final_tropes(final_tropes_F, final_tropes_M):
     return male_director_data, female_director_data, male_director_top, female_director_top
 
 
+# 3.C.2 )
+def top_genres(df, big_cols, less_cols, top=3):  
+    # Group by then count the occurrences
+    genre_counts = df.explode("movie_genres").groupby(big_cols)["movie_genres"].count().reset_index(name='count')
+    # Sort the values by count in descending order
+    sorted_genre_counts = genre_counts.sort_values(by='count', ascending=False)
+    # Get top genres
+    top_genres_per_trope = sorted_genre_counts.groupby(less_cols).head(top)
+    top_genres_per_trope = top_genres_per_trope.groupby(less_cols)['movie_genres'].apply(list).reset_index()
+    
+    return top_genres_per_trope
 
 # 3.D 1)
 def corr_bechdel(df):
@@ -577,8 +588,8 @@ def logistic_regression_for_bechdel(df):
     y_pred_train = log_reg_model.predict(X_train_standardized)
 
     # Save the model and the scaler
-    joblib.dump(log_reg_model, 'log_reg_model.pkl')
-    joblib.dump(scaler, 'scaler.pkl')
+    joblib.dump(log_reg_model, 'src/utils/model_ML/log_reg_model.pkl')
+    joblib.dump(scaler, 'src/utils/model_ML/scaler.pkl')
 
     print(f'The accuracy score for the TEST set is: {accuracy_score(y_test, y_pred_test) * 100:.2f}%')
     print(f'The accuracy score for the TRAINING set is: {accuracy_score(y_train, y_pred_train) * 100:.2f}%')

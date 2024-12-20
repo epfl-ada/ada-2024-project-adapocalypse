@@ -3,15 +3,15 @@ import plotly.graph_objects as go
 import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
-# import folium
-# import geopandas as gpd
-# from folium import Choropleth, CircleMarker, Popup
-# import pandas as pd
+import folium
+import geopandas as gpd
+from folium import Choropleth, CircleMarker, Popup
+import pandas as pd
 from plotly.subplots import make_subplots
-# import ast
-# from sklearn.metrics import confusion_matrix
-# import seaborn as sns
-# from scipy.stats import pearsonr, spearmanr
+import ast
+from sklearn.metrics import confusion_matrix
+import seaborn as sns
+from scipy.stats import pearsonr, spearmanr
 
 # CONSTANT DEFINITIONS
 COLOR_MALE = '#2D9884'
