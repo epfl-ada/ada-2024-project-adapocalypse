@@ -17,6 +17,8 @@ from src.data.data_loader import load_csv
 # from sklearn.ensemble import RandomForestClassifier
 # from sklearn.metrics import confusion_matrix
 import ast
+import joblib
+
 
 # CONSTANT DEFINITIONS
 RAW_DATA_FOLDER_PATH = 'data/raw/'
@@ -576,7 +578,7 @@ def obtain_df_bechdel_used_in_ML(df):
 
     return df_bechdel
 
-# 3.D 3)
+# 3.C 3)
 def feature_importance(log_reg_model, X_train):
     """
     Defines the feature importance of the logistic regression model
