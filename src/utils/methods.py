@@ -578,6 +578,130 @@ def obtain_df_bechdel_used_in_ML(df):
 
     return df_bechdel
 
+
+def preprocess_before_inference(df): 
+    """
+    Preprocess the data for use in our ML model 
+
+    Args: 
+        df (DataFrame): Dataframe on which we extract the data for the preprocessing
+    Returns:
+        df_preprocessed (DataFrame): preprocessed dataframe
+
+    """
+    df_without_emotions = df.copy(deep = True)
+    df_full_emotions = df.copy(deep = True)
+
+    df_without_emotions = df_without_emotions[df_without_emotions['bechdel_rating'].isna()]
+
+    genres_list = df_without_emotions.explode('movie_genres')['movie_genres'].unique().tolist()
+    countries_list = df_without_emotions.explode("movie_countries")["movie_countries"].unique().tolist()
+
+    cols_df_genres_countries = pd.DataFrame(columns= genres_list + countries_list)
+    df_without_emotions = pd.concat([df_without_emotions, cols_df_genres_countries], axis=1).fillna(0).reset_index(drop=True)
+
+    for index, row in df_without_emotions.iterrows():
+        genres = row["movie_genres"]
+        countries = row["movie_countries"]
+        for genre in genres:
+            df_without_emotions.at[index, genre] = 1
+        for country in countries:
+            df_without_emotions.at[index, country] = 1
+        
+    # dropping old unformatted columns
+    df_without_emotions = df_without_emotions.drop(columns=["actor_genders", "movie_genres", "movie_countries", "actor_genders", "emotion_scores", "dominant_emotion", "wikipedia_movie_id", "movie_name", "director_name", "actor_age"])
+    df_without_emotions.columns = df_without_emotions.columns.astype(str)
+
+    df_without_emotions["director_gender"] = df_without_emotions["director_gender"].apply(lambda x: int(0) if (x=='M') else int(1))
+
+
+    
+    df_full_emotions = df_full_emotions[df_full_emotions['bechdel_rating'].isna()]
+    df_full_emotions = df_full_emotions.dropna(subset=['emotion_scores'])
+
+    df_full_emotions["emotion_scores"] = df_full_emotions["emotion_scores"].str.replace("'", '"')
+    # Parse the corrected strings into dictionaries
+    df_full_emotions["emotion_scores"] = df_full_emotions["emotion_scores"].apply(json.loads)
+
+    emotion_list = df_full_emotions["dominant_emotion"].unique().tolist()
+    # add genre and countries columns
+    cols_df = pd.DataFrame(columns= emotion_list) # genres_list + countries_list + 
+    df_full_emotions = pd.concat([df_full_emotions, cols_df], axis=1).fillna(0).reset_index(drop=True)
+
+
+    for index, row in df_full_emotions.iterrows():
+        emotions_dict = row["emotion_scores"]
+        for emotion in emotion_list:
+            df_full_emotions.at[index, emotion] = emotions_dict[emotion]
+
+
+    # dropping old unformatted columns
+    df_full_emotions = df_full_emotions.drop(columns=["actor_genders", "movie_genres", "movie_countries", "actor_genders", "emotion_scores", "dominant_emotion", "wikipedia_movie_id", "movie_name", "director_name", "actor_age"])
+    df_full_emotions.columns = df_full_emotions.columns.astype(str)
+
+    # simplifying the bechdel_rating column into 0 (M) and 1(F)
+    df_full_emotions["director_gender"] = df_full_emotions["director_gender"].apply(lambda x: int(0) if (x=='M') else int(1))
+
+    complicated_columns = ['movie_budget', 'bechdel_rating', 'char_M', 'movie_release_date',
+       'num_votes', 'char_F', 'director_gender', 'box_office_revenue',
+       'average_rating', 'char_tot']
+    
+    df_full_emotions = df_full_emotions.drop(columns=complicated_columns)
+
+    df_preprocessed = pd.concat([df_without_emotions, df_full_emotions], axis=1, join="outer")
+
+
+    df_bechdel = obtain_df_bechdel_used_in_ML(df)
+    column_bechdel = list((set(df_bechdel.columns)))
+    df_preprocessed['Qatar'] = 0
+    df_preprocessed = df_preprocessed[column_bechdel]
+    # reorder columns
+    df_preprocessed = df_preprocessed[df_bechdel.columns]
+    # we don't need the bechdel_rating column for the inference
+    df_preprocessed = df_preprocessed.drop(columns=['bechdel_rating'])
+
+    
+    return df_preprocessed
+
+
+def obtain_prediction_bechdel(df_preprocessed):
+    """
+        Obtain the bechdel prediction for the movies that we don't have the bechdel rating for
+
+        Args: 
+            df_preprocessed (DataFrame): Dataframe on which we extract the data for the prediction
+        Returns:
+            df_bechdel_predictions (DataFrame): prediction dataframe with only the bechdel rating column
+
+    """
+
+    log_reg_model = joblib.load('log_reg_model.pkl')
+    scaler = joblib.load('scaler.pkl')
+
+    standardized_preprocessed = scaler.transform(df_preprocessed)
+    standardized_preprocessed = np.nan_to_num(standardized_preprocessed)
+
+    predictions_bechdel = log_reg_model.predict(standardized_preprocessed)
+
+    df_bechdel_predictions = pd.DataFrame(predictions_bechdel, columns=['bechdel_rating'])
+
+    return df_bechdel_predictions
+
+
+def preprocess_bechdel_ratings_by_dirctor_gender(df_preprocessed):
+    """
+    Preprocess the data for plot the bechdel results by director gender
+    Args:
+        df_preprocessed (DataFrame): Dataframe on which we extract the data for the preprocessing
+    Returns:
+        df_plot (DataFrame): preprocessed dataframe for the plot
+    """
+    df_plot = pd.DataFrame()
+    df_bechdel_predictions = obtain_prediction_bechdel(df_preprocessed)
+    df_plot['bechdel_rating'] = df_bechdel_predictions['bechdel_rating']
+    df_plot['director_gender'] = df_preprocessed['director_gender']
+    return df_plot
+
 # 3.C 3)
 def feature_importance(log_reg_model, X_train):
     """
