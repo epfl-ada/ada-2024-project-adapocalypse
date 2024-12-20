@@ -3,15 +3,15 @@ import plotly.graph_objects as go
 import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
-# import folium
-# import geopandas as gpd
-# from folium import Choropleth, CircleMarker, Popup
-# import pandas as pd
-# from plotly.subplots import make_subplots
-# import ast
-# from sklearn.metrics import confusion_matrix
-# import seaborn as sns
-# from scipy.stats import pearsonr, spearmanr
+import folium
+import geopandas as gpd
+from folium import Choropleth, CircleMarker, Popup
+import pandas as pd
+from plotly.subplots import make_subplots
+import ast
+from sklearn.metrics import confusion_matrix
+import seaborn as sns
+from scipy.stats import pearsonr, spearmanr
 
 # CONSTANT DEFINITIONS
 COLOR_MALE = '#2D9884'
@@ -20,6 +20,7 @@ COLOR_MALE_LIGHT = '#17D07D'
 COLOR_FEMALE_LIGHT = '#C48BF0'
 COLOR_NEUTRAL = '#FDE047'
 COLOR_PALETTE = {'M': COLOR_MALE, 'F': COLOR_FEMALE}
+COLOR_PALETTE_LIST = [COLOR_FEMALE, COLOR_MALE]
 
 LABELS = {"M":"Male",
           "F":"Female",
@@ -85,7 +86,7 @@ def movies_per_year(df):
         df (DataFrame): Processed datafram on which we extract the data from
     """
     plt.figure(figsize=(12, 6))
-    plt.hist(df["movie_release_date"], bins=range(df["movie_release_date"].min(), df["movie_release_date"].max() + ONE), color=COLOR_NEUTRAL) # add one to max to include it
+    plt.hist(df["movie_release_date"], bins=range(df["movie_release_date"].min(), df["movie_release_date"].max() + ONE), color=COLOR_NEUTRAL, edgecolor='white') # add one to max to include it
     plt.xlabel('Release Year')
     plt.ylabel('Number of Movies')
     plt.title('Number of Movies Released by Year')
@@ -181,7 +182,7 @@ def age_actors_layout(fig):
     fig.update_layout(
         title="Age Distribution of Actors by Director Gender (Percentage)",
         xaxis_title="Age",
-        yaxis_title='Percentage (%)',
+        yaxis_title='Actors [%]',
         legend_title="Actor Gender & Director Gender",
         template="plotly_white"
     )
@@ -262,7 +263,7 @@ def fem_representation_by_dir(df):
     # Customize layout
     fig.update_layout(
         title="Representation of Female Characters by Director Gender",
-        yaxis_title="Percentage of Female Characters in Movies [%]",
+        yaxis_title="Female Characters in Movies [%]",
         xaxis_title="Year",
         xaxis=dict(
             tickmode='array',
@@ -282,19 +283,18 @@ def fem_representation_by_dir(df):
     fig.show()
   
 # 3.B 4)  
-def map_fem_char(df, director_gender):
+def map_fem_char(gender_percentages_per_country, director_gender):
     """
     Generates a choropleth map of average female character percentages, 
-    total characters, and movie counts in movies directed by directors of the specified gender, grouped by country
+    total characters, and movie counts in movies directed by directors of the specified gender, grouped by country.
 
     Parameters:
-    - df: Processed dataframe on which we extract the data from
-    - director_gender: Gender of the directors to filter ('M' or 'F')
+    - movies_df: DataFrame containing movie data.
+    - director_gender: Gender of the directors to filter ('M' or 'F').
 
     Returns:
-    - Folium Map object
+    - Folium Map object.
     """
-
     # Load the world map
     world = gpd.read_file(gpd.datasets.get_path("naturalearth_lowres"))
 
@@ -312,10 +312,10 @@ def map_fem_char(df, director_gender):
     }
 
     # Replace country names in gender_percentages_per_country
-    df["movie_countries"] = df["movie_countries"].replace(country_mapping)
+    gender_percentages_per_country["movie_countries"] = gender_percentages_per_country["movie_countries"].replace(country_mapping)
 
     # Merge gender data with GeoPandas world map
-    world = world.merge(df, left_on="name", right_on="movie_countries", how="left")
+    world = world.merge(gender_percentages_per_country, left_on="name", right_on="movie_countries", how="left")
 
     # Initialize the Folium map
     m = folium.Map(
@@ -329,7 +329,7 @@ def map_fem_char(df, director_gender):
     # Add a choropleth layer
     Choropleth(
         geo_data=world,
-        data=df,
+        data=gender_percentages_per_country,
         columns=["movie_countries", "mean_female_percentage"],
         key_on="feature.properties.name",
         fill_color="RdYlGn",
@@ -348,7 +348,7 @@ def map_fem_char(df, director_gender):
         "Malaysia": [4.210484, 101.975766],
         "Indonesia": [-2.548926, 118.014863],
     }
-    
+
     # Add tooltips for additional data
     for _, row in world.iterrows():
         if pd.notna(row["mean_female_percentage"]):  # Ensure valid data
@@ -374,7 +374,7 @@ def map_fem_char(df, director_gender):
                 )
             ).add_to(m)
             
-    return 
+    return m
 
 # 3.B 5)
 def plot_top10_genres(df, gender_real):
@@ -516,7 +516,7 @@ def plot_director_trope_pie_charts(male_director_data, female_director_data):
         hole=0.5,  # Adds a donut hole for aesthetics
         domain=dict(x=[0, 0.5]),  # Place pie chart on the left
         textinfo='none',
-        marker=dict(colors=[COLOR_PALETTE]),
+        marker=dict(colors=COLOR_PALETTE_LIST),        
         name="Male directors",
         hovertemplate='%{label}: %{value:.2f}%'  # Customize hovertemplate (show label and percentage with 2 decimals)
     ))
@@ -528,18 +528,17 @@ def plot_director_trope_pie_charts(male_director_data, female_director_data):
         hole=0.5,
         domain=dict(x=[0.5, 1]),  # Place pie chart on the right
         textinfo='none',
-        marker=dict(colors=[COLOR_PALETTE]),
+        marker=dict(colors=COLOR_PALETTE_LIST),     
         name="Female directors",
         hovertemplate='%{label}: %{value:.2f}%'  # Customize hovertemplate (show label and percentage with 2 decimals)
     ))
 
-    # Update layout for displaying both charts side by side and proper annotations
     fig.update_layout(
         title="Representation of Male/Female Tropes by Director Gender",
         grid=dict(rows=1, columns=2),
         annotations=[
-            dict(text='Male Directors', x=0.1, y=0.5, font_size=12, showarrow=False),
-            dict(text='Female Directors', x=0.6, y=0.5, font_size=12, showarrow=False)
+            dict(text='Male Directors', x=0.25, y=1.05, font_size=14, showarrow=False, xanchor="center", yanchor="bottom"),
+            dict(text='Female Directors', x=0.75, y=1.05, font_size=14, showarrow=False, xanchor="center", yanchor="bottom")
         ],
         showlegend=True,
         legend=dict(orientation="h", x=0.5, xanchor="center", y=-0.2),
@@ -578,7 +577,79 @@ def gender_char_types(df):
     plt.show()
  
 # 3.D 1)
-def bechdel_test_ratings_by_gender(df):
+import plotly.graph_objects as go
+
+def bechdel_4_categories(df):
+    """
+    Plot the results of the Bechdel test ratings regarding the gender of the director,
+    using labels for 'Bechdel Failed', 'Bechdel Passed', 'Bechdel Partially Passed', and 'Bechdel Undetermined'.
+
+    Args:
+        df (DataFrame): Processed dataframe on which we extract the data from
+    """
+    # Mapping for Bechdel ratings
+    bechdel_mapping = {0: "No 2 women", 
+                       1: "2 women not talking", 
+                       2: "2 women talking about a man", 
+                       3: "2 women talking about something else than a man"}
+    
+    # Calculate histograms for male and female directors
+    male_director_hist = (
+        df[df['director_gender'] == "M"]['bechdel_rating']
+        .replace(bechdel_mapping)  # Replace values with labels
+        .value_counts(normalize=True) * 100
+    )
+    female_director_hist = (
+        df[df['director_gender'] == "F"]['bechdel_rating']
+        .replace(bechdel_mapping)
+        .value_counts(normalize=True) * 100
+    )
+    
+    # Labels for x-axis (based on the bechdel_mapping)
+    x = list(bechdel_mapping.values())
+    
+    # Create bar traces for Male and Female Directors
+    trace_male = go.Bar(
+        x=x,
+        y=[male_director_hist.get(label, 0) for label in x],
+        name='Male Directors',
+        marker_color=COLOR_MALE,
+        width=0.4,
+        
+        hovertemplate=(
+            "Director Gender: %{x}<br>"
+            "Proportion of movies: %{y:.2f}%<br>" 
+        )
+    )
+    trace_female = go.Bar(
+        x=x,
+        y=[female_director_hist.get(label, 0) for label in x],
+        name='Female Directors',
+        marker_color=COLOR_FEMALE,
+        width=0.4,
+        
+        hovertemplate=(
+            "Director Gender: %{x}<br>"
+            "Proportion of movies: %{y:.2f}%<br>" 
+        )
+    )
+    
+    # Create layout
+    layout = go.Layout(
+        title="Bechdel Test Ratings by Gender of Directors",
+        xaxis=dict(title="Bechdel Rating", tickvals=x),
+        yaxis=dict(title="Movies [%]"),
+        barmode='group',  # Group the bars
+        legend_title="Director Gender",
+        bargap=0.2,  # Gap between bars
+        template="plotly_white"
+    )
+    
+    # Create figure and show plot
+    fig = go.Figure(data=[trace_male, trace_female], layout=layout)
+    fig.show()
+
+def bechdel_2_categories(df):
     """
     Plot the results of the Bechdel test ratings regarding the gender of the director,
     using labels for 'Bechdel Failed' and 'Bechdel Passed'.
@@ -634,7 +705,7 @@ def bechdel_test_ratings_by_gender(df):
     layout = go.Layout(
         title="Bechdel Test Ratings by Gender of Directors",
         xaxis=dict(title="Bechdel Rating", tickvals=x),
-        yaxis=dict(title="Percentage (%)"),
+        yaxis=dict(title="Movies [%]"),
         barmode='group',  # Group the bars
         legend_title="Director Gender",
         bargap=0.2  # Gap between bars
@@ -644,28 +715,6 @@ def bechdel_test_ratings_by_gender(df):
     fig = go.Figure(data=[trace_male, trace_female], layout=layout)
     fig.show()
 
-# 3.D 1)
-def corr_bechdel(df):
-    """
-    Plot the correlation of the Bechdel ratings with the number of men and women characters and the gender director.
-    
-    Args: 
-        df (DataFrame): Processed dataframe on which we extract the data from
-    """
-    # Correlation values
-    correlations = df[['bechdel_rating', 'char_F', 'char_M', "director_gender"]].corr()
-    bechdel_corr = correlations['bechdel_rating'].drop('bechdel_rating')
-
-    # Plotting
-    plt.figure(figsize=(8, 5))
-    bechdel_corr.sort_values(ascending=True).plot(kind='barh', color=COLOR_NEUTRAL)
-    plt.plot(color=COLOR_NEUTRAL)
-    plt.title('Correlation with Bechdel Rating')
-    plt.xlabel('Correlation Coefficient')
-    plt.ylabel('Variables')
-    plt.axvline(0, color='grey', linestyle='--', linewidth=1)  # Mark zero correlation
-    plt.tight_layout()
-    plt.show()
     
 # 3.D 2)
 def graph_emotions(emotion_totals):
@@ -678,7 +727,7 @@ def graph_emotions(emotion_totals):
     """
     df = pd.DataFrame(list(emotion_totals.items()), columns=['Emotion', 'Score'])
 
-    fig = px.pie(df, names='Emotion', values='Score', title='Emotions in Plot Summaries',
+    fig = px.pie(df, names='Emotion', values='Score', title='Average emotions distribution in plot summaries',
                  color_discrete_sequence=px.colors.qualitative.Set2,
                  hover_data={'Emotion': True, 'Score': True}
             )
@@ -701,22 +750,27 @@ def plot_bechdel_predictions(df_bechdel_predictions):
     Returns:
         None
     """
-
     value_counts = df_bechdel_predictions['bechdel_rating'].value_counts().reset_index()
     value_counts.columns = ['bechdel_rating', 'count']
 
+    # Apply the bechdel_mapping to replace the values
+    bechdel_mapping = {0: "Bechdel Failed", 1: "Bechdel Passed"}
+    value_counts['bechdel_rating'] = value_counts['bechdel_rating'].map(bechdel_mapping)
+
+    # Plotting
     fig = px.bar(
         value_counts,
         x='bechdel_rating',
         y='count',
         text='count',
-        labels={'bechdel_rating': 'Bechdel Rating', 'count': 'Count'},
-        title='Distribution of Bechdel Ratings',
+        labels={'bechdel_rating': 'Bechdel Result', 'count': 'Number of movies'},
+        title='Predictions - Distribution of Bechdel Result',
         color_discrete_sequence=[COLOR_NEUTRAL]
     )
 
     fig.update_traces(textposition='outside')
     fig.show()
+
 
 def bechdel_test_obtain_with_ml_ratings_by_gender(df):
     """
@@ -762,9 +816,9 @@ def bechdel_test_obtain_with_ml_ratings_by_gender(df):
     
     # Create layout
     layout = go.Layout(
-        title="Bechdel Test Ratings by Gender of Directors",
-        xaxis=dict(title="Bechdel Rating"),
-        yaxis=dict(title="Percentage (%)"),
+        title="Predictions - Bechdel Result by Gender of Directors",
+        xaxis=dict(title="Bechdel Result"),
+        yaxis=dict(title="Movies [%]"),
         barmode='group',  # Group the bars
         legend_title="Director Gender",
         bargap=0.2  # Gap between bars
@@ -811,68 +865,75 @@ def graph_emotions_bechdel_combined(df_bechdel):
         specs=[[{'type': 'polar'}, {'type': 'polar'}]],      
     )
 
-    # First graph: For films that pass the Bechdel test (Grade 3)
+    # First graph: For Male directors
     fig.add_trace(go.Scatterpolar(
         r=data_men_grade3,
         theta=data_men_grade3.index,
         fill='toself',
-        name='Men - Bechdel passed',
-        marker_color=COLOR_MALE,
-        
-        hovertemplate=(
-            "Emotion: %{theta}<br>"
-            "Proportion: %{r:.2f}%<br>"
-    )
-    ), row=1, col=1)
-
-    fig.add_trace(go.Scatterpolar(
-        r=data_women_grade3,
-        theta=data_women_grade3.index,
-        fill='toself',
-        name='Women - Bechdel passed',
-        marker_color=COLOR_FEMALE,
-        
-        hovertemplate=(
-            "Emotion: %{theta}<br>"
-            "Proportion: %{r:.2f}%<br>"
-    )
-    ), row=1, col=1)
-
-    # Second graph: For films that do not pass the Bechdel test (Grades 0, 1, 2)
-    fig.add_trace(go.Scatterpolar(
-        r=data_men_grade012,
-        theta=data_men_grade012.index,
-        fill='toself',
-        name='Men - Bechdel failed',
-        marker_color=COLOR_MALE_LIGHT,
+        name='Passed',
+        marker_color="#b7e1a1",
         
         hovertemplate=(
             "Emotion: %{theta}<br>"
             "Proportion: %{r:.2f}%<br>"
     )
     ), row=1, col=2)
+
+    fig.add_trace(go.Scatterpolar(
+        r=data_men_grade012,
+        theta=data_men_grade012.index,
+        fill='toself',
+        name='Failed',
+        marker_color="#f29e8e",
+        
+        hovertemplate=(
+            "Emotion: %{theta}<br>"
+            "Proportion: %{r:.2f}%<br>"
+    )
+    ), row=1, col=2)
+
+    # Second graph: For Female directors
+    fig.add_trace(go.Scatterpolar(
+        r=data_women_grade3,
+        theta=data_women_grade3.index,
+        fill='toself',
+        name='Passed',
+        marker_color="#b7e1a1",
+        
+        hovertemplate=(
+            "Emotion: %{theta}<br>"
+            "Proportion: %{r:.2f}%<br>"
+    )
+    ), row=1, col=1)
 
     fig.add_trace(go.Scatterpolar(
         r=data_women_grade012,
         theta=data_women_grade012.index,
         fill='toself',
-        name='Women - Bechdel failed',
-        marker_color=COLOR_FEMALE_LIGHT,
+        name='Failed',
+        marker_color="#f29e8e",
         
         hovertemplate=(
             "Emotion: %{theta}<br>"
             "Proportion: %{r:.2f}%<br>"
     )
-    ), row=1, col=2)
+    ), row=1, col=1)
 
     fig.update_layout(
         title_text="Emotion Distribution by Gender for Bechdel Test Results",
         showlegend=True,
         polar=dict(
-            radialaxis=dict(visible=True, range=[0, 0.25])
-        ),
-        template="plotly_white"
+        radialaxis=dict(visible=True, range=[0, 0.20]),
+        # Adjust the size of the radar plot area
+        angularaxis=dict(tickmode='array', tickvals=data_men_grade3.index)  # Adjust tick values for readability
+    ),
+        template="plotly_white",
+        annotations=[
+            dict(text="Female Director", x=0.22, y=1.09, showarrow=False, font=dict(size=14, color="black"), align="center"),
+            dict(text="Male Director", x=0.86, y=1.09, showarrow=False, font=dict(size=14, color="black"), align="center")
+        ]
     )
+
 
     fig.show()
     
@@ -896,7 +957,7 @@ def graph_ratio_emotion_by_director_gender(ratios_women, ratios_men):
         df,
         x='Emotion',
         y=['Women', 'Men'],
-        title='Ratio of Emotions by Gender',
+        title='Emotions distribution by director gender',
         labels=LABELS,
         barmode='group',
         color_discrete_map={
@@ -912,7 +973,7 @@ def graph_ratio_emotion_by_director_gender(ratios_women, ratios_men):
                           "Proportion: %{y:.2f}%<br>"))
     fig.update_layout(
         xaxis_title="Emotion",
-        yaxis_title="Proportion (%)",
+        yaxis_title="Emotion proportion [%]",
         legend_title="Director Gender",
         template="plotly_white"
     )
@@ -996,7 +1057,7 @@ def plot_confusion_matrix(y_test, y_pred_test):
 
     # Plotting the normalized confusion matrix
     plt.figure(figsize=(8,6))
-    sns.heatmap(cm_normalized, annot=True, fmt=".2f", cmap="Blues", xticklabels=['Class 0', 'Class 1'], yticklabels=['Class 0', 'Class 1'])
+    sns.heatmap(cm_normalized, annot=True, fmt=".2f", cmap="Blues", xticklabels=['Fail', 'Pass'], yticklabels=['Fail', 'Pass'])
     plt.title('Normalized Random Forest Confusion Matrix')
     plt.xlabel('Predicted')
     plt.ylabel('Actual')
@@ -1025,100 +1086,193 @@ def avg_rating_bechdel(ratings_passed_female, ratings_failed_female, ratings_pas
     Args:
         df (DataFrame): Processed dataframe on which we extract the data from
     """
-    fig = go.Figure()
+    # fig = go.Figure()
+
+    # # Female Directors - Passed Bechdel Test
+    
+    # # to display when hovering
+    # nb_movies_female_passed = len(ratings_passed_female)
+    
+    # fig.add_trace(go.Histogram(
+    #         x=ratings_passed_female.values,
+    #         xbins=dict(start=0, end=10, size=1),
+    #         marker_color=COLOR_FEMALE,
+    #         opacity=0.75,
+    #         name="Bechdel Passed - Female Director",
+    #         histnorm='percent',
+            
+    #         hovertemplate=(
+    #             "Bechdel Passed - Female Director<br>"
+    #             "Proportion: %{y:.2f}%<br>"
+    #             f"Number of movies: {nb_movies_female_passed}<br>"
+    # )
+    #     )
+    # )
+
+    # # Female Directors - Failed Bechdel Test
+    
+    # # to display when hovering
+    # nb_movies_female_failed = len(ratings_failed_female)
+    
+    # fig.add_trace(go.Histogram(
+    #         x=ratings_failed_female.values,
+    #         xbins=dict(start=0, end=10, size=1), 
+    #         marker_color=COLOR_FEMALE_LIGHT,
+    #         opacity=0.75,
+    #         name="Bechdel Failed - Female Director",
+    #         histnorm='percent',
+            
+    #          hovertemplate=(
+    #             "Bechdel Passed - Male Director<br>"
+    #             "Proportion: %{y:.2f}%<br>"
+    #             f"Number of movies: {nb_movies_female_failed}<br>"
+    # )
+    #     )
+    # )
+    
+    # # Male Directors - Passed Bechdel Test
+    
+    # # to display when hovering
+    # nb_movies_male_passed = len(ratings_passed_male)
+    
+    # fig.add_trace(go.Histogram(
+    #         x=ratings_passed_male.values,
+    #         xbins=dict(start=0, end=10, size=1),
+    #         marker_color=COLOR_MALE,
+    #         opacity=0.75,
+    #         name="Bechdel Passed - Male Director",
+    #         histnorm='percent',
+            
+    #         hovertemplate=(
+    #             "Bechdel Passed - Male Director<br>"
+    #             "Proportion: %{y:.2f}%<br>"
+    #             f"Number of movies: {nb_movies_male_passed}<br>"
+    # )
+    #     )
+    # )
+
+    # # Male Directors - Failed Bechdel Test
+    
+    # # to display when hovering
+    # nb_movies_male_failed = len(ratings_failed_male)
+    
+    # fig.add_trace(go.Histogram(
+    #         x=ratings_failed_male.values,
+    #         xbins=dict(start=0, end=10, size=1),
+    #         marker_color=COLOR_MALE_LIGHT,
+    #         opacity=0.75,
+    #         name="Bechdel Failed - Male Director",
+    #         histnorm='percent',
+            
+    #         hovertemplate=(
+    #             "Bechdel Passed - Male Director<br>"
+    #             "Proportion: %{y:.2f}%<br>"
+    #             f"Number of movies: {nb_movies_male_failed}<br>"
+    # )
+    #     )
+    # )
+
+    # # Personnalisation du graphique
+    # fig.update_layout(
+    #     title="Average Rating depending on Bechdel Test by Director Gender",
+    #     xaxis_title="Average Rating",
+    #     yaxis_title="Movies [%]"
+    # )
+    
+    # fig.show()
+
+
+    # Create a subplot grid with 1 row and 2 columns
+    fig = make_subplots(
+        rows=1, cols=2,
+        subplot_titles=["Female Directors", "Male Directors"],
+        shared_yaxes=True  # This allows the y-axes to be shared between the two subplots
+    )
 
     # Female Directors - Passed Bechdel Test
-    
-    # to display when hovering
     nb_movies_female_passed = len(ratings_passed_female)
-    
     fig.add_trace(go.Histogram(
             x=ratings_passed_female.values,
             xbins=dict(start=0, end=10, size=1),
-            marker_color=COLOR_FEMALE,
+            marker_color="#b7e1a1",
             opacity=0.75,
-            name="Bechdel Passed - Female Director",
+            name="Bechdel Passed",
             histnorm='percent',
-            
             hovertemplate=(
                 "Bechdel Passed - Female Director<br>"
                 "Proportion: %{y:.2f}%<br>"
                 f"Number of movies: {nb_movies_female_passed}<br>"
-    )
-        )
+            )
+        ), row=1, col=1
     )
 
     # Female Directors - Failed Bechdel Test
-    
-    # to display when hovering
     nb_movies_female_failed = len(ratings_failed_female)
-    
     fig.add_trace(go.Histogram(
             x=ratings_failed_female.values,
-            xbins=dict(start=0, end=10, size=1), 
-            marker_color=COLOR_FEMALE_LIGHT,
+            xbins=dict(start=0, end=10, size=1),
+            marker_color="#f29e8e",
             opacity=0.75,
-            name="Bechdel Failed - Female Director",
+            name="Bechdel Failed",
             histnorm='percent',
-            
-             hovertemplate=(
-                "Bechdel Passed - Male Director<br>"
+            hovertemplate=(
+                "Bechdel Failed - Female Director<br>"
                 "Proportion: %{y:.2f}%<br>"
                 f"Number of movies: {nb_movies_female_failed}<br>"
+            )
+        ), row=1, col=1
     )
-        )
-    )
-    
+
     # Male Directors - Passed Bechdel Test
-    
-    # to display when hovering
     nb_movies_male_passed = len(ratings_passed_male)
-    
     fig.add_trace(go.Histogram(
             x=ratings_passed_male.values,
             xbins=dict(start=0, end=10, size=1),
-            marker_color=COLOR_MALE,
+            marker_color="#b7e1a1",
             opacity=0.75,
-            name="Bechdel Passed - Male Director",
+            name="Bechdel Passed",
             histnorm='percent',
-            
             hovertemplate=(
                 "Bechdel Passed - Male Director<br>"
                 "Proportion: %{y:.2f}%<br>"
                 f"Number of movies: {nb_movies_male_passed}<br>"
-    )
-        )
+            )
+        ), row=1, col=2
     )
 
     # Male Directors - Failed Bechdel Test
-    
-    # to display when hovering
     nb_movies_male_failed = len(ratings_failed_male)
-    
     fig.add_trace(go.Histogram(
             x=ratings_failed_male.values,
             xbins=dict(start=0, end=10, size=1),
-            marker_color=COLOR_MALE_LIGHT,
+            marker_color="#f29e8e",
             opacity=0.75,
-            name="Bechdel Failed - Male Director",
+            name="Bechdel Failed",
             histnorm='percent',
-            
             hovertemplate=(
-                "Bechdel Passed - Male Director<br>"
+                "Bechdel Failed - Male Director<br>"
                 "Proportion: %{y:.2f}%<br>"
                 f"Number of movies: {nb_movies_male_failed}<br>"
-    )
-        )
+            )
+        ), row=1, col=2
     )
 
-    # Personnalisation du graphique
+    # Update layout for the plot
     fig.update_layout(
-        title="Average Rating depending on Bechdel Test by Director Gender",
+        title="Average Rating Depending on Bechdel Test by Director Gender",
         xaxis_title="Average Rating",
-        yaxis_title="Proportion (in %)"
+        yaxis_title="Movies [%]",
+        showlegend=True,
+        height=600,  # Adjust height to fit the plots
+        title_x=0.5,  # Center the title
+        template="plotly_white"  # Use a clean theme
     )
-    
+
+    # Show the plot
     fig.show()
+
+
+
 
 # 3.E 2)
 def revenue_bechdel(passed_male_df, failed_male_df, passed_female_df, failed_female_df):
@@ -1183,6 +1337,85 @@ def revenue_bechdel(passed_male_df, failed_male_df, passed_female_df, failed_fem
         legend_title_text="Director Gender"
     )
     fig.show()
+
+
+    # Create custom legend items for clarity
+    # legend_fem = go.Scatter(x=[None], y=[None], mode="markers", 
+    #                         marker=dict(color="#b7e1a1", size=10), name="Bechdel Passed")
+    # legend_male = go.Scatter(x=[None], y=[None], mode="markers", 
+    #                         marker=dict(color="#f29e8e", size=10), name="Bechdel Failed")
+
+    # # Create a subplot grid with 1 row and 2 columns
+    # fig = make_subplots(
+    #     rows=1, cols=2,
+    #     subplot_titles=["Female Directors", "Male Directors"],  # Titles for both subplots
+    #     shared_yaxes=True  # Sharing the y-axis to make comparison easier
+    # )
+
+    # # Female Director - Bechdel Passed
+    # fig.add_trace(go.Violin(
+    #     y=passed_female_df.values,
+    #     line_color="#b7e1a1",
+    #     meanline_visible=True,
+    #     box_visible=True,
+    #     showlegend=False,  # Ensure the trace is not shown in the legend
+    #     legendgroup="female_passed"  # Group the traces so that only one legend entry is shown
+    # ), row=1, col=1)
+
+    # # Female Director - Bechdel Failed
+    # fig.add_trace(go.Violin(
+    #     y=failed_female_df.values,
+    #     line_color="#f29e8e",
+    #     meanline_visible=True,
+    #     box_visible=True,
+    #     showlegend=False,  # Ensure the trace is not shown in the legend
+    #     legendgroup="female_failed"  # Group the traces so that only one legend entry is shown
+    # ), row=1, col=1)
+
+    # # Male Director - Bechdel Passed
+    # fig.add_trace(go.Violin(
+    #     y=passed_male_df.values,
+    #     line_color="#b7e1a1",
+    #     meanline_visible=True,
+    #     box_visible=True,
+    #     showlegend=False,  # Ensure the trace is not shown in the legend
+    #     legendgroup="male_passed"  # Group the traces so that only one legend entry is shown
+    # ), row=1, col=2)
+
+    # # Male Director - Bechdel Failed
+    # fig.add_trace(go.Violin(
+    #     y=failed_male_df.values,
+    #     line_color="#f29e8e",
+    #     meanline_visible=True,
+    #     box_visible=True,
+    #     showlegend=False,  # Ensure the trace is not shown in the legend
+    #     legendgroup="male_failed"  # Group the traces so that only one legend entry is shown
+    # ), row=1, col=2)
+
+
+    # # Add the custom legend to the figure
+    # fig.add_trace(legend_fem)
+    # fig.add_trace(legend_male)
+
+    # # Update layout for the plot
+    # fig.update_layout(
+    #     title="Movie Revenue Depending on Bechdel Test by Director Gender",
+    #     xaxis=dict(
+    #         tickmode='array',  # Define custom tick positions
+    #         tickvals=[0.5, 2.5],  # Values where ticks appear
+    #         ticktext=['Female Director', 'Male Director'],  # Custom tick labels
+    #     ),
+    #     yaxis_title="Movie Revenue",
+    #     legend_title_text="Bechdel Test Result",
+    #     height=600,  # Adjust the height for a better view
+    #     template="plotly_white",  # Clean theme for better aesthetics
+    #     showlegend=True  # Ensure the custom legend is displayed
+    # )
+
+    # # Show the plot
+    # fig.show()
+
+
      
 # 3.E 3)
 def success_bechdel(df):

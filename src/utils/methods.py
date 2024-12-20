@@ -6,16 +6,18 @@ import json
 from src.data.data_loader import load_csv
 
 # IMPORTATIONS FOR THE ML MODEL
-# from sklearn.model_selection import train_test_split
-# from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
-# from sklearn.preprocessing import StandardScaler
-# from statsmodels import tools
-# from sklearn.linear_model import LogisticRegression
-# from sklearn.tree import DecisionTreeClassifier, plot_tree
-# from sklearn.metrics import mean_squared_error
-# from sklearn.metrics import mean_absolute_error
-# from sklearn.ensemble import RandomForestClassifier
-# from sklearn.metrics import confusion_matrix
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
+from sklearn.preprocessing import StandardScaler
+from statsmodels import tools
+from sklearn.linear_model import LogisticRegression
+from sklearn.tree import DecisionTreeClassifier, plot_tree
+from sklearn.metrics import mean_squared_error
+from sklearn.metrics import mean_absolute_error
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import confusion_matrix
+from scipy.stats import chi2_contingency
+import scipy.stats as stats
 import ast
 import joblib
 
@@ -129,7 +131,7 @@ def process_actor_age(df, gender):
     return age_female_percentage, age_male_percentage
 
 # 3.B 4)
-def process_map_fem_char(df, director_gender):
+def process_map_fem_char(movies_df, director_gender, filter_movies):
     """
 
 
@@ -141,7 +143,7 @@ def process_map_fem_char(df, director_gender):
     """
     
     # Filter the data for the specified director gender
-    movies_df = df[df["director_gender"] == director_gender].copy()
+    movies_df = movies_df[movies_df["director_gender"] == director_gender]
 
     # Flatten the "movie_countries" column to the first country
     movies_df["movie_countries"] = movies_df["movie_countries"].str[0]
@@ -150,9 +152,12 @@ def process_map_fem_char(df, director_gender):
     movies_df["female_percentage"] = (movies_df["char_F"] / movies_df["char_tot"]) * 100
 
     # Group by country to calculate metrics
-    mean_female_percentage_per_country = movies_df.groupby("movie_countries")["female_percentage"].mean()
     number_movies_per_country = movies_df.groupby("movie_countries")["wikipedia_movie_id"].nunique()
+    countries_filter_movies = (number_movies_per_country.values > filter_movies)
+    mean_female_percentage_per_country = movies_df.groupby("movie_countries")["female_percentage"].mean()
+    mean_female_percentage_per_country = mean_female_percentage_per_country[countries_filter_movies]
     total_characters_per_country = movies_df.groupby("movie_countries")["char_tot"].sum()
+    total_characters_per_country = total_characters_per_country[countries_filter_movies]
 
     # Create a DataFrame with the results
     gender_percentages_per_country = pd.DataFrame({
@@ -181,55 +186,6 @@ def process_top10_genres(df):
     genre_counts = genre_gender_counts.groupby('movie_genres').size().sort_values(ascending=False).head(10)
     gender_genre_percentages_top10 = gender_genre_percentages.loc[genre_counts.index]
     return gender_genre_percentages_top10
-
-# 3.C 1)
-def process_bechdel(df):
-    """
-    Process dataframe to later on apply correlation analysis
-
-    Args:
-        df (DataFrame): original dataframe that is to be modified to produce the desired data
-
-    Returns:
-        DataFrame: desired dataframe to apply correlation analysis
-    """
-    df_bechdel = df.copy(deep = True)
-
-    df_bechdel = df_bechdel.dropna(subset=['bechdel_rating', 'emotion_scores'])
-    df_bechdel["emotion_scores"] = df_bechdel["emotion_scores"].str.replace("'", '"')
-    # Parse the corrected strings into dictionaries
-    df_bechdel["emotion_scores"] = df_bechdel["emotion_scores"].apply(json.loads)
-
-    genres_list = df_bechdel.explode('movie_genres')['movie_genres'].unique().tolist()
-    countries_list = df_bechdel.explode("movie_countries")["movie_countries"].unique().tolist()
-    emotion_list = df_bechdel["dominant_emotion"].unique().tolist()
-    # add genre and countries columns
-    cols_df = pd.DataFrame(columns= genres_list + countries_list + emotion_list)
-    df_bechdel = pd.concat([df_bechdel, cols_df], axis=1).fillna(0).reset_index(drop=True)
-
-
-    for index, row in df_bechdel.iterrows():
-        genres = row["movie_genres"]
-        countries = row["movie_countries"]
-        emotions_dict = row["emotion_scores"]
-        for genre in genres:
-            df_bechdel.at[index, genre] = 1
-        for country in countries:
-            df_bechdel.at[index, country] = 1
-        for emotion in emotion_list:
-            df_bechdel.at[index, emotion] = emotions_dict[emotion]
-    
-    # dropping old unformatted columns
-    df_bechdel = df_bechdel.drop(columns=["actor_genders", "movie_genres", "movie_countries", "actor_genders", "emotion_scores", "dominant_emotion", "wikipedia_movie_id", "movie_name", "director_name", "actor_age"])
-    df_bechdel.columns = df_bechdel.columns.astype(str)
-
-    # simplifying the bechdel_rating column into 0 (fails test) and 1(passes test)
-    df_bechdel["bechdel_rating"] = df_bechdel["bechdel_rating"].apply(lambda x: int(0) if (x==0 or x==1 or x==2) else int(1))
-
-    # simplifying the bechdel_rating column into 0 (M) and 1(F)
-    df_bechdel["director_gender"] = df_bechdel["director_gender"].apply(lambda x: int(0) if (x=='M') else int(1))
-
-    return df_bechdel
 
 
 # 3.C
@@ -274,7 +230,15 @@ def get_dominant_tropes(filtered_tropes, genderedness_df, dominant, non_dominant
 
     return final_tropes
 
+
 # 3.C
+def get_top_tropes(trope_data, perc_column):
+    """ Function to limit to get the top-tropes
+    """
+    # Sort the tropes based on percentage
+    top_tropes = trope_data.sort_values(by=perc_column, ascending=False)
+    return top_tropes
+
 def preprocessing_final_tropes(final_tropes_F, final_tropes_M):
     """
     Processes data to plot the gendered proportion of tv tropes depending on the gender of the movie director
@@ -286,6 +250,7 @@ def preprocessing_final_tropes(final_tropes_F, final_tropes_M):
     Returns:
         tuple of floats, tuple of floats: proportion of male/female tropes in movies depending on the gender of the movie director
     """
+
     gendered_tropes = pd.concat([final_tropes_F, final_tropes_M])
     # Total male and female directors
     total_M_dir = gendered_tropes['dir_M'].sum()
@@ -297,8 +262,90 @@ def preprocessing_final_tropes(final_tropes_F, final_tropes_M):
 
     male_director_data = gendered_tropes.groupby('trope_gender')['dir_M_perc'].sum()
     female_director_data = gendered_tropes.groupby('trope_gender')['dir_F_perc'].sum()  
+
+    # Get top tropes for Male and Female directors
+    male_director_top = get_top_tropes(gendered_tropes, 'dir_M_perc')
+    female_director_top = get_top_tropes(gendered_tropes, 'dir_F_perc')
     
-    return male_director_data, female_director_data
+    return male_director_data, female_director_data, male_director_top, female_director_top
+
+
+
+# 3.D 1)
+def corr_bechdel(df):
+    """
+    Perform Pearson's correlation test for the number of male and female characters with Bechdel ratings.
+    Also performs the Chi-Square test for director gender and Bechdel rating.
+    
+    Args:
+        df (DataFrame): Processed dataframe on which we extract the data from
+    """
+    # Correlation values (Pearson's correlation for numerical features)
+    correlations = df[['bechdel_rating', 'char_F', 'char_M']].corr()
+    bechdel_corr = correlations['bechdel_rating'].drop('bechdel_rating')
+
+    # Create an empty dictionary for p-values
+    p_values = {}
+
+    # Perform Pearson's correlation for character counts (char_F, char_M)
+    for col in ['char_F', 'char_M']:
+        corr, p_val = stats.pearsonr(df[col], df['bechdel_rating'])
+        p_values[col] = p_val
+
+    # Perform Chi-Square test for director_gender and bechdel_rating
+    contingency_table = pd.crosstab(df['director_gender'], df['bechdel_rating'])
+    chi2_stat, p_val_chi2, dof, expected = stats.chi2_contingency(contingency_table)
+    chi2_results = {
+        'Chi-Square Statistic': chi2_stat,
+        'P-Value': p_val_chi2,
+        'Degrees of Freedom': dof,
+        'Expected Frequencies': expected,
+        'Observed Frequencies': contingency_table.values
+    }
+
+    # Combine correlations and p-values into one DataFrame for easy display
+    corr_results = pd.DataFrame({
+        'Correlation': bechdel_corr,
+        'P-Value': p_values
+    })
+
+    # Print the correlation results and significance
+    print("Correlation Results with Bechdel Rating:")
+    for index, row in corr_results.iterrows():
+        if row['P-Value'] < 0.05:
+            print(f"Variable: {index}, Correlation: {row['Correlation']:.2f}, P-Value: {row['P-Value']} (Significant)")
+
+        else:
+            print(f"Variable: {index}, Correlation: {row['Correlation']:.2f}, P-Value: {row['P-Value']} (Not Significant)")
+
+    # Print Chi-Square test results for director_gender and bechdel_rating
+    print("\nChi-Square Test for Director Gender and Bechdel Rating:")
+    print(f"Chi-Square Statistic: {chi2_results['Chi-Square Statistic']:.2f}")
+    print(f"P-Value: {chi2_results['P-Value']}")
+    print(f"Degrees of Freedom: {chi2_results['Degrees of Freedom']}")
+    print("Observed Frequencies:\n", chi2_results['Observed Frequencies'])
+    print("Expected Frequencies:\n", chi2_results['Expected Frequencies'])
+
+
+def chi2_test(df):
+    # Create a contingency table (cross-tabulation of director_gender and bechdel_rating)
+    contingency_table = pd.crosstab(df['director_gender'], df['bechdel_rating'], margins=False)
+
+    # Perform the Chi-Square test
+    chi2_stat, p_val, dof, expected = chi2_contingency(contingency_table)
+
+    # Print the observed frequencies
+    print("Observed Frequencies:")
+    print(np.array(contingency_table))
+
+    # Print the expected frequencies
+    print("\nExpected Frequencies:")
+    print(np.array(pd.DataFrame(expected, index=contingency_table.index, columns=contingency_table.columns)))
+
+    # Print the Chi-Square statistic, p-value, degrees of freedom, and expected frequencies
+    print("\nChi-Square Statistic:", chi2_stat)
+    print("Degrees of Freedom:", dof)
+    print("P-Value:", p_val)
 
 # 3.D 2)
 def process_df_emotions(df):
@@ -440,61 +487,70 @@ def process_bechdel_radar(df):
     return df_bechdel
 
 # 3.D 3)
+def process_bechdel(bechdel_df):
+    """
+    Process dataframe to later on apply correlation analysis
+
+    Args:
+        df (DataFrame): original dataframe that is to be modified to produce the desired data
+
+    Returns:
+        DataFrame: desired dataframe to apply correlation analysis
+    """
+    bechdel_df = bechdel_df.dropna(subset=['bechdel_rating', 'emotion_scores'])
+    bechdel_df["emotion_scores"] = bechdel_df["emotion_scores"].str.replace("'", '"')
+    # Parse the corrected strings into dictionaries
+    bechdel_df["emotion_scores"] = bechdel_df["emotion_scores"].apply(json.loads)
+
+    genres_list = bechdel_df.explode('movie_genres')['movie_genres'].unique().tolist()
+    countries_list = bechdel_df.explode("movie_countries")["movie_countries"].unique().tolist()
+    emotion_list = bechdel_df["dominant_emotion"].unique().tolist()
+    # manual one-hot encoding
+    cols_df = pd.DataFrame(columns= genres_list + countries_list + emotion_list) # create cols
+    bechdel_df = pd.concat([bechdel_df, cols_df], axis=1).fillna(0).reset_index(drop=True) # add empty cols
+    for index, row in bechdel_df.iterrows(): # fill the cols
+        genres = row["movie_genres"]
+        countries = row["movie_countries"]
+        emotions_dict = row["emotion_scores"]
+        for genre in genres:
+            bechdel_df.at[index, genre] = 1
+        for country in countries:
+            bechdel_df.at[index, country] = 1
+        for emotion in emotion_list:
+            bechdel_df.at[index, emotion] = emotions_dict[emotion]
+    # dropping old unformatted columns
+    bechdel_df = bechdel_df.drop(columns=["actor_genders", "movie_genres", "movie_countries", "actor_genders", "emotion_scores", "dominant_emotion", "wikipedia_movie_id", "movie_name", "director_name", "actor_age"])
+    bechdel_df.columns = bechdel_df.columns.astype(str)
+    # simplifying the bechdel_rating column into 0 (fails test) and 1(passes test)
+    bechdel_df["bechdel_rating"] = bechdel_df["bechdel_rating"].apply(lambda x: int(0) if (x==0 or x==1 or x==2) else int(1))
+    # simplifying the bechdel_rating column into 0 (M=male director) and 1(F=female director)
+    bechdel_df["director_gender"] = bechdel_df["director_gender"].apply(lambda x: int(0) if (x=='M') else int(1))
+    
+    return bechdel_df
 
 def logistic_regression_for_bechdel(df):
     """
-    Machine Learning logistic regression model to predict the Bechdel test rating of a movie based on its features
+    Machine Learning logistic regression model to predict the Bechdel test rating of a movie based on its features.
+    We split 80:20. We standardize then we train the model and we evaluate it. We save it for easy re-use.
 
     Args:
         df (DataFrame): Processed dataframe on which we extract the data from
 
     Returns:
-        type1, type2, type3, type4:?? Mahlia aide-moi ma soeur
+        y_test: the test labels.
+        y_pred_test: the predicted labels to be compared to y_test.
+        log_reg_model: our model.
+        X_train: the formatted dataset used to train.
     """
-    df_bechdel = df.copy(deep = True)
+    # call function for pre-processing
+    bechdel_df = process_bechdel(df)
 
-    df_bechdel = df_bechdel.dropna(subset=['bechdel_rating', 'emotion_scores'])
-    df_bechdel["emotion_scores"] = df_bechdel["emotion_scores"].str.replace("'", '"')
-    # Parse the corrected strings into dictionaries
-    df_bechdel["emotion_scores"] = df_bechdel["emotion_scores"].apply(json.loads)
-
-    genres_list = df_bechdel.explode('movie_genres')['movie_genres'].unique().tolist()
-    countries_list = df_bechdel.explode("movie_countries")["movie_countries"].unique().tolist()
-    emotion_list = df_bechdel["dominant_emotion"].unique().tolist()
-    # add genre and countries columns
-    cols_df = pd.DataFrame(columns= genres_list + countries_list + emotion_list)
-    df_bechdel = pd.concat([df_bechdel, cols_df], axis=1).fillna(0).reset_index(drop=True)
-
-
-    for index, row in df_bechdel.iterrows():
-        genres = row["movie_genres"]
-        countries = row["movie_countries"]
-        emotions_dict = row["emotion_scores"]
-        for genre in genres:
-            df_bechdel.at[index, genre] = 1
-        for country in countries:
-            df_bechdel.at[index, country] = 1
-        for emotion in emotion_list:
-            df_bechdel.at[index, emotion] = emotions_dict[emotion]
-
-
-    # dropping old unformatted columns
-    df_bechdel = df_bechdel.drop(columns=["actor_genders", "movie_genres", "movie_countries", "actor_genders", "emotion_scores", "dominant_emotion", "wikipedia_movie_id", "movie_name", "director_name", "actor_age"])
-    df_bechdel.columns = df_bechdel.columns.astype(str)
-
-    # simplifying the bechdel_rating column into 0 (fails test) and 1(passes test)
-    df_bechdel["bechdel_rating"] = df_bechdel["bechdel_rating"].apply(lambda x: int(0) if (x==0 or x==1 or x==2) else int(1))
-
-    # simplifying the bechdel_rating column into 0 (M) and 1(F)
-    df_bechdel["director_gender"] = df_bechdel["director_gender"].apply(lambda x: int(0) if (x=='M') else int(1))
-    
-
-    # preparing data for model
+    # PREPARING DATA FOR MODEL
     target_cols = ["bechdel_rating"]
-    features_cols = df_bechdel.keys().tolist()
+    features_cols = bechdel_df.keys().tolist()
     features_cols.remove(target_cols[0])
-    X = df_bechdel[features_cols]
-    y = df_bechdel[target_cols]
+    X = bechdel_df[features_cols]
+    y = bechdel_df[target_cols]
 
     # we split
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
@@ -503,7 +559,7 @@ def logistic_regression_for_bechdel(df):
     y_test = y_test.squeeze()
     y_train = y_train.squeeze()
 
-    # Load the module
+    # Load the module to standaradize
     scaler = StandardScaler()
 
     # Standardize X train
@@ -524,8 +580,8 @@ def logistic_regression_for_bechdel(df):
     joblib.dump(log_reg_model, 'log_reg_model.pkl')
     joblib.dump(scaler, 'scaler.pkl')
 
-    print(f'The accuracy score for test set is: {accuracy_score(y_test, y_pred_test)}')
-    print(f'The accuracy score for train set is: {accuracy_score(y_train, y_pred_train)}')
+    print(f'The accuracy score for the TEST set is: {accuracy_score(y_test, y_pred_test) * 100:.2f}%')
+    print(f'The accuracy score for the TRAINING set is: {accuracy_score(y_train, y_pred_train) * 100:.2f}%')
 
     return y_test, y_pred_test, log_reg_model, X_train
 
@@ -728,7 +784,7 @@ def feature_importance(log_reg_model, X_train):
     }).sort_values(by='Importance', ascending=False)
 
     # Display the top 20 features
-    return feature_importance_df
+    return feature_importance_df.head(10)
 
 # 3.D 3)
 def preprocessing_bechdel_for_radar_graph(movies_complete_df):

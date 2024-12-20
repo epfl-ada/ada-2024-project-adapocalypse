@@ -264,10 +264,21 @@ def preprocess_plot_emotions():
 
 
 # PREPROCESSING BECHDEL TEST
-def preprocess_bechdel_ratings():
-    bechdel_ratings_df = 0
-    bechdel_ratings_df.to_csv(TRANSITIONARY_DATA_FOLDER_PATH + "bechdel_ratings.csv")  
-    return 0
+def preprocess_bechdel_ratings(movies_df):
+    # load bechdel
+    bechdel_df = pd.read_csv("src/data/external_data/bechdel_movies_2023_FEB.csv")
+    # create common columns to merge easily
+    bechdel_df["title_year"] = bechdel_df["title"].str.lower() + bechdel_df['year'].astype(str)
+    movies_df["title_year"] = movies_df["movie_name"].str.lower() + movies_df['movie_release_date'].astype(str)
+    # merge
+    bechdel_intersection = bechdel_df.merge(movies_df[["title_year", "wikipedia_movie_id"]], how="inner")
+    bechdel_intersection = bechdel_intersection[["wikipedia_movie_id", "title", "year", "rating"]]
+    bechdel_intersection.rename(columns={"title":"movie_name", 
+                                    "year":"movie_release_date", 
+                                    "rating":"bechdel_rating"}, inplace=True)
+    bechdel_intersection.to_csv(TRANSITIONARY_DATA_FOLDER_PATH + "bechdel_ratings.csv")  
+    
+    return bechdel_intersection
 
 
 # PREPROCESSING MOVIES COMPLETE
@@ -294,7 +305,7 @@ def preprocess_movies_complete(from_files=False):
         movie_success_df = preprocess_movies_success()
         
         plot_emotions_df = load_csv(preprocess_plot_emotions())
-        bechdel_ratings_df = preprocess_bechdel_ratings()
+        bechdel_ratings_df = preprocess_bechdel_ratings(movies_metadata_df)
     
     # create complete df
     movies_complete_df = movies_metadata_df.copy(deep=True)
@@ -358,6 +369,8 @@ def preprocess_tvtropes(df):
         film_tropes_df['Trope'].isin(char_types) & film_tropes_df['Title'].isin(valid_titles)
     ].drop(['title_id', 'Unnamed: 0'], axis=1)
 
+    # filter the genderedness_df
+    genderedness_df = genderedness_df[genderedness_df['Trope'].isin(char_types)].reset_index(drop=True)
     # Merge with transformed movie names
     movies_data = df.copy()
     movies_data['movie_name'] = movies_data['movie_name'].apply(transform_title)
